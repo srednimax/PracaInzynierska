@@ -25,4 +25,5 @@ public class Book
     public string Author { get; set; }
     public Genre Genre { get; set; }
     public int PublishYear { get; set; }
+    public bool IsBorrowed { get; set; }
 }

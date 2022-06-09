@@ -34,5 +34,11 @@ public class BookConfigurations:IEntityTypeConfiguration<Book>
             .HasColumnName("genre")
             .HasColumnType("int")
             .IsRequired();
+
+        builder.Property(x => x.IsBorrowed)
+            .HasColumnName("is_borrowed")
+            .HasColumnType("bit")
+            .HasDefaultValue(false);
+
     }
 }
