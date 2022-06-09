@@ -24,5 +24,5 @@ public class Book
     public string Title { get; set; }
     public string Author { get; set; }
     public Genre Genre { get; set; }
-    public DateTime PublishDate { get; set; }
+    public int PublishYear { get; set; }
 }
