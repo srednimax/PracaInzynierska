@@ -9,6 +9,7 @@ public class LibraryDatabaseContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<BorrowedBook> BorrowedBooks { get; set; }
+    public DbSet<BookRating> BookRatings { get; set; }
 
     public LibraryDatabaseContext()
     {
