@@ -25,7 +25,7 @@ public class BookRatingConfigurations:IEntityTypeConfiguration<BookRating>
             .HasColumnType("int")
             .IsRequired();
 
-        builder.ToTable("BookRating")
+        builder.ToTable("book_ratings")
             .HasOne(x => x.Book)
             .WithMany()
             .HasForeignKey("book_id");

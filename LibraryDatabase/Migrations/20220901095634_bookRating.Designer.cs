@@ -4,6 +4,7 @@ using LibraryDatabase.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryDatabase.Migrations
 {
     [DbContext(typeof(LibraryDatabaseContext))]
-    partial class LibraryDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220901095634_bookRating")]
+    partial class bookRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,7 +59,7 @@ namespace LibraryDatabase.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("books", (string)null);
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("Models.BookRating", b =>
@@ -84,7 +86,7 @@ namespace LibraryDatabase.Migrations
 
                     b.HasIndex("book_id");
 
-                    b.ToTable("book_ratings", (string)null);
+                    b.ToTable("book_rating", (string)null);
                 });
 
             modelBuilder.Entity("Models.BorrowedBook", b =>
@@ -194,7 +196,7 @@ namespace LibraryDatabase.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Models.BookRating", b =>
