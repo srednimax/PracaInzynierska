@@ -1,6 +1,5 @@
 ﻿namespace Models;
 
-[Flags]
 public enum Genre
 {
     LiteraryFiction,
@@ -21,8 +20,8 @@ public enum Genre
 public class Book
 {
     public int Id { get; set; }
-    public string Title { get; set; }
-    public string Author { get; set; }
+    public string? Title { get; set; }
+    public string? Author { get; set; }
     public Genre Genre { get; set; }
     public int PublishYear { get; set; }
     public bool IsBorrowed { get; set; }
