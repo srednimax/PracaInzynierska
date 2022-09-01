@@ -36,6 +36,11 @@ public class BorrowedBookConfiguration : IEntityTypeConfiguration<BorrowedBook>
             .HasColumnType("bit")
             .HasDefaultValue(false);
 
+        builder.Property(x => x.Status)
+            .HasColumnName("status")
+            .HasColumnType("int")
+            .HasDefaultValue(Status.Booked);
+
         builder.ToTable("borrowed_books")
             .HasOne(x => x.Book)
             .WithMany()
@@ -50,5 +55,6 @@ public class BorrowedBookConfiguration : IEntityTypeConfiguration<BorrowedBook>
             .HasOne(x => x.Reader)
             .WithMany()
             .HasForeignKey("reader_id");
+        
     }
 }
