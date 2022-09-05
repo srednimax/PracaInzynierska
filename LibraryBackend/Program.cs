@@ -9,6 +9,7 @@ builder.Services.AddDbContext<LibraryDatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("LibraryDatabase"));
     options.EnableSensitiveDataLogging();
 });
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
