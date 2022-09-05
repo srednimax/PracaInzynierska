@@ -1,5 +1,7 @@
 using LibraryDatabase.Models;
 using Microsoft.EntityFrameworkCore;
+using Services;
+using Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,10 @@ builder.Services.AddDbContext<LibraryDatabaseContext>(options =>
     options.EnableSensitiveDataLogging();
 });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// services
+builder.Services.AddTransient<IUserService, UserService>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
