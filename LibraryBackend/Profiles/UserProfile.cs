@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using LibraryBackend.Dtos;
-using Models;
+using LibraryDatabase.Models;
 
 namespace LibraryBackend.Profiles;
 
