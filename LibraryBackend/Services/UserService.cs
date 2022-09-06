@@ -18,6 +18,14 @@ namespace LibraryBackend.Services
         }
         public async Task<ServiceResult<UserDto>> SignIn(UserSignInDto userSignInDto)
         {
+            var userForVerifyPassword = await _userRepository.GetUserByEmail(userSignInDto.Email);
+
+            if (userForVerifyPassword is not null &&
+                BCrypt.Net.BCrypt.Verify(userSignInDto.Password, userForVerifyPassword.Password))
+            {
+                userSignInDto.Password = userForVerifyPassword.Password;
+            }
+
             var user = await _userRepository.SignIn(_mapper.Map<User>(userSignInDto));
             if (user is null)
             {
@@ -37,6 +45,8 @@ namespace LibraryBackend.Services
                 // email exist in database
                 return new ServiceResult<UserDto>() { Status = 1 };
             }
+            // hashing password
+            userSignUpDto.Password = BCrypt.Net.BCrypt.HashPassword(userSignUpDto.Password);
 
             var newUser = await _userRepository.AddUser( _mapper.Map<User>(userSignUpDto));
 
