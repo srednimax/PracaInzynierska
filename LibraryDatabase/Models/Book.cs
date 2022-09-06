@@ -1,4 +1,4 @@
-﻿namespace Models;
+﻿namespace LibraryDatabase.Models;
 
 public enum Genre
 {
