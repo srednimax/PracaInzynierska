@@ -12,6 +12,11 @@ public class UserRepository: Repository<User>,IUserRepository
         return await GetAll().FirstOrDefaultAsync(x => x.Id == id);
     }
 
+    public async Task<User?> GetUserByEmail(string email)
+    {
+        return await GetAll().FirstOrDefaultAsync(x => x.Email == email);
+    }
+
     public async Task<User?> AddUser(User newUser)
     {
         return await AddAsync(newUser);

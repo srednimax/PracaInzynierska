@@ -46,7 +46,4 @@ public class UserSignUpDto
     [Required]
     [EnumDataType(typeof(Gender))]
     public Gender Gender { get; set; }
-
-    [EnumDataType(typeof(Role))]
-    public Role Role { get; set; }
 }

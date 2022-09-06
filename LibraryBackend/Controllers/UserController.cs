@@ -33,7 +33,9 @@ public class UserController : ControllerBase
         var result = await _userService.SignUp(userSignUpDto);
         return result.Status switch
         {
+            1   => Problem("User with the same e-mail exist in database"),
             200 => result.Body,
+            400 => BadRequest(),
             404 => NotFound()
         };
     }
