@@ -23,8 +23,8 @@ public class UserController : ControllerBase
         var result = await _userService.SignIn(userSignInDto);
         return result.Status switch
         {
+            1   => Problem("Wrong e-mail or password"),
             200 => result.Body,
-            404 => NotFound()
         };
     }
     [HttpPost("SignUp")]

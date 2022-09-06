@@ -18,7 +18,14 @@ namespace LibraryBackend.Services
         }
         public async Task<ServiceResult<UserDto>> SignIn(UserSignInDto userSignInDto)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.SignIn(_mapper.Map<User>(userSignInDto));
+            if (user is null)
+            {
+                // wrong email or password
+                return new ServiceResult<UserDto>() { Status = 1 };
+            }
+
+            return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(user), Status = 200 };
         }
 
         public async Task<ServiceResult<UserDto>> SignUp(UserSignUpDto userSignUpDto)
