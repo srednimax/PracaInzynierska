@@ -1,16 +1,16 @@
 ﻿using LibraryBackend.Dtos;
-using Services.Interfaces;
+using LibraryBackend.Services.Interfaces;
 
-namespace Services
+namespace LibraryBackend.Services
 {
     public class UserService: IUserService
     {
-        public Task<UserDto> SignIn(UserSignInDto userSignInDto)
+        public Task<ServiceResult<UserDto>> SignIn(UserSignInDto userSignInDto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<UserDto> SignUp(UserSignUpDto userSignUpDto)
+        public Task<ServiceResult<UserDto>> SignUp(UserSignUpDto userSignUpDto)
         {
             throw new NotImplementedException();
         }

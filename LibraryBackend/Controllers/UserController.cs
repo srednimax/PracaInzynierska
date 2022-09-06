@@ -1,6 +1,8 @@
-﻿using LibraryBackend.Dtos;
+﻿using System.Diagnostics;
+using System.Linq.Expressions;
+using LibraryBackend.Dtos;
+using LibraryBackend.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Services.Interfaces;
 
 namespace LibraryBackend.Controllers;
 
@@ -18,11 +20,21 @@ public class UserController : ControllerBase
     [HttpPost("SignIn")]
     public async Task<ActionResult<UserDto>> SignIn(UserSignInDto userSignInDto)
     {
-        return await _userService.SignIn(userSignInDto);
+        var result = await _userService.SignIn(userSignInDto);
+        return result.Status switch
+        {
+            200 => result.Body,
+            404 => NotFound()
+        };
     }
     [HttpPost("SignUp")]
     public async Task<ActionResult<UserDto>> SignUp(UserSignUpDto userSignUpDto)        
     {
-        return await _userService.SignUp(userSignUpDto);
+        var result = await _userService.SignUp(userSignUpDto);
+        return result.Status switch
+        {
+            200 => result.Body,
+            404 => NotFound()
+        };
     }
 }

@@ -1,9 +1,9 @@
 ﻿using LibraryBackend.Dtos;
 
-namespace Services.Interfaces;
+namespace LibraryBackend.Services.Interfaces;
 
 public interface IUserService
 {
-    public Task<UserDto> SignIn(UserSignInDto userSignInDto);
-    public Task<UserDto> SignUp(UserSignUpDto userSignUpDto);
+    public Task<ServiceResult<UserDto>> SignIn(UserSignInDto userSignInDto);
+    public Task<ServiceResult<UserDto>> SignUp(UserSignUpDto userSignUpDto);
 }
