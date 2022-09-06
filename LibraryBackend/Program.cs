@@ -1,7 +1,9 @@
+using LibraryBackend.Repositories;
+using LibraryBackend.Repositories.Interfaces;
+using LibraryBackend.Services;
+using LibraryBackend.Services.Interfaces;
 using LibraryDatabase.Models;
 using Microsoft.EntityFrameworkCore;
-using Services;
-using Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,14 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // services
 builder.Services.AddTransient<IUserService, UserService>();
+
+// repositories
+builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IBookRepository, BookRepository>();
+builder.Services.AddTransient<IBookRatingRepository, BookRatingRepository>();
+builder.Services.AddTransient<IBorrowedBookRepository,BorrowedBookRepository>();
+
 
 
 builder.Services.AddControllers();
