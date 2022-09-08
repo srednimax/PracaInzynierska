@@ -3,7 +3,8 @@
     public enum Role
     {
         User,
-        Employee
+        Employee,
+        Admin
     }
 
     public enum Gender

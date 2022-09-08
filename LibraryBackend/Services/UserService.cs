@@ -29,8 +29,7 @@ namespace LibraryBackend.Services
             var user = await _userRepository.SignIn(_mapper.Map<User>(userSignInDto));
             if (user is null)
             {
-                // wrong email or password
-                return new ServiceResult<UserDto>() { Status = 1 };
+                return new ServiceResult<UserDto>() { Status = 500,Message = "Wrong email or password" };
             }
 
             return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(user), Status = 200 };
@@ -42,9 +41,9 @@ namespace LibraryBackend.Services
             var sameEmail = await _userRepository.GetUserByEmail(userSignUpDto.Email);
             if (sameEmail is not null)
             {
-                // email exist in database
-                return new ServiceResult<UserDto>() { Status = 1 };
+                return new ServiceResult<UserDto>() { Status = 500,Message = "Email exist in database"};
             }
+
             // hashing password
             userSignUpDto.Password = BCrypt.Net.BCrypt.HashPassword(userSignUpDto.Password);
 
