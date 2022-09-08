@@ -59,5 +59,14 @@ namespace LibraryBackend.Services
                 Status = 200
             };
         }
+
+        public async Task<ServiceResult<UserDto>> GetUserById(int id)
+        {
+            var user = await _userRepository.GetUserById(id);
+            if (user == null)
+                return new ServiceResult<UserDto>() {Status= 404 };
+
+            return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(user), Status = 200 };
+        }
     }
 }

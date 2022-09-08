@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq.Expressions;
+using System.Security.Claims;
 using AutoMapper;
 using LibraryBackend.Authentication;
 using LibraryBackend.Dtos;
@@ -52,6 +53,21 @@ public class UserController : ControllerBase
             1   => Problem("User with the same e-mail exist in database"),
             200 => result.Body,
             400 => BadRequest(),
+            404 => NotFound()
+        };
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<ActionResult<UserDto>> GetLoggedUser()
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+
+        var result = await _userService.GetUserById(userId);
+
+        return result.Status switch
+        {
+            200 => result.Body,
             404 => NotFound()
         };
     }
