@@ -26,9 +26,8 @@ namespace LibraryBackend.Controllers
 
             return result.Status switch
             {
-                1 => Problem(result.Message),
-                2 => Problem(result.Message),
-                200 => result.Body
+                200 => result.Body,
+                500 => Problem(result.Message)
             };
         }
     }

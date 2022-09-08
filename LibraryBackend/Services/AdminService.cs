@@ -27,12 +27,12 @@ public class AdminService:IAdminService
 
         if (user.Role == Role.Admin)
         {
-            return new ServiceResult<UserDto>() { Status = 1,Message = "Can't change Admin role"};
+            return new ServiceResult<UserDto>() { Status = 500,Message = "Can't change Admin role"};
         }
 
         if (user.Role == Role.Employee)
         {
-            return new ServiceResult<UserDto>() { Status = 2,Message = "Already an employee"};
+            return new ServiceResult<UserDto>() { Status = 500,Message = "Already an employee"};
         }
 
         user.Role = Role.Employee;

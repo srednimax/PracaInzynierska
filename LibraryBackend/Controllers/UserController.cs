@@ -33,12 +33,12 @@ public class UserController : ControllerBase
         var result = await _userService.SignIn(userSignInDto);
         switch (result.Status)
         {
-            case 1:
-                return Problem("Wrong e-mail or password");
             case 200:
                 var token = _auth.Authentication(_mapper.Map<User>(result.Body));
                 HttpContext.Response.Headers.Add("jwt",token);
                 return result.Body;
+            case 500:
+                return Problem(result.Message);
             default:
                 return BadRequest();
         }
@@ -50,10 +50,10 @@ public class UserController : ControllerBase
         var result = await _userService.SignUp(userSignUpDto);
         return result.Status switch
         {
-            1   => Problem("User with the same e-mail exist in database"),
             200 => result.Body,
             400 => BadRequest(),
-            404 => NotFound()
+            404 => NotFound(),
+            500 => Problem(result.Message)
         };
     }
 
@@ -68,7 +68,8 @@ public class UserController : ControllerBase
         return result.Status switch
         {
             200 => result.Body,
-            404 => NotFound()
+            404 => NotFound(),
+            500 => Problem(result.Message)
         };
     }
 }
