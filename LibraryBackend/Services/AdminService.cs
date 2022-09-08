@@ -1,0 +1,44 @@
+﻿using AutoMapper;
+using LibraryBackend.Dtos;
+using LibraryBackend.Repositories.Interfaces;
+using LibraryBackend.Services.Interfaces;
+using LibraryDatabase.Models;
+
+namespace LibraryBackend.Services;
+
+public class AdminService:IAdminService
+{
+    private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
+
+    public AdminService(IUserRepository userRepository, IMapper mapper)
+    {
+        _userRepository = userRepository;
+        _mapper = mapper;
+    }
+    public async Task<ServiceResult<UserDto>> ChangeRoleToEmployee(int id)
+    {
+        var user = await _userRepository.GetUserById(id);
+
+        if (user is null)
+        {
+            return new ServiceResult<UserDto>() { Status = 404 };
+        }
+
+        if (user.Role == Role.Admin)
+        {
+            return new ServiceResult<UserDto>() { Status = 1,Message = "Can't change Admin role"};
+        }
+
+        if (user.Role == Role.Employee)
+        {
+            return new ServiceResult<UserDto>() { Status = 2,Message = "Already an employee"};
+        }
+
+        user.Role = Role.Employee;
+
+        await _userRepository.UpdateUser(user);
+
+        return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(user), Status = 200 };
+    }
+}
