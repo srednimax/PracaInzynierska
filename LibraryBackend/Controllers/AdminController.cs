@@ -19,10 +19,21 @@ namespace LibraryBackend.Controllers
             _adminService = adminService;
         }
 
-        [HttpPut]
+        [HttpPut("ToEmployee")]
         public async Task<ActionResult<UserDto>> ChangeRoleToEmployee(int id)
         {
             var result = await _adminService.ChangeRoleToEmployee(id);
+
+            return result.Status switch
+            {
+                200 => result.Body,
+                500 => Problem(result.Message)
+            };
+        }
+        [HttpPut("ToUser")]
+        public async Task<ActionResult<UserDto>> ChangeRoleToUser(int id)
+        {
+            var result = await _adminService.ChangeRoleToUser(id);
 
             return result.Status switch
             {

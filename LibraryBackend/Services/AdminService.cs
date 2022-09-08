@@ -41,4 +41,29 @@ public class AdminService:IAdminService
 
         return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(user), Status = 200 };
     }
+    public async Task<ServiceResult<UserDto>> ChangeRoleToUser(int id)
+    {
+        var user = await _userRepository.GetUserById(id);
+
+        if (user is null)
+        {
+            return new ServiceResult<UserDto>() { Status = 404 };
+        }
+
+        if (user.Role == Role.Admin)
+        {
+            return new ServiceResult<UserDto>() { Status = 500, Message = "Can't change Admin role" };
+        }
+
+        if (user.Role == Role.User)
+        {
+            return new ServiceResult<UserDto>() { Status = 500, Message = "Already an user" };
+        }
+
+        user.Role = Role.User;
+
+        await _userRepository.UpdateUser(user);
+
+        return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(user), Status = 200 };
+    }
 }
