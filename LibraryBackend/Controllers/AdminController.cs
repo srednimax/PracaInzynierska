@@ -41,5 +41,18 @@ namespace LibraryBackend.Controllers
                 500 => Problem(result.Message)
             };
         }
+        [HttpDelete]
+        public async Task<ActionResult<UserDto>> RemoveUser(int id)
+        {
+            var result = await _adminService.Remove(id);
+
+            return result.Status switch
+            {
+                200 => result.Body,
+                404 => NotFound(),
+                500 => Problem(result.Message)
+            };
+        }
+
     }
 }

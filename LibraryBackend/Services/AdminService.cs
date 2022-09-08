@@ -66,4 +66,21 @@ public class AdminService:IAdminService
 
         return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(user), Status = 200 };
     }
+
+    public async Task<ServiceResult<UserDto>> Remove(int id)
+    {
+        var userToRemove = await _userRepository.GetUserById(id);
+        if(userToRemove is null)
+            return new ServiceResult<UserDto>() { Status = 404};
+
+        if (userToRemove.Role == Role.Admin)
+        {
+            return new ServiceResult<UserDto>() { Status = 500, Message = "Can't remove Admin" };
+        }
+
+        await _userRepository.RemoveUser(userToRemove);
+
+        return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(userToRemove), Status = 200 };
+
+    }
 }
