@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using LibraryDatabase.Models;
 
@@ -9,14 +10,22 @@ public class BookUpdateDto
     [Required]
     public int Id { get; set; }
 
+    [Required(AllowEmptyStrings = true)]
+    [DefaultValue("")]
     [MaxLength(100)]
     public string? Title { get; set; }
+
+    [Required(AllowEmptyStrings = true)]
+    [DefaultValue("")]
     [MaxLength(200)]
     public string? Author { get; set; }
+
+    [Required(AllowEmptyStrings = true)]
+    [DefaultValue("")]
     [EnumDataType(typeof(Genre))]
     public Genre Genre { get; set; }
-    [MaxLength(4)]
-    [MinLength(4)]
-    [RegularExpression(@"^(19|20)\d{2}$")]
+
+    [Required(AllowEmptyStrings = true)]
+    
     public int PublishYear { get; set; }
 }

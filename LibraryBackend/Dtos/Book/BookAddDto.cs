@@ -15,8 +15,6 @@ public class BookAddDto
     [EnumDataType(typeof(Genre))]
     public Genre Genre { get; set; }
     [Required]
-    [MaxLength(4)]
-    [MinLength(4)]
     [RegularExpression(@"^(19|20)\d{2}$")]
     public int PublishYear { get; set; }
 }
