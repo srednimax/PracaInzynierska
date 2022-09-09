@@ -1,6 +1,6 @@
 ﻿using LibraryDatabase.Models;
 
-namespace LibraryBackend.Dtos;
+namespace LibraryBackend.Dtos.User;
 
 public class UserDto
 {
@@ -9,7 +9,7 @@ public class UserDto
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string? PhoneNumber { get; set; }
-    public DateTime? Birth  { get; set; }
+    public DateTime? Birth { get; set; }
     public Gender Gender { get; set; }
     public Role Role { get; set; }
 }

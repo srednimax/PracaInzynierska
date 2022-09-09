@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Security.Claims;
 using AutoMapper;
 using LibraryBackend.Authentication;
-using LibraryBackend.Dtos;
+using LibraryBackend.Dtos.User;
 using LibraryBackend.Services.Interfaces;
 using LibraryDatabase.Models;
 using Microsoft.AspNetCore.Authorization;

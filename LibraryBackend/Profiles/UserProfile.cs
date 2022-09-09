@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LibraryBackend.Dtos;
+using LibraryBackend.Dtos.User;
 using LibraryDatabase.Models;
 
 namespace LibraryBackend.Profiles;

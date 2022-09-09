@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using LibraryDatabase.Models;
 
-namespace LibraryBackend.Dtos;
+namespace LibraryBackend.Dtos.User;
 
 public class UserSignUpDto
 {
@@ -11,7 +11,7 @@ public class UserSignUpDto
     public string? Email { get; set; }
 
     [Required]
-    [Compare("Email",ErrorMessage = "E-mails are not the same")]
+    [Compare("Email", ErrorMessage = "E-mails are not the same")]
     public string? ConfirmEmail { get; set; }
 
     [Required]
@@ -41,7 +41,7 @@ public class UserSignUpDto
     public string? PhoneNumber { get; set; }
 
     [Required]
-    public DateTime? Birth  { get; set; }
+    public DateTime? Birth { get; set; }
 
     [Required]
     [EnumDataType(typeof(Gender))]

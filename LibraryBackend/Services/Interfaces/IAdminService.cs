@@ -1,4 +1,4 @@
-﻿using LibraryBackend.Dtos;
+﻿using LibraryBackend.Dtos.User;
 
 namespace LibraryBackend.Services.Interfaces;
 

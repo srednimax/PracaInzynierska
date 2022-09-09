@@ -1,4 +1,4 @@
-﻿using LibraryBackend.Dtos;
+﻿using LibraryBackend.Dtos.User;
 using LibraryBackend.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
