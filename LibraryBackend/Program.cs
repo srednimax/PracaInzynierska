@@ -23,6 +23,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // services
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
+builder.Services.AddTransient<IBookService, BookService>();
 
 // repositories
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));

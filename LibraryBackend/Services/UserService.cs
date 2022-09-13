@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LibraryBackend.Dtos;
+using LibraryBackend.Dtos.User;
 using LibraryBackend.Repositories.Interfaces;
 using LibraryBackend.Services.Interfaces;
 using LibraryDatabase.Models;
