@@ -24,6 +24,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<IBookService, BookService>();
+builder.Services.AddTransient<IBorrowingBookService, BorrowingBookService>();
 
 // repositories
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
