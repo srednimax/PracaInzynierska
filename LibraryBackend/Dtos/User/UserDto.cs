@@ -12,5 +12,5 @@ public class UserDto
     public DateTime? Birth { get; set; }
     public Gender Gender { get; set; }
     public Role Role { get; set; }
-    
+    public double Penalty { get; set; }
 }
