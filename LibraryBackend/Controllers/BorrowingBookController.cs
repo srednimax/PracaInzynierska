@@ -21,9 +21,13 @@ namespace LibraryBackend.Controllers
 
         [Authorize(Roles = "User")]
         [HttpPost]
-        public async Task<ActionResult<BorrowedBookDto>> BorrowBook(BorrowedBookAddDto borrowedBookAddDto)
+        public async Task<ActionResult<BorrowedBookDto>> BorrowBook(int bookId)
         {
-            borrowedBookAddDto.UserId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+            var borrowedBookAddDto = new BorrowedBookAddDto()
+            {
+                BookId = bookId,
+                UserId = int.Parse(User.Claims.First(x => x.Type == "id").Value)
+            };
 
             var result = await _borrowingBookService.BorrowBook(borrowedBookAddDto);
 
@@ -45,6 +49,7 @@ namespace LibraryBackend.Controllers
                 200 => result.Body
             };
         }
+        [Authorize(Roles="User")]
         [HttpGet("UserBook's")]
         public async Task<ActionResult<List<BorrowedBookDto>>> GetAllBorrowedBooksByUser()
         {

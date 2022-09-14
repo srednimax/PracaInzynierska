@@ -61,6 +61,12 @@ namespace LibraryBackend.Services
             if (book is null)
                 return new ServiceResult<BorrowedBookDto>() { Status = 404 };
 
+            if (await _borrowedBookRepository.CheckIfUserBookedBook(borrowedBookAddDto.BookId,
+                    borrowedBookAddDto.UserId))
+            {
+                return new ServiceResult<BorrowedBookDto>() { Status = 500, Message="You already booked this book" };
+            }
+
             var borrowedBook = new BorrowedBook()
             {
                 Book = book,
@@ -139,7 +145,11 @@ namespace LibraryBackend.Services
             if (borrowedBook.IsRenew)
                 return new ServiceResult<BorrowedBookDto>() { Status = 500, Message = "This was already renewed" };
 
+            if (borrowedBook.Status != Status.Ready)
+                return new ServiceResult<BorrowedBookDto>() { Status = 500, Message =  "This book is not ready yet" };
+
             borrowedBook.ReturnDate = borrowedBook.ReturnDate.Value.AddDays(14);
+            borrowedBook.IsRenew = true;
 
             await _borrowedBookRepository.UpdateBorrowedBook(borrowedBook);
 
@@ -169,6 +179,9 @@ namespace LibraryBackend.Services
 
             borrowedBook.Status = bookChangeStatusDto.Status;
             borrowedBook.Employee = employee;
+
+            if(bookChangeStatusDto.Status == Status.Ready)
+                borrowedBook.ReturnDate = DateTime.Now.AddDays(14);
 
             return new ServiceResult<BorrowedBookDto>()
             {
