@@ -57,5 +57,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnName("birth")
             .HasColumnType("datetime")
             .IsRequired();
+
+        builder.Property(x => x.Penalty)
+            .HasColumnName("penalty")
+            .HasColumnType("decimal")
+            .HasDefaultValue(0);
     }
 }

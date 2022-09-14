@@ -3,6 +3,7 @@
 public enum Status
 {
     Booked,
+    WaitingForBook,
     Preparing,
     Ready
 }

@@ -23,6 +23,7 @@
         public string? PhoneNumber { get; set; }
         public DateTime? Birth  { get; set; }
         public Gender Gender { get; set; }
+        public double Penalty { get; set; }
         public Role Role { get; set; }
     }
 }
