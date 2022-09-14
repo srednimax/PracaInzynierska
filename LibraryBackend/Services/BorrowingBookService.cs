@@ -52,6 +52,10 @@ namespace LibraryBackend.Services
             if (user is null)
                 return new ServiceResult<BorrowedBookDto>() { Status = 404 };
 
+            if (user.Penalty > 0)
+                return new ServiceResult<BorrowedBookDto>()
+                    { Status = 500, Message = "You must first pay the penalty" };
+
             var book = await _bookRepository.GetBookById(borrowedBookAddDto.BookId);
 
             if (book is null)
@@ -86,19 +90,91 @@ namespace LibraryBackend.Services
 
         }
 
-        public async Task<ServiceResult<BorrowedBookDto>> ReturnBook(int bookId)
+        public async Task<ServiceResult<BorrowedBookDto>> ReturnBook(BorrowedBookReturnDto borrowedBookReturnDto)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetUserById(borrowedBookReturnDto.UserId);
+
+            if (user is null)
+                return new ServiceResult<BorrowedBookDto>() { Status = 404 };
+
+            var borrowedBook = await _borrowedBookRepository.GetBorrowedBookById(borrowedBookReturnDto.BorrowedBookId);
+
+            if (borrowedBook is null)
+                return new ServiceResult<BorrowedBookDto>() { Status = 404 };
+
+            var book = await _bookRepository.GetBookById(borrowedBook.Book.Id);
+
+            if (book.IsBorrowed == false)
+            {
+                return new ServiceResult<BorrowedBookDto>()
+                    { Status = 500, Message = "This book was already returned" };
+            }
+
+            if (borrowedBook.ReturnDate < DateTime.Now)
+            {
+                user.Penalty += 10;
+                await _userRepository.UpdateUser(user);
+            }
+
+            book.IsBorrowed = false;
+            await _bookRepository.UpdateBook(book);
+
+            borrowedBook.IsReturned = true;
+            await _borrowedBookRepository.UpdateBorrowedBook(borrowedBook);
+
+            return new ServiceResult<BorrowedBookDto>()
+            {
+                Body = _mapper.Map<BorrowedBookDto>(borrowedBook),
+                Status = 200
+            };
         }
 
-        public async Task<ServiceResult<BorrowedBookDto>> OrderBook(int bookId)
+        public async Task<ServiceResult<BorrowedBookDto>> RenewBook(int borrowedBookId)
         {
-            throw new NotImplementedException();
+            var borrowedBook = await _borrowedBookRepository.GetBorrowedBookById(borrowedBookId);
+
+            if (borrowedBook is null)
+                return new ServiceResult<BorrowedBookDto>() { Status = 404 };
+
+            if (borrowedBook.IsRenew)
+                return new ServiceResult<BorrowedBookDto>() { Status = 500, Message = "This was already renewed" };
+
+            borrowedBook.ReturnDate = borrowedBook.ReturnDate.Value.AddDays(14);
+
+            await _borrowedBookRepository.UpdateBorrowedBook(borrowedBook);
+
+            return new ServiceResult<BorrowedBookDto>()
+            {
+                Body = _mapper.Map<BorrowedBookDto>(borrowedBook),
+                Status = 200
+            };
         }
 
-        public async Task<ServiceResult<BorrowedBookDto>> ChangeStatus()
+
+        public async Task<ServiceResult<BorrowedBookDto>> ChangeStatus(BorrowedBookChangeStatusDto bookChangeStatusDto)
         {
-            throw new NotImplementedException();
+            var employee = await _userRepository.GetUserById(bookChangeStatusDto.EmployeeId);
+
+            if (employee is null)
+                return new ServiceResult<BorrowedBookDto>() { Status = 404 };
+
+            var borrowedBook = await _borrowedBookRepository.GetBorrowedBookById(bookChangeStatusDto.BorrowedBookId);
+
+            if (borrowedBook is null)
+                return new ServiceResult<BorrowedBookDto>() { Status = 404 };
+
+            if (borrowedBook.IsReturned)
+                return new ServiceResult<BorrowedBookDto>()
+                    { Status = 500, Message = "Can't change returned book's status" };
+
+            borrowedBook.Status = bookChangeStatusDto.Status;
+            borrowedBook.Employee = employee;
+
+            return new ServiceResult<BorrowedBookDto>()
+            {
+                Body = _mapper.Map<BorrowedBookDto>(await _borrowedBookRepository.UpdateBorrowedBook(borrowedBook)),
+                Status = 200
+            };
         }
     }
 }

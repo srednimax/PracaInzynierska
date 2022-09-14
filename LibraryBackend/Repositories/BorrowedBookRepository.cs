@@ -16,7 +16,7 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
             .ToListAsync();
     }
 
-    public async Task<BorrowedBook?> GetBorrowedBooksById(int id)
+    public async Task<BorrowedBook?> GetBorrowedBookById(int id)
     {
         return await GetAll()
             .Include(x => x.Book)
