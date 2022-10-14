@@ -4,6 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 //primeng
 import {InputTextModule} from 'primeng/inputtext';
+import {CardModule} from 'primeng/card';
+import {ButtonModule} from 'primeng/button';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -16,7 +18,9 @@ import { LoginComponent } from './login/login.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    InputTextModule
+    InputTextModule,
+    CardModule,
+    ButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
