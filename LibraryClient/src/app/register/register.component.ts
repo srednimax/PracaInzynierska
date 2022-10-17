@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { IGender } from 'src/Dtos/User/IUserSignUpDto';
+import { IGender, IUserSignUpDto } from 'src/Dtos/User/IUserSignUpDto';
 import { UserService } from 'src/services/userService';
 import { CustomValidators } from '../customValidators/customValidators';
 
@@ -23,6 +23,8 @@ export class RegisterComponent implements OnInit {
   },
   CustomValidators.mustMatch('password', 'confirmPassword')
   );
+
+  existEmail:boolean;
   genders : IGender[] = [{number:0,name:'wole nie podawać'},{number:1,name:'mężczyzna'},{number:2,name:'kobieta'}];
 
 
@@ -32,7 +34,30 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void{
+    this.existEmail = false;
 
+    let userSignUp : IUserSignUpDto ={
+      email: this.loginForm.controls.email.value,
+      password: this.loginForm.controls.password.value,
+      confirmPassword:this.loginForm.controls.confirmPassword.value,
+      firstName: this.loginForm.controls.firstName.value,
+      lastName: this.loginForm.controls.lastName.value,
+      phoneNumber: this.loginForm.controls.phoneNumber.value,
+      birth: this.loginForm.controls.birth.value,
+      gender: this.loginForm.controls.gender.value
+    };
+    console.log(userSignUp);
+    this.userService.signUpUser(userSignUp).subscribe(
+      {next: (resp) =>{
+        console.log(resp);
+      },
+      error: (error) =>{
+        if(error =="Email exist in database")
+        {
+          this.existEmail = true;
+        }
+      }
+  });
   }
 
   get email(){

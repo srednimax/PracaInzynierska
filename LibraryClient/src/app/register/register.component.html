@@ -86,11 +86,14 @@
                         </div>
                         <div class="col-12 py-3">
                             <p-dropdown [options]="genders" formControlName="gender" placeholder="Wybierz płeć"
-                                optionLabel="name" [showClear]="true"></p-dropdown>
+                                optionLabel="name" optionValue="number" [showClear]="true"></p-dropdown>
                         </div>
                         <div *ngIf="gender && gender.invalid && (gender.dirty || gender.touched)"
                             class="pb text-danger">
                             <p *ngIf="gender.errors?.['required']">Proszę wybrać płeć</p>
+                        </div>
+                        <div *ngIf="existEmail" class="pb-3 text-danger">
+                            Podany email został już wykorzystany
                         </div>
                         <p-button [disabled]="loginForm.invalid" type="submit" label="Zrejestruj się"></p-button>
                     </div>
