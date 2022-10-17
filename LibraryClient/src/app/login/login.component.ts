@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IUserSignInDto } from 'src/Dtos/User/IUserSignInDto';
+import { UserService } from 'src/services/userService';
 
 @Component({
   selector: 'app-login',
@@ -7,10 +10,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  wrongCredentials:boolean;
+
+  loginForm = new FormGroup({
+    email: new FormControl('',[Validators.required,Validators.email]),
+    password: new FormControl('',[Validators.required])
+  });
+//,Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$")]
+  constructor(private userService: UserService) { }
 
 
   ngOnInit(): void {
+  }
+
+  onSubmit(): void {
+    this.wrongCredentials = false;
+
+    let userSignIn : IUserSignInDto ={
+      email: this.loginForm.controls.email.value,
+      password: this.loginForm.controls.password.value
+    };
+    this.userService.signInUser(userSignIn).subscribe(
+      {next: (resp) =>{
+        localStorage.setItem("token", resp.headers.get("jwt")!);
+      },
+      error: (error) =>{
+        if(error =="Wrong email or password")
+        {
+          this.wrongCredentials = true;
+        }
+      }
+  });
+  }
+
+  get email(){
+    return this.loginForm.get('email');
+  }
+  
+  get password(){
+    return this.loginForm.get('password');
   }
 
 }

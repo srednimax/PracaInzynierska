@@ -43,7 +43,12 @@ export class JwtInterceptor implements HttpInterceptor {
           { 
              this._router.navigate(["/"]);
           }
-          return throwError(errorMsg);
+          if(error.status == 500)
+          {
+           errorMsg = error.error.detail;
+          }
+
+          return throwError(() => errorMsg);
         })
       );
     }
@@ -59,7 +64,11 @@ export class JwtInterceptor implements HttpInterceptor {
          { 
             this._router.navigate(["/"]);
          }
-        return throwError(errorMsg);
+         if(error.status == 500)
+         {
+          errorMsg = error.error.detail;
+         }
+        return throwError(() => errorMsg);
       })
     );
   }
