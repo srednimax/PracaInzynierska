@@ -2,3 +2,20 @@
 .w-full{
     width: 100% !important;
 }
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* 115px is the height of my footer */
+    padding-bottom: 115px;
+}
+
+.footer{  
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
