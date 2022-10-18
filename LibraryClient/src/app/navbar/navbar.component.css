@@ -1,0 +1,32 @@
+ul li {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    color: #1f2226;
+  }
+  
+  ul li:hover {
+    transition: all 0.4s ease;
+  }
+  
+  ul li:hover a {
+    color: #1f2226;
+  }
+  
+  ul li a {
+    color: #1f2226;
+    text-decoration: none;
+  }
+
+  ul li a:active {
+   color: #1f2226;
+  }
+  .active{
+    color: #1f2226;
+    font-weight: bold;
+  }
+  .logo {
+    color: #1f2226;
+    text-decoration: none;
+    font-size: 32px;
+  }

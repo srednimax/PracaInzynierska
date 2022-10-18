@@ -11,6 +11,7 @@ import {ButtonModule} from 'primeng/button';
 import {CalendarModule} from 'primeng/calendar';
 import {PasswordModule} from 'primeng/password';
 import {DropdownModule} from 'primeng/dropdown';
+import {TabViewModule} from 'primeng/tabview';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -18,12 +19,18 @@ import { UserService } from 'src/services/userService';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'src/services/JwtInteceptor';
 import { RegisterComponent } from './register/register.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
+import { SignInUpComponent } from './sign-in-up/sign-in-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NavbarComponent,
+    FooterComponent,
+    SignInUpComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +44,8 @@ import { RegisterComponent } from './register/register.component';
     CalendarModule,
     BrowserAnimationsModule,
     PasswordModule,
-    DropdownModule
+    DropdownModule,
+    TabViewModule
   ],
   providers: [
     UserService,
