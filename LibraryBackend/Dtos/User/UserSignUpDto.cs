@@ -11,10 +11,6 @@ public class UserSignUpDto
     public string? Email { get; set; }
 
     [Required]
-    [Compare("Email", ErrorMessage = "E-mails are not the same")]
-    public string? ConfirmEmail { get; set; }
-
-    [Required]
     [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$")]
     public string? Password { get; set; }
 

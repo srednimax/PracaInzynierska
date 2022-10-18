@@ -1,0 +1,98 @@
+<div class="container py-3 ">
+    <div class="row">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="p-fluid">
+                <div class="col-12 py-3">
+                    <span class="p-float-label">
+                        <input id="float-input-email" type="text" pInputText formControlName="email">
+                        <label for="float-input-email">Email</label>
+                    </span>
+                </div>
+                <div *ngIf="email && email.invalid && (email.dirty || email.touched)" class="text-danger">
+                    <p *ngIf="email.errors?.['required']">To pole nie może być puste</p>
+                    <p *ngIf="email.errors?.['email']">Podaj poprawny email</p>
+                </div>
+                <div class="col-12 py-3">
+                    <span class="p-float-label">
+                        <input id="float-input-password" type="password" pInputText formControlName="password">
+                        <label for="float-input-password">Hasło</label>
+                    </span>
+                </div>
+                <div *ngIf="password && password.invalid && (password.dirty || password.touched)"
+                    class="text-danger">
+                    <p *ngIf="password.errors?.['required']">To pole nie może być puste</p>
+                    <p *ngIf="password.errors?.['pattern']">Hasło musi zwierać jedną małą, dużą literę, znak
+                        specialny oraz mieć długość 8-50</p>
+                </div>
+                <div class="col-12 py-3">
+                    <span class="p-float-label">
+                        <input id="float-input-confirmPassword" type="password" pInputText
+                            formControlName="confirmPassword">
+                        <label for="float-input-confirmPassword">Powtórz hasło</label>
+                    </span>
+                </div>
+                <div *ngIf="confirmPassword && confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)"
+                    class="text-danger">
+                    <p *ngIf="confirmPassword.errors?.['required']">To pole nie może być puste</p>
+                    <p *ngIf="confirmPassword.errors?.['mustMatch']">Hasła się nie zgadzają</p>
+                </div>
+                <div class="col-12 py-3">
+                    <span class="p-float-label">
+                        <input id="float-input-firstName" type="text" pInputText formControlName="firstName">
+                        <label for="float-input-firstName">Imię</label>
+                    </span>
+                </div>
+                <div *ngIf="firstName && firstName.invalid && (firstName.dirty || firstName.touched)"
+                    class="text-danger">
+                    <p *ngIf="firstName.errors?.['required']">To pole nie może być puste</p>
+                    <p *ngIf="firstName.errors?.['pattern']">Imię musi składać się z samych liter i mieć długość
+                        3-50 znaków</p>
+                </div>
+                <div class="col-12 py-3">
+                    <span class="p-float-label">
+                        <input id="float-input-lastName" type="text" pInputText formControlName="lastName">
+                        <label for="float-input-lastName">Nazwisko</label>
+                    </span>
+                </div>
+                <div *ngIf="lastName && lastName.invalid && (lastName.dirty || lastName.touched)"
+                    class="text-danger">
+                    <p *ngIf="lastName.errors?.['required']">To pole nie może być puste</p>
+                    <p *ngIf="lastName.errors?.['pattern']">Nazwisko musi składać się z samych liter i mieć
+                        długość 3-50 znaków</p>
+                </div>
+                <div class="col-12 py-3">
+                    <span class="p-float-label">
+                        <input id="float-input-phoneNumber" type="text" pInputText formControlName="phoneNumber">
+                        <label for="float-input-phoneNumber">Numer telefonu</label>
+                    </span>
+                </div>
+                <div *ngIf="phoneNumber && phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)"
+                    class="text-danger">
+                    <p *ngIf="phoneNumber.errors?.['required']">To pole nie może być puste</p>
+                    <p *ngIf="phoneNumber.errors?.['pattern']">Podaj poprawny numer telefonu</p>
+                </div>
+                <div class="col-12 py-3">
+                    <span class="p-float-label">
+                        <p-calendar formControlName="birth" id="float-calendar" dateFormat="dd-mm-yy">
+                        </p-calendar>
+                        <label for="float-calendar">Data urodzenia</label>
+                    </span>
+                </div>
+                <div *ngIf="birth && birth.invalid && (birth.dirty || birth.touched)" class="text-danger">
+                    <p *ngIf="birth.errors?.['required']">To pole nie może być puste</p>
+                </div>
+                <div class="col-12 py-3">
+                    <p-dropdown [options]="genders" formControlName="gender" placeholder="Wybierz płeć"
+                        optionLabel="name" optionValue="number" [showClear]="true"></p-dropdown>
+                </div>
+                <div *ngIf="gender && gender.invalid && (gender.dirty || gender.touched)" class="text-danger">
+                    <p *ngIf="gender.errors?.['required']">Proszę wybrać płeć</p>
+                </div>
+                <div *ngIf="existEmail" class="pb-3 text-danger">
+                    Podany email został już wykorzystany
+                </div>
+                <p-button class="w-full pt-3" [disabled]="loginForm.invalid" type="submit" label="Zrejestruj się"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
