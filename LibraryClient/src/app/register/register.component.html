@@ -1,12 +1,10 @@
-<div class="container py-5 ">
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-5">
-            <p-card>
+<div class="container py-3 ">
+    <div class="row">
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                    <div class="row ">
+                    <div class="p-fluid">
                         <div class="col-12 py-3">
                             <span class="p-float-label">
-                                <input id="float-input-email" type="text" pInputText formControlName="email">
+                                <input id="float-input-email"  type="text" pInputText formControlName="email">
                                 <label for="float-input-email">Email</label>
                             </span>
                         </div>
@@ -16,7 +14,7 @@
                         </div>
                         <div class="col-12 py-3">
                             <span class="p-float-label">
-                                <input id="float-input-password" type="password" pInputText formControlName="password">
+                                <input id="float-input-password"  type="password" pInputText formControlName="password">
                                 <label for="float-input-password">Hasło</label>
                             </span>
                         </div>
@@ -76,7 +74,7 @@
                         </div>
                         <div class="col-12 py-3">
                             <span class="p-float-label">
-                                <p-calendar formControlName="birth" id="float-calendar" dateFormat="dd-mm-yy">
+                                <p-calendar formControlName="birth" class="w-full" id="float-calendar" dateFormat="dd-mm-yy">
                                 </p-calendar>
                                 <label for="float-calendar">Data urodzenia</label>
                             </span>
@@ -85,7 +83,7 @@
                             <p *ngIf="birth.errors?.['required']">To pole nie może być puste</p>
                         </div>
                         <div class="col-12 py-3">
-                            <p-dropdown [options]="genders" formControlName="gender" placeholder="Wybierz płeć"
+                            <p-dropdown [options]="genders"  formControlName="gender" placeholder="Wybierz płeć"
                                 optionLabel="name" optionValue="number" [showClear]="true"></p-dropdown>
                         </div>
                         <div *ngIf="gender && gender.invalid && (gender.dirty || gender.touched)"
@@ -97,8 +95,6 @@
                         </div>
                         <p-button [disabled]="loginForm.invalid" type="submit" label="Zrejestruj się"></p-button>
                     </div>
-                </form>
-            </p-card>
+                    </form>
         </div>
-    </div>
 </div>
