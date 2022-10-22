@@ -1,0 +1,23 @@
+<p-table [value]="books" [paginator]="true" [rows]="10" [totalRecords]="books ? books.length : 0" responsiveLayout="scroll">
+    <ng-template pTemplate="caption">
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-book>
+        <tr>
+            <td>{{book.name}}</td>
+            <td>{{book.author}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+            In total there are {{books ? books.length : 0 }} books.
+        </div>
+    </ng-template>
+</p-table>
+

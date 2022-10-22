@@ -19,7 +19,7 @@ namespace LibraryBackend.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<List<BookDto>>> GetAllBooks()
         {
             var result = await _bookService.GetAllBooks();

@@ -215,3 +215,6 @@ var books = new List<Book>()
         PublishYear = 2007
     },
 };
+
+dbContext.AddRange(books);
+dbContext.SaveChanges();
