@@ -30,6 +30,7 @@ import { SignInUpComponent } from './sign-in-up/sign-in-up.component';
 import { HomeComponent } from './home/home.component';
 import { BooksComponent } from './books/books.component';
 import { BookService } from 'src/services/bookService';
+import { BorrowingBookService } from 'src/services/borrowingBookServices';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { BookService } from 'src/services/bookService';
   providers: [
     UserService,
     BookService,
+    BorrowingBookService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

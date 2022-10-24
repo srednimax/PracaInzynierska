@@ -1,16 +1,31 @@
 <div *ngFor="let book of books | paginate: {itemsPerPage: 10,currentPage: page,totalItems: books ? books.length : 0  }">
-    <div class="row p-2">
-        <p-card>
-        <div class="col-12">
-            {{book.title}}
-        </div>
-        <div class="col-4">
-            {{book.author}}
-        </div>
-        <div class="col-4">
-            {{book.genre}}
+
+    <p-card class="p-2">
+        <div class="row d-flex align-items-center">
+            <div class="col-4">
+                <img src="assets/images/bookCoverPlaceholder.png">
+            </div>
+            <div class="col-4">
+                <div clas="row d-flex ">
+                    <div class="col-12">
+                        <p>{{book.title}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>{{book.author}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Gatunek: {{genre(book.genre)}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Rok wydania: {{book.publishYear}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <p-button type="button" (onClick)="borrowBook(book.id)" [label]="book.isBorrowed ? 'Niet':'Wypożycz'"></p-button>
+            </div>
         </div>
     </p-card>
-    </div>
+
 </div>
 <pagination-controls (pageChange)="page =$event" [responsive]="true"></pagination-controls>

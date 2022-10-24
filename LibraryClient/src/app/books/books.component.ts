@@ -1,65 +1,53 @@
-import { Component, OnInit } from '@angular/core';
-import { IBookDto } from 'src/Dtos/Book/IBookDto';
-import { BookService } from 'src/services/bookService';
+import { Component, OnInit } from "@angular/core";
+import { IBookDto } from "src/Dtos/Book/IBookDto";
+import { BookService } from "src/services/bookService";
+import { BorrowingBookService } from "src/services/borrowingBookServices";
 
 @Component({
-  selector: 'app-books',
-  templateUrl: './books.component.html',
-  styleUrls: ['./books.component.css']
+  selector: "app-books",
+  templateUrl: "./books.component.html",
+  styleUrls: ["./books.component.css"],
 })
 export class BooksComponent implements OnInit {
 
-  constructor(private bookService: BookService) { }
+  constructor(private bookService: BookService,private borrowingBookService:BorrowingBookService) {}
 
-  books: IBookDto[]; 
-  page: number =1;
+
+  books: IBookDto[];
+  page: number = 1;
 
   ngOnInit(): void {
     this.bookService.getBooks().subscribe((resp) => {
       this.books = resp;
     });
   }
-  genre(gen:number):string{
-    switch(gen){
+  genre(gen: number): string {
+    switch (gen) {
       case 0:
         return "Fikcja literacka";
-        case 1:
-        return "Tajemnica";
-        case 2:
+      case 1:
         return "Kryminał";
-        case 3:
+      case 2:
         return "Horror";
-        case 4:
+      case 3:
         return "Historyczna";
-        case 5:
+      case 4:
         return "Romans";
-        case 6:
+      case 5:
         return "Western";
-        case 7:
-        return "Fikcja spekulacyjna";
-        case 8:
+      case 6:
         return "Science fiction";
-        case 9:
-        return "Fantazy";
-        case 10:
-        return;
-        case 11:
-        return "Literatura realistyczna";
+      case 7:
+        return "Fantasy";
+      default:
+        return "";
     }
-    
-    Fikcja literacka,
-    Tajemnica,
-    Kryminał,
-    Przerażenie,
-    Historyczny,
-    Romans,
-    Zachodni,
-    Fikcja spekulacyjna,
-    Science fiction,
-    Fantazja,
-    Dystopijczyk,
-    Magiczny realizm,
-    RealistaLiteratura
 
+   
+  }
+  borrowBook(id:number){
+      this.borrowingBookService.borrowBooks(id).subscribe(resp =>{
+
+      });
   }
 }
