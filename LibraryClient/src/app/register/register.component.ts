@@ -49,7 +49,6 @@ export class RegisterComponent implements OnInit {
     console.log(userSignUp);
     this.userService.signUpUser(userSignUp).subscribe(
       {next: (resp) =>{
-        console.log(resp);
       },
       error: (error) =>{
         if(error =="Email exist in database")
