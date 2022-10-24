@@ -15,6 +15,9 @@ import {TabViewModule} from 'primeng/tabview';
 import {TableModule} from 'primeng/table';
 import {PaginatorModule} from 'primeng/paginator';
 
+//pagination
+import {NgxPaginationModule} from 'ngx-pagination'; 
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { UserService } from 'src/services/userService';
@@ -55,7 +58,8 @@ import { BookService } from 'src/services/bookService';
     DropdownModule,
     TabViewModule,
     TableModule,
-    PaginatorModule
+    PaginatorModule,
+    NgxPaginationModule
   ],
   providers: [
     UserService,

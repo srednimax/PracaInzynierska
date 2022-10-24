@@ -3,18 +3,13 @@
 public enum Genre
 {
     LiteraryFiction,
-    Mystery,
     Thriller,
     Horror,
     Historical,
     Romance,
     Western,
-    SpeculativeFiction,
     ScienceFiction,
     Fantasy,
-    Dystopian,
-    MagicalRealism,
-    RealistLiterature
 }
 
 public class Book
