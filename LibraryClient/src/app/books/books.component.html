@@ -1,5 +1,5 @@
+<p-toast></p-toast>
 <div *ngFor="let book of books | paginate: {itemsPerPage: 10,currentPage: page,totalItems: books ? books.length : 0  }">
-
     <p-card class="p-2">
         <div class="row d-flex align-items-center">
             <div class="col-4">
@@ -7,7 +7,7 @@
             </div>
             <div class="col-4">
                 <div clas="row d-flex ">
-                    <div class="col-12">
+                    <div class="col-12 title">
                         <p>{{book.title}}</p>
                     </div>
                     <div class="col-4">
@@ -22,8 +22,10 @@
                 </div>
             </div>
             <div class="col-4">
-                <p-button type="button" (onClick)="borrowBook(book.id)" [label]="book.isBorrowed ? 'Niet':'Wypożycz'"></p-button>
+                <p-button type="button" (onClick)="borrowBook(book.id)"
+                    [label]="book.isBorrowed ? 'Zarezerwuj':'Wypożycz'"></p-button>
             </div>
+
         </div>
     </p-card>
 

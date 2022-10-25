@@ -14,6 +14,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {TabViewModule} from 'primeng/tabview';
 import {TableModule} from 'primeng/table';
 import {PaginatorModule} from 'primeng/paginator';
+import {ToastModule} from 'primeng/toast';
 
 //pagination
 import {NgxPaginationModule} from 'ngx-pagination'; 
@@ -31,6 +32,7 @@ import { HomeComponent } from './home/home.component';
 import { BooksComponent } from './books/books.component';
 import { BookService } from 'src/services/bookService';
 import { BorrowingBookService } from 'src/services/borrowingBookServices';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -60,12 +62,14 @@ import { BorrowingBookService } from 'src/services/borrowingBookServices';
     TabViewModule,
     TableModule,
     PaginatorModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ToastModule
   ],
   providers: [
     UserService,
     BookService,
     BorrowingBookService,
+    MessageService, 
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

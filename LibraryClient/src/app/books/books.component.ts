@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { MessageService } from "primeng/api";
 import { IBookDto } from "src/Dtos/Book/IBookDto";
 import { BookService } from "src/services/bookService";
 import { BorrowingBookService } from "src/services/borrowingBookServices";
@@ -9,8 +10,11 @@ import { BorrowingBookService } from "src/services/borrowingBookServices";
   styleUrls: ["./books.component.css"],
 })
 export class BooksComponent implements OnInit {
-
-  constructor(private bookService: BookService,private borrowingBookService:BorrowingBookService) {}
+  constructor(
+    private bookService: BookService,
+    private borrowingBookService: BorrowingBookService,
+    private messageService: MessageService
+  ) {}
 
 
   books: IBookDto[];
@@ -42,12 +46,24 @@ export class BooksComponent implements OnInit {
       default:
         return "";
     }
-
-   
   }
-  borrowBook(id:number){
-      this.borrowingBookService.borrowBooks(id).subscribe(resp =>{
-
-      });
+  borrowBook(id: number) {
+    
+    this.borrowingBookService.borrowBooks(id).subscribe({
+      next: (resp) => {
+        this.books[this.books.findIndex((x) => x.id === id)].isBorrowed = true;
+      },
+      error: (error) => {
+        if (error === "You must first pay the penalty") {
+          this.showError("Musisz najpierw zapłacić karę.");
+        }
+        if (error === "You already booked this book") {
+          this.showError("Książka jest już w trakcie realizacji");
+        }
+      },
+    });
+  }
+  showError(message:string):void{
+    this.messageService.add({severity:'error', summary: 'Błąd', detail: message,life:5000});
   }
 }
