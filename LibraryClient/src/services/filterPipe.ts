@@ -3,9 +3,19 @@ import { IBookDto } from 'src/Dtos/Book/IBookDto';
 
 @Pipe({ name: "filter" })
 export class ManualFilterPipe implements PipeTransform {
-  transform(bookList: IBookDto[], searchKeyword: string,from:string,to:string) {
+  transform(bookList: IBookDto[], searchKeyword: string,from:string,to:string,isAvalible:boolean,selectedGenres:any[]) {
     if (!bookList)
       return [];
+    
+      if(isAvalible)
+      {
+        bookList=bookList.filter(x=>x.isBorrowed === false);
+      }
+      if(selectedGenres.length> 0)
+      {
+        let s = selectedGenres.map(x=>x.id);
+        bookList = bookList.filter(book => s.includes(book.genre));
+      }
     if (!searchKeyword && !from && !to)
       return bookList;
     let filteredBookList:IBookDto[] = [];
@@ -51,6 +61,7 @@ export class ManualFilterPipe implements PipeTransform {
            
       });
     }
+
     return filteredBookList;
   }
 }

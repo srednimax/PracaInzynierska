@@ -15,6 +15,8 @@ import {TabViewModule} from 'primeng/tabview';
 import {TableModule} from 'primeng/table';
 import {PaginatorModule} from 'primeng/paginator';
 import {ToastModule} from 'primeng/toast';
+import {CheckboxModule} from 'primeng/checkbox';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 //pagination
 import {NgxPaginationModule} from 'ngx-pagination'; 
@@ -65,7 +67,9 @@ import { ManualFilterPipe } from 'src/services/filterPipe';
     TableModule,
     PaginatorModule,
     NgxPaginationModule,
-    ToastModule
+    ToastModule,
+    CheckboxModule,
+    MultiSelectModule
   ],
   providers: [
     UserService,

@@ -22,6 +22,20 @@ export class BooksComponent implements OnInit {
   search:string;
   from:string;
   to:string;
+  isAvalible:boolean;
+  
+  genres:any[] =[
+    {id:0,genre:"Fikcja literacka"},
+    {id:1,genre:"Kryminał"},
+    {id:2,genre:"Horror"},
+    {id:3,genre:"Historyczna"},
+    {id:4,genre:"Romans"},
+    {id:5,genre:"Western"},
+    {id:6,genre:"Science fiction"},
+    {id:7,genre:"Fantasy"}
+      ];
+  selectedGenres:any[]=[];
+
 
   ngOnInit(): void {
     this.bookService.getBooks().subscribe((resp) => {
@@ -90,8 +104,10 @@ export class BooksComponent implements OnInit {
     if(this.search)
     {
       this.filterBooks=this.books.filter(x=>x.title?.includes(this.search));
-      console.log(this.filterBooks)
     }
+  }
+  con(){
+    console.log(this.selectedGenres)
   }
 
  
