@@ -2,10 +2,12 @@
 <div >
     
     <input type="text" [(ngModel)]="search" pInputText placeholder="Search" />
+    <input type="text" [(ngModel)]="from" pInputText placeholder="Od" />
+    <input type="text" [(ngModel)]="to" pInputText placeholder="Do" />
     <p-button class="px-2" icon="pi pi-search"  ></p-button>
     
 </div>
-<div *ngFor="let book of books | filter: search | paginate: {itemsPerPage: 10,currentPage: page }">
+<div *ngFor="let book of books | filter: search: from: to | paginate: {itemsPerPage: 10,currentPage: page }">
     <p-card class="p-2">
         <div class="row d-flex align-items-center">
             <div class="col-4">

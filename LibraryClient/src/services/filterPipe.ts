@@ -3,10 +3,10 @@ import { IBookDto } from 'src/Dtos/Book/IBookDto';
 
 @Pipe({ name: "filter" })
 export class ManualFilterPipe implements PipeTransform {
-  transform(bookList: IBookDto[], searchKeyword: string) {
+  transform(bookList: IBookDto[], searchKeyword: string,from:string,to:string) {
     if (!bookList)
       return [];
-    if (!searchKeyword)
+    if (!searchKeyword && !from && !to)
       return bookList;
     let filteredBookList:IBookDto[] = [];
     if (bookList.length > 0) {
@@ -24,13 +24,31 @@ export class ManualFilterPipe implements PipeTransform {
         //     }
         //   }
         // }
-        if (book.title!.toLowerCase().indexOf(searchKeyword) > -1)
+        if (searchKeyword && book.title!.toLowerCase().indexOf(searchKeyword) > -1)
             {
                 filteredBookList.push(book);
             }
-            else if (book.author!.toLowerCase().indexOf(searchKeyword) > -1){
+        else if (searchKeyword && book.author!.toLowerCase().indexOf(searchKeyword) > -1){
                 filteredBookList.push(book);
             }
+        else if(from && to)
+        {
+            if (book.publishYear! >= Number(from) && book.publishYear <= Number(to) )
+            {
+                filteredBookList.push(book);
+            }
+        }
+        else if( from && book.publishYear! >= Number(from)){
+            filteredBookList.push(book);
+        }
+        else if(to && book.publishYear! <= Number(to)){
+            filteredBookList.push(book);
+        }
+
+           
+           
+
+           
       });
     }
     return filteredBookList;

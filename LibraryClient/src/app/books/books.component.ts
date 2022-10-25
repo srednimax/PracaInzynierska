@@ -20,6 +20,8 @@ export class BooksComponent implements OnInit {
   filterBooks: IBookDto[];
   page: number = 1;
   search:string;
+  from:string;
+  to:string;
 
   ngOnInit(): void {
     this.bookService.getBooks().subscribe((resp) => {
