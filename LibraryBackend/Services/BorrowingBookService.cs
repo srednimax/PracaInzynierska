@@ -56,6 +56,12 @@ namespace LibraryBackend.Services
                 return new ServiceResult<BorrowedBookDto>()
                     { Status = 500, Message = "You must first pay the penalty" };
 
+
+            if (await _borrowedBookRepository.MoreThanThreeBooks(user.Id))
+            {
+                return new ServiceResult<BorrowedBookDto>() { Status = 500, Message = "You can't borrowed more than 3 books at the same time" };
+            }
+
             var book = await _bookRepository.GetBookById(borrowedBookAddDto.BookId);
 
             if (book is null)

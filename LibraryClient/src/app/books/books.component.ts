@@ -55,15 +55,18 @@ export class BooksComponent implements OnInit {
       },
       error: (error) => {
         if (error === "You must first pay the penalty") {
-          this.showError("Musisz najpierw zapłacić karę.");
+          this.showToast("error","Błąd","Musisz najpierw zapłacić karę.");
         }
         if (error === "You already booked this book") {
-          this.showError("Książka jest już w trakcie realizacji");
+          this.showToast("info","Informacja","Książka jest już w trakcie realizacji.");
+        }
+        if (error === "You can't borrowed more than 3 books at the same time") {
+          this.showToast("error","Błąd","Nie możesz wypożyczyć więcej niż 3 książki naraz.");
         }
       },
     });
   }
-  showError(message:string):void{
-    this.messageService.add({severity:'error', summary: 'Błąd', detail: message,life:5000});
+  showToast(severity:string,summary:string,message:string):void{
+    this.messageService.add({severity:severity, summary: summary, detail: message,life:5000});
   }
 }
