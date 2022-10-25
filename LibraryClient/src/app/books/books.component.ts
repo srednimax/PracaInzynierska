@@ -16,13 +16,15 @@ export class BooksComponent implements OnInit {
     private messageService: MessageService
   ) {}
 
-
   books: IBookDto[];
+  filterBooks: IBookDto[];
   page: number = 1;
+  search:string;
 
   ngOnInit(): void {
     this.bookService.getBooks().subscribe((resp) => {
       this.books = resp;
+      this.filterBooks = resp;
     });
   }
   genre(gen: number): string {
@@ -48,25 +50,47 @@ export class BooksComponent implements OnInit {
     }
   }
   borrowBook(id: number) {
-    
     this.borrowingBookService.borrowBooks(id).subscribe({
       next: (resp) => {
         this.books[this.books.findIndex((x) => x.id === id)].isBorrowed = true;
+        this.filterBooks[this.filterBooks.findIndex((x) => x.id === id)].isBorrowed = true;
       },
       error: (error) => {
         if (error === "You must first pay the penalty") {
-          this.showToast("error","Błąd","Musisz najpierw zapłacić karę.");
+          this.showToast("error", "Błąd", "Musisz najpierw zapłacić karę.");
         }
         if (error === "You already booked this book") {
-          this.showToast("info","Informacja","Książka jest już w trakcie realizacji.");
+          this.showToast(
+            "info",
+            "Informacja",
+            "Książka jest już w trakcie realizacji."
+          );
         }
         if (error === "You can't borrowed more than 3 books at the same time") {
-          this.showToast("error","Błąd","Nie możesz wypożyczyć więcej niż 3 książki naraz.");
+          this.showToast(
+            "error",
+            "Błąd",
+            "Nie możesz wypożyczyć więcej niż 3 książki naraz."
+          );
         }
       },
     });
   }
-  showToast(severity:string,summary:string,message:string):void{
-    this.messageService.add({severity:severity, summary: summary, detail: message,life:5000});
+  showToast(severity: string, summary: string, message: string): void {
+    this.messageService.add({
+      severity: severity,
+      summary: summary,
+      detail: message,
+      life: 5000,
+    });
   }
+  filterText(){
+    if(this.search)
+    {
+      this.filterBooks=this.books.filter(x=>x.title?.includes(this.search));
+      console.log(this.filterBooks)
+    }
+  }
+
+ 
 }
