@@ -1,0 +1,45 @@
+<p-toast></p-toast>
+<div >
+    
+    <input type="text" [(ngModel)]="search" pInputText placeholder="Search" />
+    <input type="text" [(ngModel)]="from" pInputText placeholder="Od" />
+    <input type="text" [(ngModel)]="to" pInputText placeholder="Do" />
+    <p-checkbox [(ngModel)]="isAvalible" [binary]="true" inputId="binary"></p-checkbox>
+    <label for="binary">Wybierz tylko dostępne</label>
+
+    <p-multiSelect defaultLabel="Wybierz kategorie" [options]="genres" [(ngModel)]="selectedGenres" optionLabel="genre"></p-multiSelect>
+    
+</div>
+
+<div *ngFor="let book of books | filter: search: from: to: isAvalible: selectedGenres | paginate: {itemsPerPage: 10,currentPage: page }">
+    <p-card class="p-2">
+        <div class="row d-flex align-items-center">
+            <div class="col-4">
+                <img src="assets/images/bookCoverPlaceholder.png">
+            </div>
+            <div class="col-4">
+                <div clas="row d-flex ">
+                    <div class="col-12 title">
+                        <p>{{book.title}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>{{book.author}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Gatunek: {{genre(book.genre)}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Rok wydania: {{book.publishYear}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <p-button type="button" (onClick)="borrowBook(book.id)"
+                    [label]="book.isBorrowed ? 'Zarezerwuj':'Wypożycz'"></p-button>
+            </div>
+
+        </div>
+    </p-card>
+
+</div>
+<pagination-controls (pageChange)="page =$event" [responsive]="true"></pagination-controls>

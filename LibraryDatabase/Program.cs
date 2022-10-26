@@ -9,7 +9,7 @@ var books = new List<Book>()
     {
         Title ="Title 1",
         Author = "Author 2",
-        Genre = Genre.Dystopian,
+        Genre = Genre.Western,
         PublishYear = 1999
     },
     new Book()
@@ -30,7 +30,7 @@ var books = new List<Book>()
     {
         Title ="Title 4",
         Author = "Author 3",
-        Genre = Genre.Mystery,
+        Genre = Genre.ScienceFiction,
         PublishYear = 2008
     },
     new Book()
@@ -99,7 +99,7 @@ var books = new List<Book>()
     {
         Title ="Title 14",
         Author = "Author 1",
-        Genre = Genre.SpeculativeFiction,
+        Genre = Genre.Historical,
         PublishYear = 2004
     },
     new Book()
@@ -127,14 +127,14 @@ var books = new List<Book>()
     {
         Title ="Title 18",
         Author = "Author 2",
-        Genre = Genre.Dystopian,
+        Genre = Genre.LiteraryFiction,
         PublishYear = 2001
     },
     new Book()
     {
         Title ="Title 19",
         Author = "Author 1",
-        Genre = Genre.Mystery,
+        Genre = Genre.Thriller,
         PublishYear = 1999
     },
     new Book()
@@ -176,14 +176,14 @@ var books = new List<Book>()
     {
         Title ="Title 25",
         Author = "Author 7",
-        Genre = Genre.MagicalRealism,
+        Genre = Genre.Romance,
         PublishYear = 2006
     },
     new Book()
     {
         Title ="Title 26",
         Author = "Author 8",
-        Genre = Genre.SpeculativeFiction,
+        Genre = Genre.Fantasy,
         PublishYear = 2012
     },
     new Book()
@@ -215,3 +215,6 @@ var books = new List<Book>()
         PublishYear = 2007
     },
 };
+
+dbContext.AddRange(books);
+dbContext.SaveChanges();

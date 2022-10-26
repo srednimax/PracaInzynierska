@@ -14,7 +14,7 @@ public class BookRepository: Repository<Book>,IBookRepository
 
     public async Task<List<Book>> GetAllBooks()
     {
-        return await GetAll().ToListAsync();
+        return await GetAll().OrderBy(x=>x.IsBorrowed).ToListAsync();
     }
 
     public async Task<Book> AddBook(Book book)

@@ -37,15 +37,12 @@ export class JwtInterceptor implements HttpInterceptor {
             errorMsg = `Error: ${error.error.message}`;
           } else {
             errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
-                   
           }
-          if (error.status == 401 || error.status == 403)
-          { 
-             this._router.navigate(["/"]);
+          if (error.status == 401 || error.status == 403) {
+            this._router.navigate(["/signInUp"]);
           }
-          if(error.status == 500)
-          {
-           errorMsg = error.error.detail;
+          if (error.status == 500) {
+            errorMsg = error.error.detail;
           }
 
           return throwError(() => errorMsg);
@@ -55,19 +52,18 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMsg = "";
+        console.log(error);
         if (error.error instanceof ErrorEvent) {
           errorMsg = `Error: ${error.error.message}`;
         } else {
           errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
         }
-        if (error.status == 401 || error.status == 403)
-         { 
-            this._router.navigate(["/"]);
-         }
-         if(error.status == 500)
-         {
+        if (error.status == 401 || error.status == 403) {
+          this._router.navigate(["/signInUp"]);
+        }
+        if (error.status == 500) {
           errorMsg = error.error.detail;
-         }
+        }
         return throwError(() => errorMsg);
       })
     );

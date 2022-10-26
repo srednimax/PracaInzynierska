@@ -54,4 +54,11 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
     {
         return await UpdateAsync(borrowedBook);
     }
+
+    public async Task<bool> MoreThanThreeBooks(int userId)
+    {
+        var userBorrowedBooks = await GetAll().Include(x => x.Reader).CountAsync(x => x.IsReturned == false);
+
+        return userBorrowedBooks >= 3;
+    }
 }

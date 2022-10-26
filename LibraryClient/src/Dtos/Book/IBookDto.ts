@@ -2,7 +2,7 @@ export interface IBookDto {
     id: number;
     title: string | null;
     author: string | null;
-    genre: string;
+    genre: number;
     publishYear: number;
     isBorrowed: boolean;
 }

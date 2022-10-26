@@ -20,7 +20,7 @@ namespace LibraryBackend.Controllers
         }
 
         [Authorize(Roles = "User")]
-        [HttpPost]
+        [HttpPost("{bookId}")]
         public async Task<ActionResult<BorrowedBookDto>> BorrowBook(int bookId)
         {
             var borrowedBookAddDto = new BorrowedBookAddDto()

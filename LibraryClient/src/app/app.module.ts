@@ -12,6 +12,14 @@ import {CalendarModule} from 'primeng/calendar';
 import {PasswordModule} from 'primeng/password';
 import {DropdownModule} from 'primeng/dropdown';
 import {TabViewModule} from 'primeng/tabview';
+import {TableModule} from 'primeng/table';
+import {PaginatorModule} from 'primeng/paginator';
+import {ToastModule} from 'primeng/toast';
+import {CheckboxModule} from 'primeng/checkbox';
+import {MultiSelectModule} from 'primeng/multiselect';
+
+//pagination
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -22,6 +30,13 @@ import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { SignInUpComponent } from './sign-in-up/sign-in-up.component';
+import { HomeComponent } from './home/home.component';
+import { BooksComponent } from './books/books.component';
+import { BookService } from 'src/services/bookService';
+import { BorrowingBookService } from 'src/services/borrowingBookServices';
+import { MessageService } from 'primeng/api';
+import { ManualFilterPipe } from 'src/services/filterPipe';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +45,10 @@ import { SignInUpComponent } from './sign-in-up/sign-in-up.component';
     RegisterComponent,
     NavbarComponent,
     FooterComponent,
-    SignInUpComponent
+    SignInUpComponent,
+    HomeComponent,
+    BooksComponent,
+    ManualFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -45,10 +63,19 @@ import { SignInUpComponent } from './sign-in-up/sign-in-up.component';
     BrowserAnimationsModule,
     PasswordModule,
     DropdownModule,
-    TabViewModule
+    TabViewModule,
+    TableModule,
+    PaginatorModule,
+    NgxPaginationModule,
+    ToastModule,
+    CheckboxModule,
+    MultiSelectModule
   ],
   providers: [
     UserService,
+    BookService,
+    BorrowingBookService,
+    MessageService, 
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

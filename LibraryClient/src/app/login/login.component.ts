@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IUserSignInDto } from 'src/Dtos/User/IUserSignInDto';
 import { UserService } from 'src/services/userService';
 
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
     email: new FormControl('',[Validators.required,Validators.email]),
     password: new FormControl('',[Validators.required])
   });
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,private router:Router) { }
 
 
   ngOnInit(): void {
@@ -32,6 +33,9 @@ export class LoginComponent implements OnInit {
     this.userService.signInUser(userSignIn).subscribe(
       {next: (resp) =>{
         localStorage.setItem("token", resp.headers.get("jwt")!);
+        this.router.navigate(["/"]).then(()=>{
+          window.location.reload();
+        });
       },
       error: (error) =>{
         if(error =="Wrong email or password")
