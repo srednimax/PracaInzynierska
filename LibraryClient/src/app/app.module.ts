@@ -36,6 +36,7 @@ import { BookService } from 'src/services/bookService';
 import { BorrowingBookService } from 'src/services/borrowingBookServices';
 import { MessageService } from 'primeng/api';
 import { ManualFilterPipe } from 'src/services/filterPipe';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { ManualFilterPipe } from 'src/services/filterPipe';
     SignInUpComponent,
     HomeComponent,
     BooksComponent,
-    ManualFilterPipe
+    ManualFilterPipe,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
