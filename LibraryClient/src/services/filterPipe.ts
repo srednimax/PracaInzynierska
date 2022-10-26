@@ -3,7 +3,7 @@ import { IBookDto } from 'src/Dtos/Book/IBookDto';
 
 @Pipe({ name: "filter" })
 export class ManualFilterPipe implements PipeTransform {
-  transform(bookList: IBookDto[], searchKeyword: string,from:string,to:string,isAvalible:boolean,selectedGenres:any[]) {
+  transform(bookList: IBookDto[], search: string,from:string,to:string,isAvalible:boolean,selectedGenres:any[]) {
     if (!bookList)
       return [];
     
@@ -16,29 +16,17 @@ export class ManualFilterPipe implements PipeTransform {
         let s = selectedGenres.map(x=>x.id);
         bookList = bookList.filter(book => s.includes(book.genre));
       }
-    if (!searchKeyword && !from && !to)
+    if (!search && !from && !to)
       return bookList;
     let filteredBookList:IBookDto[] = [];
     if (bookList.length > 0) {
-      searchKeyword = searchKeyword.toLowerCase();
+        search = search.toLowerCase();
       bookList.forEach(book => {
-        //Object.values(item) => gives the list of all the property values of the 'item' object
-        // let propValueList:any[] = Object.values(book);
-        // for(let i=0;i<propValueList.length;i++)
-        // {
-        //   if (propValueList[i]) {
-        //     if (propValueList[i].toString().toLowerCase().indexOf(searchKeyword) > -1)
-        //     {
-        //         filteredBookList.push(book);
-        //       break;
-        //     }
-        //   }
-        // }
-        if (searchKeyword && book.title!.toLowerCase().indexOf(searchKeyword) > -1)
+        if (search && book.title!.toLowerCase().indexOf(search) > -1)
             {
                 filteredBookList.push(book);
             }
-        else if (searchKeyword && book.author!.toLowerCase().indexOf(searchKeyword) > -1){
+        else if (search && book.author!.toLowerCase().indexOf(search) > -1){
                 filteredBookList.push(book);
             }
         else if(from && to)
@@ -54,11 +42,6 @@ export class ManualFilterPipe implements PipeTransform {
         else if(to && book.publishYear! <= Number(to)){
             filteredBookList.push(book);
         }
-
-           
-           
-
-           
       });
     }
 

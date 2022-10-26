@@ -4,9 +4,10 @@
     <input type="text" [(ngModel)]="search" pInputText placeholder="Search" />
     <input type="text" [(ngModel)]="from" pInputText placeholder="Od" />
     <input type="text" [(ngModel)]="to" pInputText placeholder="Do" />
-    <p-checkbox [(ngModel)]="isAvalible" [binary]="true"></p-checkbox>
+    <p-checkbox [(ngModel)]="isAvalible" [binary]="true" inputId="binary"></p-checkbox>
+    <label for="binary">Wybierz tylko dostępne</label>
 
-    <p-multiSelect [options]="genres" [(ngModel)]="selectedGenres" optionLabel="genre"></p-multiSelect>
+    <p-multiSelect defaultLabel="Wybierz kategorie" [options]="genres" [(ngModel)]="selectedGenres" optionLabel="genre"></p-multiSelect>
     
 </div>
 
