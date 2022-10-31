@@ -5,4 +5,5 @@ export interface IBookDto {
     genre: number;
     publishYear: number;
     isBorrowed: boolean;
+    rating:number;
 }

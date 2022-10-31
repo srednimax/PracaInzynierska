@@ -51,7 +51,7 @@ public class BookRatingRepository : Repository<BookRating>, IBookRatingRepositor
         var rating = ratings.Average(x => x.Rating);
             
 
-        return (float)Math.Round(rating, 2);
+        return (float)Math.Round(rating, 0);
     }
 
     public async Task<bool> CheckedIfExist(int userId, int bookId)
