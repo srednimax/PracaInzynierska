@@ -40,11 +40,29 @@ public class BookRatingRepository : Repository<BookRating>, IBookRatingRepositor
 
     public async Task<float> CalculateRating(int bookId)
     {
-        var rating = await GetAll()
+        var ratings = await GetAll()
             .Include(x => x.Book)
             .Where(x => x.Book.Id == bookId)
-            .AverageAsync(x => x.Rating);
+            .ToListAsync();
 
-        return (float)Math.Round(rating,2);
+        if(ratings.Count == 0)
+            return 0f;
+
+        var rating = ratings.Average(x => x.Rating);
+            
+
+        return (float)Math.Round(rating, 2);
+    }
+
+    public async Task<bool> CheckedIfExist(int userId, int bookId)
+    {
+        var rating = await GetAll()
+            .Include(x => x.Book)
+            .Include(x => x.User)
+            .Where(x=>x.Book.Id == bookId && x.User.Id== userId)
+            .FirstOrDefaultAsync();
+
+        return rating is not null;
+
     }
 }
