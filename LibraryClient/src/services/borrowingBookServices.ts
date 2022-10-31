@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { IBookDto } from "src/Dtos/Book/IBookDto";
+import { IBorrowedBookDto } from "src/Dtos/BorrowedBook/IBorrowedBookDto";
 
 @Injectable()
 export class BorrowingBookService {
@@ -12,5 +11,11 @@ export class BorrowingBookService {
   borrowBooks(bookId:number) {
     return this.http.post(`${this.url}/${bookId}`,null);
   }
-
+  getBorrowedBooks() {
+    return this.http.get<IBorrowedBookDto[]>(`${this.url}/UserBook's`);
+  }
+  renewBook(borrowedBookId:number){
+    return this.http.put(`${this.url}/Renew/${borrowedBookId}`,null);
+  }
+ 
 }

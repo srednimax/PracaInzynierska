@@ -5,7 +5,9 @@ public enum Status
     Booked,
     WaitingForBook,
     Preparing,
-    Ready
+    Ready,
+    Received,
+    Returned
 }
 
 public class BorrowedBook

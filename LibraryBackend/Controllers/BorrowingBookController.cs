@@ -76,7 +76,7 @@ namespace LibraryBackend.Controllers
             };
         }
 
-        [HttpPut("Renew")]
+        [HttpPut("Renew/{borrowedBookId}")]
         [Authorize(Roles = "User")]
         public async Task<ActionResult<BorrowedBookDto>> RenewBook(int borrowedBookId)
         {
