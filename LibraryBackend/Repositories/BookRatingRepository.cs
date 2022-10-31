@@ -9,12 +9,12 @@ public class BookRatingRepository:Repository<BookRating>,IBookRatingRepository
     public BookRatingRepository(LibraryDatabaseContext context) : base(context) { }
     public async Task<BookRating?> GetBookRatingById(int id)
     {
-        return await GetAll().FirstOrDefaultAsync(x => x.Id == id);
+        return await GetAll().Include(x=>x.Book).FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<List<BookRating>> GetAllBooks()
     {
-        return await GetAll().ToListAsync();
+        return await GetAll().Include(x=>x.Book).ToListAsync();
     }
 
     public async Task<BookRating> AddBookRating(BookRating bookRating)
