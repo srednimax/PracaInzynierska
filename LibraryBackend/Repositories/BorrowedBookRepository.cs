@@ -25,15 +25,6 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
             .FirstOrDefaultAsync(x=>x.Id==id);
     }
 
-    public async Task<BorrowedBook?> GetBorrowedBookByBookId(int bookId)
-    {
-        return await GetAll()
-            .Include(x => x.Book)
-            .Include(x => x.Employee)
-            .Include(x => x.Reader)
-            .FirstOrDefaultAsync(x => x.Book.Id == bookId);
-    }
-
     public async Task<bool> CheckIfUserBookedBook(int bookId, int userId)
     {
         var borrowedBook= await GetAll()
@@ -52,6 +43,15 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
             .Include(x => x.Employee)
             .Include(x => x.Reader)
             .Where(x=>x.Reader.Id==userId).ToListAsync();
+    }
+
+    public async Task<BorrowedBook?> GetBorrowedBookByUser(int userId, int bookId)
+    {
+        return await GetAll()
+            .Include(x => x.Book)
+            .Include(x => x.Employee)
+            .Include(x => x.Reader)
+            .FirstOrDefaultAsync(x => x.Book.Id == bookId && x.Reader.Id==userId);
     }
 
     public async Task<BorrowedBook> AddBorrowedBook(BorrowedBook borrowedBook)

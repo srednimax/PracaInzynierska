@@ -4,17 +4,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryBackend.Repositories;
 
-public class BookRatingRepository:Repository<BookRating>,IBookRatingRepository
+public class BookRatingRepository : Repository<BookRating>, IBookRatingRepository
 {
     public BookRatingRepository(LibraryDatabaseContext context) : base(context) { }
     public async Task<BookRating?> GetBookRatingById(int id)
     {
-        return await GetAll().Include(x=>x.Book).FirstOrDefaultAsync(x => x.Id == id);
+        return await GetAll()
+            .Include(x => x.Book)
+            .Include(x => x.User)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<List<BookRating>> GetAllBooks()
     {
-        return await GetAll().Include(x=>x.Book).ToListAsync();
+        return await GetAll()
+            .Include(x => x.Book)
+            .Include(x => x.User)
+            .ToListAsync();
     }
 
     public async Task<BookRating> AddBookRating(BookRating bookRating)
@@ -30,5 +36,15 @@ public class BookRatingRepository:Repository<BookRating>,IBookRatingRepository
     public async Task<BookRating> RemoveBookRating(BookRating bookRating)
     {
         return await RemoveAsync(bookRating);
+    }
+
+    public async Task<float> CalculateRating(int bookId)
+    {
+        var rating = await GetAll()
+            .Include(x => x.Book)
+            .Where(x => x.Book.Id == bookId)
+            .AverageAsync(x => x.Rating);
+
+        return (float)Math.Round(rating,2);
     }
 }

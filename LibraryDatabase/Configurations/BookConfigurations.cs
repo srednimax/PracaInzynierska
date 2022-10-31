@@ -42,5 +42,10 @@ public class BookConfigurations:IEntityTypeConfiguration<Book>
             .HasColumnType("bit")
             .HasDefaultValue(false);
 
+        builder.Property(x => x.Rating)
+            .HasColumnName("rating")
+            .HasColumnType("float")
+            .HasDefaultValue(0);
+
     }
 }

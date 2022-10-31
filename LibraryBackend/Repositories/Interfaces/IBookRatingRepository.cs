@@ -9,4 +9,5 @@ public interface IBookRatingRepository
     public Task<BookRating> AddBookRating(BookRating bookRating);
     public Task<BookRating> UpdateBookRating(BookRating bookRating);
     public Task<BookRating> RemoveBookRating(BookRating bookRating);
+    public Task<float> CalculateRating(int bookId);
 }
