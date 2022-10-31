@@ -7,5 +7,5 @@ public interface IBookRatingService
     public Task<ServiceResult<List<BookRatingDto>>> GetAllBooksRating();
     public Task<ServiceResult<BookRatingDto>> AddBookRating(BookRatingAddDto bookRatingAddDto);
     public Task<ServiceResult<BookRatingDto>> UpdateBookRating(BookRatingUpdateDto bookRatingUpdateDto);
-    public Task<ServiceResult<BookRatingDto>> RemoveBookRating(int id);
+    public Task<ServiceResult<BookRatingDto>> RemoveBookRating(BookRatingRemoveDto bookRatingRemoveDto);
 }
