@@ -106,6 +106,7 @@ export class UserProfileComponent implements OnInit {
 
   //p-dialog
   editRating(bookId: number, borrowedBookId: number) {
+    this.submitted=false;
     let bookR =
       this.bookRatings[this.bookRatings.findIndex((x) => x.book?.id == bookId)];
 
@@ -125,6 +126,7 @@ export class UserProfileComponent implements OnInit {
     this.submitted = false;
   }
   saveRating(): void {
+    this.submitted =true;
     if (this.isNotExist) {
       //add
       let newRating: IBookRatingAddDto = {

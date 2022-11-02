@@ -65,11 +65,12 @@
         <div class="field">
             <label for="rate">Oena</label>
             <p-rating [(ngModel)]="bookRating.rating" [stars]="5" [cancel]="false"></p-rating>
-            <small class="p-error" *ngIf="submitted && !bookRating.rating">Name is required.</small>
+            <small class="p-error" *ngIf="submitted && !bookRating.rating">Ocena jest wymagana.</small>
         </div>
         <div class="field">
             <label for="comment">Komentarz</label>
             <textarea id="comment" pInputTextarea [(ngModel)]="bookRating.comment" required rows="3" cols="20"></textarea>
+            <small class="p-error" *ngIf="submitted && !bookRating.comment">Komentarz jest wymagany.</small>
         </div>
     </ng-template>
 
