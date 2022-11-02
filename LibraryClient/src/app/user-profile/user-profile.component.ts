@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { IBookRatingDto } from "src/Dtos/BookRating/IBookRatingDto";
 import { IBorrowedBookDto } from "src/Dtos/BorrowedBook/IBorrowedBookDto";
+import { BookRatingServices } from "src/services/bookRatingServices";
 import { BorrowingBookService } from "src/services/borrowingBookServices";
 
 @Component({
@@ -9,9 +10,10 @@ import { BorrowingBookService } from "src/services/borrowingBookServices";
   styleUrls: ["./user-profile.component.css"],
 })
 export class UserProfileComponent implements OnInit {
-  constructor(private borrowingBookService: BorrowingBookService) {}
+  constructor(private borrowingBookService: BorrowingBookService,private bookRatingService: BookRatingServices) {}
 
   borrowedBooks: IBorrowedBookDto[];
+  bookRatings:IBookRatingDto[];
   bookRating:IBookRatingDto;
 
   //p-dialog
@@ -22,6 +24,9 @@ export class UserProfileComponent implements OnInit {
     this.borrowingBookService.getBorrowedBooks().subscribe((resp) => {
       this.borrowedBooks = resp;
     });
+    this.bookRatingService.getBookRatingsByUser().subscribe(resp =>{
+      this.bookRatings = resp;
+    })
   }
 
   con() {
@@ -100,8 +105,10 @@ export class UserProfileComponent implements OnInit {
   }
 
   //p-dialog
-  editRating(bookRating: IBookRatingDto) {
-    this.bookRating = {...bookRating};
+  editRating(bookId:number) {
+    let bookR = this.bookRatings[this.bookRatings.findIndex(x=>x.book?.id == bookId)]
+    
+    this.bookRating = {...bookR};
     this.bookRatingDialog = true;
   }
   hideDialog():void{

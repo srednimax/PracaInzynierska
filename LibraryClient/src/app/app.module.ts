@@ -39,6 +39,7 @@ import { BorrowingBookService } from 'src/services/borrowingBookServices';
 import { MessageService } from 'primeng/api';
 import { ManualFilterPipe } from 'src/services/filterPipe';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { BookRatingServices } from 'src/services/bookRatingServices';
 
 
 @NgModule({
@@ -81,6 +82,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     UserService,
     BookService,
     BorrowingBookService,
+    BookRatingServices,
     MessageService, 
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],

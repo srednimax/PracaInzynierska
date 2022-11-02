@@ -33,12 +33,12 @@ namespace LibraryBackend.Controllers
             };
         }
 
-        [HttpGet("Users's")]
-        public async Task<ActionResult<BookRatingDto>> GetBookRatingByUser()
+        [HttpGet("User's")]
+        public async Task<ActionResult<List<BookRatingDto>>> GetBookRatingByUser()
         {
             var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
 
-            var result = await _bookRatingService.GetBookRatingById(userId);
+            var result = await _bookRatingService.GetAllBooksRatingByUser(userId);
 
             return result.Status switch
             {

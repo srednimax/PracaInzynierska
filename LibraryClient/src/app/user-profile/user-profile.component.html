@@ -44,7 +44,7 @@
                             [disabled]="borrowedBook.isRenew||borrowedBook.returnDate === null"
                             [label]="borrowedBook.isRenew ? 'Przedłużona':'Przedłuż'"></p-button>
                         <div class="col-4 pt-2">
-                            <p-button type="button" (onClick)="editRating()"
+                            <p-button type="button" (onClick)="editRating(borrowedBook.book?.id!)"
                                 [label]="borrowedBook.isRated ? 'Zmień':'Oceń'"></p-button>
                         </div>
 

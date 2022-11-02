@@ -35,12 +35,12 @@ public class BookRatingService : IBookRatingService
 
     public async Task<ServiceResult<List<BookRatingDto>>> GetAllBooksRatingByUser(int userId)
     {
-        var user = _userRepository.GetUserById(userId);
+        var user = await _userRepository.GetUserById(userId);
 
         if (user is null)
             return new ServiceResult<List<BookRatingDto>>() { Status = 404 };
 
-        var bookRatings = _bookRatingRepository.GetAllBookRatingsByUser(user.Id);
+        var bookRatings = await _bookRatingRepository.GetAllBookRatingsByUser(user.Id);
 
         return new ServiceResult<List<BookRatingDto>>() { Status = 200,Body = _mapper.Map<List<BookRatingDto>>(bookRatings)};
     }
