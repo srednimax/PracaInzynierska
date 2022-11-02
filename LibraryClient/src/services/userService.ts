@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IUserDto } from 'src/Dtos/User/IUserDto';
 import { IUserSignInDto } from 'src/Dtos/User/IUserSignInDto';
 import { IUserSignUpDto } from 'src/Dtos/User/IUserSignUpDto';
+import { IUserUpdateDto } from 'src/Dtos/User/IUserUpdateDto';
 
 @Injectable()
 export class UserService {
@@ -19,6 +20,9 @@ export class UserService {
   }
   getUser(): Observable<IUserDto> {
     return this.http.get<IUserDto>(this.url);
+  }
+  updateUser(data :IUserUpdateDto){
+    return this.http.put<IUserDto>(this.url,data);
   }
 
 }

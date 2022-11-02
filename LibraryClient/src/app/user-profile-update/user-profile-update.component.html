@@ -49,16 +49,6 @@
                         <p *ngIf="phoneNumber.errors?.['pattern']">Podaj poprawny numer telefonu</p>
                     </div>
                     <div class="col-12 py-3">
-                        <span class="p-float-label">
-                            <p-calendar formControlName="birth" id="float-calendar" dateFormat="dd-mm-yy">
-                            </p-calendar>
-                            <label for="float-calendar">Data urodzenia</label>
-                        </span>
-                    </div>
-                    <div *ngIf="birth && birth.invalid && (birth.dirty || birth.touched)" class="text-danger">
-                        <p *ngIf="birth.errors?.['required']">To pole nie może być puste</p>
-                    </div>
-                    <div class="col-12 py-3">
                         <p-dropdown [options]="genders" formControlName="gender" placeholder="Wybierz płeć"
                             optionLabel="name" optionValue="number" [showClear]="true"></p-dropdown>
                     </div>
@@ -68,7 +58,7 @@
                     <div *ngIf="existEmail" class="pb-3 text-danger">
                         Podany email został już wykorzystany
                     </div>
-                    <p-button class="w-full pt-3" [disabled]="loginForm.invalid" type="submit" label="Zrejestruj się"></p-button>
+                    <p-button class="w-full pt-3" [disabled]="loginForm.invalid" type="submit" label="Zaktualizuj dane"></p-button>
                 </div>
             </form>
         </div>

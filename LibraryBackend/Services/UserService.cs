@@ -59,6 +59,30 @@ namespace LibraryBackend.Services
             };
         }
 
+        public async Task<ServiceResult<UserDto>> UpdateUser(UserUpdateDto userUpdateDto)
+        {
+            var user = await _userRepository.GetUserById(userUpdateDto.Id);
+
+            if (user is null)
+                return new ServiceResult<UserDto>() { Status = 404 };
+
+            var sameEmail = await _userRepository.GetUserByEmail(userUpdateDto.Email);
+            if (sameEmail is not null && sameEmail.Id != user.Id)
+            {
+                return new ServiceResult<UserDto>() { Status = 500, Message = "Email exist in database" };
+            }
+
+            user.Email = userUpdateDto.Email;
+            user.FirstName = userUpdateDto.FirstName;
+            user.LastName = userUpdateDto.LastName;
+            user.PhoneNumber = userUpdateDto.PhoneNumber;
+            user.Gender = userUpdateDto.Gender;
+
+            return new ServiceResult<UserDto>()
+                { Body = _mapper.Map<UserDto>(await _userRepository.UpdateUser(user)), Status = 200 };
+
+        }
+
         public async Task<ServiceResult<UserDto>> GetUserById(int id)
         {
             var user = await _userRepository.GetUserById(id);

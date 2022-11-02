@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IUserDto } from 'src/Dtos/User/IUserDto';
 import { IGender, IUserSignUpDto } from 'src/Dtos/User/IUserSignUpDto';
+import { IUserUpdateDto } from 'src/Dtos/User/IUserUpdateDto';
 import { UserService } from 'src/services/userService';
 import { CustomValidators } from '../customValidators/customValidators';
 
@@ -20,7 +21,6 @@ export class UserProfileUpdateComponent implements OnInit {
     firstName: new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z]{3,50}$")]),
     lastName: new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z]{3,50}$")]),
     phoneNumber: new FormControl('',[Validators.required,Validators.required,Validators.pattern("^[1-9][0-9]{8,8}$")]),
-    birth: new FormControl('',[Validators.required]),
     gender: new FormControl('',[Validators.required]),
   });
 
@@ -32,12 +32,7 @@ export class UserProfileUpdateComponent implements OnInit {
   ngOnInit( ): void {
     this.userService.getUser().subscribe(resp =>{
       this.user=resp;
-      this.email?.setValue(this.user.email);
-      this.firstName?.setValue(this.user.firstName);
-      this.lastName?.setValue(this.user.lastName);
-      this.phoneNumber?.setValue(this.user.phoneNumber);
-      this.birth?.setValue(this.user.birth);
-      this.gender?.setValue(this.user.gender);
+      this.updateForm();
     })
     
   }
@@ -45,18 +40,18 @@ export class UserProfileUpdateComponent implements OnInit {
   onSubmit(): void{
     this.existEmail = false;
 
-    let userSignUp : IUserSignUpDto ={
+    let userUpdateDto : IUserUpdateDto ={
+      id:0,
       email: this.loginForm.controls.email.value,
-      password: "this.loginForm.controls.password.value",
-      confirmPassword:"",
       firstName: this.loginForm.controls.firstName.value,
       lastName: this.loginForm.controls.lastName.value,
       phoneNumber: this.loginForm.controls.phoneNumber.value,
-      birth: this.loginForm.controls.birth.value,
       gender: this.loginForm.controls.gender.value
     };
-    this.userService.signUpUser(userSignUp).subscribe(
+    this.userService.updateUser(userUpdateDto).subscribe(
       {next: (resp) =>{
+        this.user=resp;
+        this.updateForm();
       },
       error: (error) =>{
         if(error =="Email exist in database")
@@ -82,13 +77,17 @@ export class UserProfileUpdateComponent implements OnInit {
   get phoneNumber(){
     return this.loginForm.get('phoneNumber');
   }
-  
-  get birth(){
-    return this.loginForm.get('birth');
-  }
 
   get gender(){
     return this.loginForm.get('gender');
   } 
+
+  updateForm():void{
+    this.email?.setValue(this.user.email);
+    this.firstName?.setValue(this.user.firstName);
+    this.lastName?.setValue(this.user.lastName);
+    this.phoneNumber?.setValue(this.user.phoneNumber);
+    this.gender?.setValue(this.user.gender);
+  }
 
 }

@@ -5,6 +5,9 @@ namespace LibraryBackend.Dtos.User;
 
 public class UserUpdateDto
 {
+    [Required] 
+    public int Id { get; set; }
+
     [Required]
     [EmailAddress]
     [MaxLength(200)]
@@ -27,9 +30,6 @@ public class UserUpdateDto
     [MinLength(9)]
     [MaxLength(9)]
     public string? PhoneNumber { get; set; }
-
-    [Required]
-    public DateTime? Birth { get; set; }
 
     [Required]
     [EnumDataType(typeof(Gender))]
