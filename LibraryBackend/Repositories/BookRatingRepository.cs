@@ -54,15 +54,4 @@ public class BookRatingRepository : Repository<BookRating>, IBookRatingRepositor
         return (float)Math.Round(rating, 0);
     }
 
-    public async Task<bool> CheckedIfExist(int userId, int bookId)
-    {
-        var rating = await GetAll()
-            .Include(x => x.Book)
-            .Include(x => x.User)
-            .Where(x=>x.Book.Id == bookId && x.User.Id== userId)
-            .FirstOrDefaultAsync();
-
-        return rating is not null;
-
-    }
 }

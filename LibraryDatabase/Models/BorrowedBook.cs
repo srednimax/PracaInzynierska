@@ -21,5 +21,6 @@ public class BorrowedBook
     public DateTime? ReturnDate { get; set; }
     public bool IsRenew { get; set; }
     public bool IsReturned { get; set; }
+    public bool IsRated { get; set; }
 
 }

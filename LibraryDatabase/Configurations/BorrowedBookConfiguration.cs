@@ -36,6 +36,11 @@ public class BorrowedBookConfiguration : IEntityTypeConfiguration<BorrowedBook>
             .HasColumnType("bit")
             .HasDefaultValue(false);
 
+        builder.Property(x => x.IsRated)
+            .HasColumnName("is_rated")
+            .HasColumnType("bit")
+            .HasDefaultValue(false);
+
         builder.Property(x => x.Status)
             .HasColumnName("status")
             .HasColumnType("int")

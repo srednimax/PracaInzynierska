@@ -53,7 +53,7 @@ public class BookRatingService : IBookRatingService
         if (borrowedBook.Status != Status.Returned)
             return new ServiceResult<BookRatingDto>() { Status = 500, Message = "You must read it first." };
 
-        if(await _bookRatingRepository.CheckedIfExist(user.Id,book.Id))
+        if(borrowedBook.IsRated == true)
             return new ServiceResult<BookRatingDto>() { Status = 500, Message = "You rated it before." };
 
         var bookRating = new BookRating()
@@ -66,8 +66,10 @@ public class BookRatingService : IBookRatingService
         var bookRatingDto = _mapper.Map<BookRatingDto>(await _bookRatingRepository.AddBookRating(bookRating));
 
         book.Rating = await _bookRatingRepository.CalculateRating(book.Id);
+        borrowedBook.IsRated = true;
 
         await _bookRepository.UpdateBook(book);
+        await _borrowedBookRepository.UpdateBorrowedBook(borrowedBook);
 
         return new ServiceResult<BookRatingDto>()
         { Status = 200, Body = bookRatingDto };
@@ -138,12 +140,20 @@ public class BookRatingService : IBookRatingService
         if (book is null)
             return new ServiceResult<BookRatingDto>() { Status = 404 };
 
+        var borrowedBook = await _borrowedBookRepository.GetBorrowedBookById(bookRatingRemoveDto.BorrowedBookId);
+
+        if (borrowedBook is null)
+            return new ServiceResult<BookRatingDto>() { Status = 404 };
+
 
         var bookRatingDto = _mapper.Map<BookRatingDto>(await _bookRatingRepository.RemoveBookRating(bookRating));
 
         book.Rating = await _bookRatingRepository.CalculateRating(book.Id);
 
+        borrowedBook.IsRated = false;
+
         await _bookRepository.UpdateBook(book);
+        await _borrowedBookRepository.UpdateBorrowedBook(borrowedBook);
 
         return new ServiceResult<BookRatingDto>() { Status = 200, Body = bookRatingDto };
 

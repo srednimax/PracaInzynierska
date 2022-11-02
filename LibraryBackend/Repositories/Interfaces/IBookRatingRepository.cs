@@ -10,5 +10,4 @@ public interface IBookRatingRepository
     public Task<BookRating> UpdateBookRating(BookRating bookRating);
     public Task<BookRating> RemoveBookRating(BookRating bookRating);
     public Task<float> CalculateRating(int bookId);
-    public Task<bool> CheckedIfExist(int userId, int bookId);
 }
