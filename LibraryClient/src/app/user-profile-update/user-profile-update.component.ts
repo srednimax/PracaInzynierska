@@ -1,36 +1,45 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IUserDto } from 'src/Dtos/User/IUserDto';
 import { IGender, IUserSignUpDto } from 'src/Dtos/User/IUserSignUpDto';
 import { UserService } from 'src/services/userService';
 import { CustomValidators } from '../customValidators/customValidators';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-user-profile-update',
+  templateUrl: './user-profile-update.component.html',
+  styleUrls: ['./user-profile-update.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class UserProfileUpdateComponent implements OnInit {
+
+
+  user:IUserDto;
 
   loginForm = new FormGroup({
     email: new FormControl('',[Validators.required,Validators.email]),
-    password: new FormControl('',[Validators.required,Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$")]),
-    confirmPassword:new FormControl('',[Validators.required]),
     firstName: new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z]{3,50}$")]),
     lastName: new FormControl('',[Validators.required,Validators.pattern("^[a-zA-Z]{3,50}$")]),
     phoneNumber: new FormControl('',[Validators.required,Validators.required,Validators.pattern("^[1-9][0-9]{8,8}$")]),
     birth: new FormControl('',[Validators.required]),
     gender: new FormControl('',[Validators.required]),
-  },
-  CustomValidators.mustMatch('password', 'confirmPassword')
-  );
+  });
 
   existEmail:boolean;
   genders : IGender[] = [{number:0,name:'wole nie podawać'},{number:1,name:'mężczyzna'},{number:2,name:'kobieta'}];
 
+  constructor(private userService:UserService) { }
 
-  constructor(private userService: UserService) { }
-
-  ngOnInit(): void {
+  ngOnInit( ): void {
+    this.userService.getUser().subscribe(resp =>{
+      this.user=resp;
+      this.email?.setValue(this.user.email);
+      this.firstName?.setValue(this.user.firstName);
+      this.lastName?.setValue(this.user.lastName);
+      this.phoneNumber?.setValue(this.user.phoneNumber);
+      this.birth?.setValue(this.user.birth);
+      this.gender?.setValue(this.user.gender);
+    })
+    
   }
 
   onSubmit(): void{
@@ -38,8 +47,8 @@ export class RegisterComponent implements OnInit {
 
     let userSignUp : IUserSignUpDto ={
       email: this.loginForm.controls.email.value,
-      password: this.loginForm.controls.password.value,
-      confirmPassword:this.loginForm.controls.confirmPassword.value,
+      password: "this.loginForm.controls.password.value",
+      confirmPassword:"",
       firstName: this.loginForm.controls.firstName.value,
       lastName: this.loginForm.controls.lastName.value,
       phoneNumber: this.loginForm.controls.phoneNumber.value,
@@ -60,14 +69,6 @@ export class RegisterComponent implements OnInit {
 
   get email(){
     return this.loginForm.get('email');
-  }
-
-  get password(){
-    return this.loginForm.get('password');
-  }
-
-  get confirmPassword(){
-    return this.loginForm.get('confirmPassword');
   }
 
   get firstName(){

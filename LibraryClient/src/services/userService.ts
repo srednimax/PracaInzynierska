@@ -17,8 +17,8 @@ export class UserService {
   signUpUser(data:IUserSignUpDto): Observable<IUserDto> {
     return this.http.post<IUserDto>(`${this.url}/SignUp`, data);
   }
-  // getUser(): Observable<IUserDto> {
-  //   return this.http.get<IUserDto>(this.url);
-  // }
+  getUser(): Observable<IUserDto> {
+    return this.http.get<IUserDto>(this.url);
+  }
 
 }

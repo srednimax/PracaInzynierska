@@ -41,6 +41,8 @@ import { MessageService } from 'primeng/api';
 import { ManualFilterPipe } from 'src/services/filterPipe';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BookRatingServices } from 'src/services/bookRatingServices';
+import { UserProfileUpdateComponent } from './user-profile-update/user-profile-update.component';
+import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books/user-profile-borrowed-books.component';
 
 
 @NgModule({
@@ -54,7 +56,9 @@ import { BookRatingServices } from 'src/services/bookRatingServices';
     HomeComponent,
     BooksComponent,
     ManualFilterPipe,
-    UserProfileComponent
+    UserProfileComponent,
+    UserProfileUpdateComponent,
+    UserProfileBorrowedBooksComponent
   ],
   imports: [
     BrowserModule,
