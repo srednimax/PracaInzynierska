@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IUserDto } from 'src/Dtos/User/IUserDto';
 import { IGender, IUserSignUpDto } from 'src/Dtos/User/IUserSignUpDto';
 import { IUserUpdateDto } from 'src/Dtos/User/IUserUpdateDto';
+import { IUserUpdatePasswordDto } from 'src/Dtos/User/IUserUpdatePasswordDto';
 import { UserService } from 'src/services/userService';
 import { CustomValidators } from '../customValidators/customValidators';
 
@@ -34,6 +35,7 @@ export class UserProfileUpdateComponent implements OnInit {
   )
 
   existEmail:boolean;
+  wrongOldPassword:boolean;
   genders : IGender[] = [{number:0,name:'wole nie podawać'},{number:1,name:'mężczyzna'},{number:2,name:'kobieta'}];
 
   constructor(private userService:UserService) { }
@@ -112,7 +114,24 @@ export class UserProfileUpdateComponent implements OnInit {
   }
 
   onSubmitPassword():void{
-
+    this.wrongOldPassword = false;
+    let userUpdatePasswordDto : IUserUpdatePasswordDto ={
+      id:0,
+      oldPassword:this.passwordForm.controls.oldPassword.value,
+      newPassword:this.passwordForm.controls.newPassword.value,
+      confirmNewPassword:this.passwordForm.controls.confirmNewPassword.value
+    };
+    this.userService.updatePassword(userUpdatePasswordDto).subscribe(
+      {next: (resp) =>{
+        this.passwordForm.reset();
+      },
+      error: (error) =>{
+        if(error =="Wrong old password")
+        {
+          this.wrongOldPassword = true;
+        }
+      }
+  });
   }
 
 }

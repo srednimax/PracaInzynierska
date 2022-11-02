@@ -5,6 +5,7 @@ import { IUserDto } from 'src/Dtos/User/IUserDto';
 import { IUserSignInDto } from 'src/Dtos/User/IUserSignInDto';
 import { IUserSignUpDto } from 'src/Dtos/User/IUserSignUpDto';
 import { IUserUpdateDto } from 'src/Dtos/User/IUserUpdateDto';
+import { IUserUpdatePasswordDto } from 'src/Dtos/User/IUserUpdatePasswordDto';
 
 @Injectable()
 export class UserService {
@@ -23,6 +24,10 @@ export class UserService {
   }
   updateUser(data :IUserUpdateDto){
     return this.http.put<IUserDto>(this.url,data);
+  }
+
+  updatePassword(data :IUserUpdatePasswordDto){
+    return this.http.put<IUserDto>(`${this.url}/ChangePassword`,data);
   }
 
 }

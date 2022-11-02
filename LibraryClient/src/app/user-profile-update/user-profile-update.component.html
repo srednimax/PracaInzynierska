@@ -103,8 +103,11 @@
                         <p *ngIf="confirmNewPassword.errors?.['required']">To pole nie może być puste</p>
                         <p *ngIf="confirmNewPassword.errors?.['mustMatch']">Hasła się nie zgadzają</p>
                     </div>
+                    <div *ngIf="wrongOldPassword" class="pb-3 text-danger">
+                        Podane stare hasło jest niepoprawne
+                    </div>
                     <p-button class="w-full pt-3" [disabled]="passwordForm.invalid" type="submit"
-                    label="Zaktualizuj dane"></p-button>
+                    label="Zaktualizuj Hasło"></p-button>
                 </div>
             </form>
         </div>

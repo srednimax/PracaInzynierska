@@ -83,10 +83,29 @@ namespace LibraryBackend.Services
 
         }
 
+        public async Task<ServiceResult<UserDto>> UpdatePassword(UserUpdatePasswordDto userUpdatePasswordDto)
+        {
+            var user = await _userRepository.GetUserById(userUpdatePasswordDto.Id);
+            if (user is null)
+                return new ServiceResult<UserDto>() { Status = 404 };
+
+            if (!BCrypt.Net.BCrypt.Verify(userUpdatePasswordDto.OldPassword, user.Password))
+            {
+                return new ServiceResult<UserDto>() { Status = 500, Message = "Wrong old password" };
+            }
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(userUpdatePasswordDto.NewPassword);
+
+            return new ServiceResult<UserDto>()
+                { Status = 200, Body = _mapper.Map<UserDto>(await _userRepository.UpdateUser(user)) };
+
+
+        }
+
         public async Task<ServiceResult<UserDto>> GetUserById(int id)
         {
             var user = await _userRepository.GetUserById(id);
-            if (user == null)
+            if (user is null)
                 return new ServiceResult<UserDto>() {Status= 404 };
 
             return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(user), Status = 200 };
