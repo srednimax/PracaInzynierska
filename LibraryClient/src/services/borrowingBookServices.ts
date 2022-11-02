@@ -17,5 +17,8 @@ export class BorrowingBookService {
   renewBook(borrowedBookId:number){
     return this.http.put(`${this.url}/Renew/${borrowedBookId}`,null);
   }
+  cancelBook(borrowedBookId:number){
+    return this.http.put<IBorrowedBookDto>(`${this.url}/Cancel/${borrowedBookId}`,null);
+  }
  
 }

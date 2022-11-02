@@ -36,6 +36,10 @@
                         [disabled]="borrowedBook.status !==5" [label]="borrowedBook.isRated ? 'Zmień':'Oceń'">
                     </p-button>
                 </div>
+                <div *ngIf="borrowedBook.status <= 0"  class="col-4 pt-2">
+                    <p-button type="button" (onClick)="cancel(borrowedBook.id)" label="Anuluj">
+                    </p-button>
+                </div>
 
             </div>
 

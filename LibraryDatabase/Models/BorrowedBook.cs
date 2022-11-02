@@ -7,7 +7,8 @@ public enum Status
     Preparing,
     Ready,
     Received,
-    Returned
+    Returned,
+    Cancel
 }
 
 public class BorrowedBook

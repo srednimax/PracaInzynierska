@@ -102,5 +102,20 @@ namespace LibraryBackend.Controllers
                 500 => Problem(result.Message)
             };
         }
+
+        [Authorize(Roles="User")]
+        [HttpPut("Cancel/{borrowedBookId}")]
+        public async Task<ActionResult<BorrowedBookDto>> Cancel(int borrowedBookId)
+        {
+
+            var result = await _borrowingBookService.Cancel(borrowedBookId);
+
+            return result.Status switch
+            {
+                200 => result.Body,
+                404 => NotFound(),
+                500 => Problem(result.Message)
+            };
+        }
     }
 }

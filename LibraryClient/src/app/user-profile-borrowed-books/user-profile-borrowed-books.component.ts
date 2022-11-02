@@ -197,6 +197,15 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
       });
     }
   }
+  cancel(borrowedBookId:number):void{
+    this.borrowingBookService.cancelBook(borrowedBookId).subscribe({next:(resp)=>{
+      this.borrowedBooks = this.borrowedBooks.filter(x=>x.id !=resp.id);
+    },error:(error)=>{
+      if (error === "You can't cancel") {
+        this.showToast("error", "Błąd", "Nie można już anulować wypożyczenia książki");
+      }
+    }})
+  }
 
   showToast(severity: string, summary: string, message: string): void {
     this.messageService.add({

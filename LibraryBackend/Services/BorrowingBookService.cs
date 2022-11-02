@@ -194,5 +194,26 @@ namespace LibraryBackend.Services
                 Status = 200
             };
         }
+
+        public async Task<ServiceResult<BorrowedBookDto>> Cancel(int borrowedBookId)
+        {
+            var borrowedBook = await _borrowedBookRepository.GetBorrowedBookById(borrowedBookId);
+
+            if (borrowedBook is null)
+                return new ServiceResult<BorrowedBookDto>() { Status = 404 };
+
+            if (borrowedBook.Status.GetHashCode() > 3)
+                return new ServiceResult<BorrowedBookDto>() { Status = 500, Message = "You can't cancel" };
+
+            borrowedBook.Status = Status.Cancel;
+
+            return new ServiceResult<BorrowedBookDto>()
+            {
+                Status = 200,
+                Body = _mapper.Map<BorrowedBookDto>(await _borrowedBookRepository.UpdateBorrowedBook(borrowedBook))
+            };
+
+
+        }
     }
 }
