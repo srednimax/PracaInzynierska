@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { IBookRatingAddDto } from "src/Dtos/BookRating/IBookRatingAddDto";
 import { IBookRatingDto } from "src/Dtos/BookRating/IBookRatingDto";
+import { IBookRatingRemoveDto } from "src/Dtos/BookRating/IBookRatingRemoveDto";
+import { IBookRatingUpdateDto } from "src/Dtos/BookRating/IBookRatingUpdateDto";
 import { IBorrowedBookDto } from "src/Dtos/BorrowedBook/IBorrowedBookDto";
 import { BookRatingServices } from "src/services/bookRatingServices";
 import { BorrowingBookService } from "src/services/borrowingBookServices";
@@ -10,23 +14,30 @@ import { BorrowingBookService } from "src/services/borrowingBookServices";
   styleUrls: ["./user-profile.component.css"],
 })
 export class UserProfileComponent implements OnInit {
-  constructor(private borrowingBookService: BorrowingBookService,private bookRatingService: BookRatingServices) {}
+  constructor(
+    private borrowingBookService: BorrowingBookService,
+    private bookRatingService: BookRatingServices,
+    private messageService: MessageService
+  ) {}
 
   borrowedBooks: IBorrowedBookDto[];
-  bookRatings:IBookRatingDto[];
-  bookRating:IBookRatingDto;
+  bookRatings: IBookRatingDto[];
+  bookRating: IBookRatingDto;
 
   //p-dialog
   bookRatingDialog: boolean;
-  submitted:boolean;
+  submitted: boolean;
+  isNotExist: boolean;
+  bookId: number;
+  borrowedBookId: number;
 
   ngOnInit(): void {
     this.borrowingBookService.getBorrowedBooks().subscribe((resp) => {
       this.borrowedBooks = resp;
     });
-    this.bookRatingService.getBookRatingsByUser().subscribe(resp =>{
+    this.bookRatingService.getBookRatingsByUser().subscribe((resp) => {
       this.bookRatings = resp;
-    })
+    });
   }
 
   con() {
@@ -40,23 +51,12 @@ export class UserProfileComponent implements OnInit {
         ].isRenew = true;
       },
       error: (error) => {
-        // if (error === "You must first pay the penalty") {
-        //   this.showToast("error", "Błąd", "Musisz najpierw zapłacić karę.");
-        // }
-        // if (error === "You already booked this book") {
-        //   this.showToast(
-        //     "info",
-        //     "Informacja",
-        //     "Książka jest już w trakcie realizacji."
-        //   );
-        // }
-        // if (error === "You can't borrowed more than 3 books at the same time") {
-        //   this.showToast(
-        //     "error",
-        //     "Błąd",
-        //     "Nie możesz wypożyczyć więcej niż 3 książki naraz."
-        //   );
-        // }
+        if (error === "This was already renewed") {
+          this.showToast("error", "Błąd", "Ta książka była już przedłużana");
+        }
+        if (error === "This book is not ready yet") {
+          this.showToast("warn", "Info", "Książka nie jest jeszcze gotowa");
+        }
       },
     });
   }
@@ -82,7 +82,7 @@ export class UserProfileComponent implements OnInit {
         return "";
     }
   }
-  getDate(date:string):string{
+  getDate(date: string): string {
     return date.slice(0, 9);
   }
   status(stat: number): string {
@@ -105,21 +105,103 @@ export class UserProfileComponent implements OnInit {
   }
 
   //p-dialog
-  editRating(bookId:number) {
-    let bookR = this.bookRatings[this.bookRatings.findIndex(x=>x.book?.id == bookId)]
-    
-    this.bookRating = {...bookR};
+  editRating(bookId: number, borrowedBookId: number) {
+    let bookR =
+      this.bookRatings[this.bookRatings.findIndex((x) => x.book?.id == bookId)];
+
+    this.bookRating = { ...bookR };
+    if (Object.keys(this.bookRating).length === 0) {
+      this.isNotExist = true;
+      this.bookId = bookId;
+    } else {
+      this.isNotExist = false;
+    }
+    this.borrowedBookId = borrowedBookId;
+
     this.bookRatingDialog = true;
   }
-  hideDialog():void{
+  hideDialog(): void {
     this.bookRatingDialog = false;
     this.submitted = false;
   }
-  saveRating(): void
-  {
-
+  saveRating(): void {
+    if (this.isNotExist) {
+      //add
+      let newRating: IBookRatingAddDto = {
+        bookId: this.bookId,
+        comment: this.bookRating.comment,
+        rating: this.bookRating.rating,
+      };
+      this.bookRatingService.addBookRating(newRating).subscribe({
+        next: (resp) => {
+          this.bookRatings.push(resp);
+          this.borrowedBooks[
+            this.borrowedBooks.findIndex((x) => x.book?.id == resp.book?.id)
+          ].isRated = true;
+          this.bookRatingDialog = false;
+        },
+        error: (error) => {
+          if (error === "You must read it first.") {
+            this.showToast("error", "Błąd", "Najpierw musisz oddać książke.");
+          }
+          if (error === "You rated it before.") {
+            this.showToast("warn", "Info", "Oceniłeś już tą książke");
+          }
+        },
+      });
+    } else {
+      //update
+      let updateRating: IBookRatingUpdateDto = {
+        id: this.bookRating.id,
+        bookId: this.bookRating.book?.id!,
+        comment: this.bookRating.comment,
+        rating: this.bookRating.rating,
+      };
+      this.bookRatingService.updateBookRating(updateRating).subscribe({
+        next: (resp) => {
+          this.bookRatings[
+            this.bookRatings.findIndex((x) => x.id == this.bookRating.id)
+          ] = resp;
+          this.bookRatingDialog = false;
+        },
+        error: (error) => {
+          if (error === "This rating do not belong to you.") {
+            this.showToast("error", "Błąd", "To nie twoja ocena.");
+          }
+        },
+      });
+    }
   }
-  deleteRating(): void{
+  deleteRating(): void {
+    if (this.isNotExist) {
+      this.showToast("error", "Błąd", "Musisz najpierw dodać ocene.");
+    } else {
+      let ratingToDelete: IBookRatingRemoveDto = {
+        id: this.bookRating.id,
+        borrowedBookId: this.borrowedBookId,
+      };
+      this.bookRatingService
+        .deleteBookRating(ratingToDelete)
+        .subscribe({ next: (resp) => {
+          this.bookRatings = this.bookRatings.filter(x=>x.id != resp.id);
+          this.borrowedBooks[
+            this.borrowedBooks.findIndex((x) => x.book?.id == resp.book?.id)
+          ].isRated = false;
+          this.bookRatingDialog=false;
+        }, error: (error) => {
+          if (error === "This rating do not belong to you.") {
+            this.showToast("error", "Błąd", "To nie twoja ocena.");
+          }
+        } });
+    }
+  }
 
+  showToast(severity: string, summary: string, message: string): void {
+    this.messageService.add({
+      severity: severity,
+      summary: summary,
+      detail: message,
+      life: 5000,
+    });
   }
 }

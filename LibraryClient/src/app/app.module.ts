@@ -19,6 +19,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {RatingModule} from 'primeng/rating';
 import {DialogModule} from 'primeng/dialog';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 //pagination
 import {NgxPaginationModule} from 'ngx-pagination'; 
@@ -76,7 +77,8 @@ import { BookRatingServices } from 'src/services/bookRatingServices';
     CheckboxModule,
     MultiSelectModule,
     RatingModule,
-    DialogModule
+    DialogModule,
+    InputTextareaModule
   ],
   providers: [
     UserService,
