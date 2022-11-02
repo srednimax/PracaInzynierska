@@ -1,7 +1,7 @@
 <p-card>
     <div class="container py-3 ">
         <div class="row">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
                 <div class="p-fluid">
                     <div class="col-12 py-3">
                         <span class="p-float-label">
@@ -58,7 +58,53 @@
                     <div *ngIf="existEmail" class="pb-3 text-danger">
                         Podany email został już wykorzystany
                     </div>
-                    <p-button class="w-full pt-3" [disabled]="loginForm.invalid" type="submit" label="Zaktualizuj dane"></p-button>
+                    <p-button class="w-full pt-3" [disabled]="updateForm.invalid" type="submit"
+                        label="Zaktualizuj dane"></p-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</p-card>
+<p-card class="p-2">
+    <div class="container py-3 ">
+        <div class="row">
+            <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
+                <div class="p-fluid">
+                    <div class="col-12 py-3">
+                        <span class="p-float-label">
+                            <input id="float-input-oldPassword" type="password" pInputText formControlName="oldPassword">
+                            <label for="float-input-oldPassword">Stare hasło</label>
+                        </span>
+                    </div>
+                    <div *ngIf="oldPassword && oldPassword.invalid && (oldPassword.dirty || oldPassword.touched)"
+                        class="text-danger">
+                        <p *ngIf="oldPassword.errors?.['required']">To pole nie może być puste</p>
+                    </div>
+                    <div class="col-12 py-3">
+                        <span class="p-float-label">
+                            <input id="float-input-newPassword" type="password" pInputText formControlName="newPassword">
+                            <label for="float-input-newPassword">Nowe hasło</label>
+                        </span>
+                    </div>
+                    <div *ngIf="newPassword && newPassword.invalid && (newPassword.dirty || newPassword.touched)"
+                        class="text-danger">
+                        <p *ngIf="newPassword.errors?.['required']">To pole nie może być puste</p>
+                        <p *ngIf="newPassword.errors?.['pattern']">Hasło musi zwierać jedną małą, dużą literę, znak
+                            specialny oraz mieć długość 8-50</p>
+                    </div>
+                    <div class="col-12 py-3">
+                        <span class="p-float-label">
+                            <input id="float-input-confirmNewPassword" type="password" pInputText formControlName="confirmNewPassword">
+                            <label for="float-input-confirmNewPassword">Powtórz nowe hasło</label>
+                        </span>
+                    </div>
+                    <div *ngIf="confirmNewPassword && confirmNewPassword.invalid && (confirmNewPassword.dirty || confirmNewPassword.touched)"
+                        class="text-danger">
+                        <p *ngIf="confirmNewPassword.errors?.['required']">To pole nie może być puste</p>
+                        <p *ngIf="confirmNewPassword.errors?.['mustMatch']">Hasła się nie zgadzają</p>
+                    </div>
+                    <p-button class="w-full pt-3" [disabled]="passwordForm.invalid" type="submit"
+                    label="Zaktualizuj dane"></p-button>
                 </div>
             </form>
         </div>
