@@ -42,7 +42,9 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
             .Include(x => x.Book)
             .Include(x => x.Employee)
             .Include(x => x.Reader)
-            .Where(x=>x.Reader.Id==userId).ToListAsync();
+            .Where(x=>x.Reader.Id==userId)
+            .OrderBy(x=>x.Status)
+            .ToListAsync();
     }
 
     public async Task<BorrowedBook?> GetBorrowedBookByUser(int userId, int bookId)

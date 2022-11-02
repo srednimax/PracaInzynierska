@@ -23,6 +23,7 @@ export class UserProfileComponent implements OnInit {
   borrowedBooks: IBorrowedBookDto[];
   bookRatings: IBookRatingDto[];
   bookRating: IBookRatingDto;
+  page:number=1;
 
   //p-dialog
   bookRatingDialog: boolean;

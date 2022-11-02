@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="col-10">
-        <div *ngFor="let borrowedBook of borrowedBooks">
+        <div *ngFor="let borrowedBook of borrowedBooks | paginate: {itemsPerPage: 5,currentPage: page }">
             <p-card class="p-2">
                 <div class="row d-flex align-items-center">
                     <div class="col-4">
@@ -56,7 +56,9 @@
             </p-card>
 
         </div>
+        <pagination-controls *ngIf="borrowedBooks.length > 0" (pageChange)="page =$event" [responsive]="true"></pagination-controls>
     </div>
+   
 </div>
 
 
