@@ -106,6 +106,7 @@ export class BooksComponent implements OnInit {
       this.filterBooks=this.books.filter(x=>x.title?.includes(this.search));
     }
   }
+  
   con(){
     console.log(this.selectedGenres)
   }

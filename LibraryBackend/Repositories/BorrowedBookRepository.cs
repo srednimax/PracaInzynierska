@@ -42,7 +42,18 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
             .Include(x => x.Book)
             .Include(x => x.Employee)
             .Include(x => x.Reader)
-            .Where(x=>x.Reader.Id==userId).ToListAsync();
+            .Where(x=>x.Reader.Id==userId && x.Status != Status.Cancel)
+            .OrderBy(x=>x.Status)
+            .ToListAsync();
+    }
+
+    public async Task<BorrowedBook?> GetBorrowedBookByUser(int userId, int bookId)
+    {
+        return await GetAll()
+            .Include(x => x.Book)
+            .Include(x => x.Employee)
+            .Include(x => x.Reader)
+            .FirstOrDefaultAsync(x => x.Book.Id == bookId && x.Reader.Id==userId);
     }
 
     public async Task<BorrowedBook> AddBorrowedBook(BorrowedBook borrowedBook)
@@ -57,7 +68,7 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
 
     public async Task<bool> MoreThanThreeBooks(int userId)
     {
-        var userBorrowedBooks = await GetAll().Include(x => x.Reader).CountAsync(x => x.IsReturned == false);
+        var userBorrowedBooks = await GetAll().Include(x => x.Reader).CountAsync(x => x.IsReturned == false && x.Status !=Status.Cancel);
 
         return userBorrowedBooks >= 3;
     }

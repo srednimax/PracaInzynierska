@@ -11,5 +11,6 @@ public class UserProfile : Profile
         CreateMap<User, UserSignUpDto>().ReverseMap();
         CreateMap<User, UserSignInDto>().ReverseMap();
         CreateMap<User, UserDto>().ReverseMap();
+        CreateMap<User, UserUpdateDto>().ReverseMap();
     }
 }

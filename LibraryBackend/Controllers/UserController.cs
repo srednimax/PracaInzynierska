@@ -72,4 +72,35 @@ public class UserController : ControllerBase
             500 => Problem(result.Message)
         };
     }
+
+    [Authorize]
+    [HttpPut]
+    public async Task<ActionResult<UserDto>> UpdateUser(UserUpdateDto userUpdateDto)
+    {
+       userUpdateDto.Id = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+
+       var result = await _userService.UpdateUser(userUpdateDto);
+
+       return result.Status switch
+       {
+           200 => result.Body,
+           404 => NotFound(),
+           500 => Problem(result.Message)
+       };
+    }
+    [Authorize]
+    [HttpPut("ChangePassword")]
+    public async Task<ActionResult<UserDto>> UpdatePassword(UserUpdatePasswordDto userUpdatePassword)
+    {
+        userUpdatePassword.Id = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+
+        var result = await _userService.UpdatePassword(userUpdatePassword);
+
+        return result.Status switch
+        {
+            200 => result.Body,
+            404 => NotFound(),
+            500 => Problem(result.Message)
+        };
+    }
 }

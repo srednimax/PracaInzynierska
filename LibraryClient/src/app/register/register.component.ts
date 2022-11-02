@@ -46,7 +46,6 @@ export class RegisterComponent implements OnInit {
       birth: this.loginForm.controls.birth.value,
       gender: this.loginForm.controls.gender.value
     };
-    console.log(userSignUp);
     this.userService.signUpUser(userSignUp).subscribe(
       {next: (resp) =>{
       },

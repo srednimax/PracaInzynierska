@@ -29,5 +29,10 @@ public class BookRatingConfigurations:IEntityTypeConfiguration<BookRating>
             .HasOne(x => x.Book)
             .WithMany()
             .HasForeignKey("book_id");
+
+        builder.ToTable("book_ratings")
+            .HasOne(x => x.User)
+            .WithMany()
+            .HasForeignKey("user_id");
     }
 }

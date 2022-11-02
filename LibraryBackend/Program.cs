@@ -25,6 +25,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<IBookService, BookService>();
 builder.Services.AddTransient<IBorrowingBookService, BorrowingBookService>();
+builder.Services.AddTransient<IBookRatingService, BookRatingService>();
 
 // repositories
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));

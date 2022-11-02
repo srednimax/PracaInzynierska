@@ -1,0 +1,115 @@
+<p-card>
+    <div class="container py-3 ">
+        <div class="row">
+            <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+                <div class="p-fluid">
+                    <div class="col-12 py-3">
+                        <span class="p-float-label">
+                            <input id="float-input-email" type="text" pInputText formControlName="email">
+                            <label for="float-input-email">Email</label>
+                        </span>
+                    </div>
+                    <div *ngIf="email && email.invalid && (email.dirty || email.touched)" class="text-danger">
+                        <p *ngIf="email.errors?.['required']">To pole nie może być puste</p>
+                        <p *ngIf="email.errors?.['email']">Podaj poprawny email</p>
+                    </div>
+                    <div class="col-12 py-3">
+                        <span class="p-float-label">
+                            <input id="float-input-firstName" type="text" pInputText formControlName="firstName">
+                            <label for="float-input-firstName">Imię</label>
+                        </span>
+                    </div>
+                    <div *ngIf="firstName && firstName.invalid && (firstName.dirty || firstName.touched)"
+                        class="text-danger">
+                        <p *ngIf="firstName.errors?.['required']">To pole nie może być puste</p>
+                        <p *ngIf="firstName.errors?.['pattern']">Imię musi składać się z samych liter i mieć długość
+                            3-50 znaków</p>
+                    </div>
+                    <div class="col-12 py-3">
+                        <span class="p-float-label">
+                            <input id="float-input-lastName" type="text" pInputText formControlName="lastName">
+                            <label for="float-input-lastName">Nazwisko</label>
+                        </span>
+                    </div>
+                    <div *ngIf="lastName && lastName.invalid && (lastName.dirty || lastName.touched)"
+                        class="text-danger">
+                        <p *ngIf="lastName.errors?.['required']">To pole nie może być puste</p>
+                        <p *ngIf="lastName.errors?.['pattern']">Nazwisko musi składać się z samych liter i mieć
+                            długość 3-50 znaków</p>
+                    </div>
+                    <div class="col-12 py-3">
+                        <span class="p-float-label">
+                            <input id="float-input-phoneNumber" type="text" pInputText formControlName="phoneNumber">
+                            <label for="float-input-phoneNumber">Numer telefonu</label>
+                        </span>
+                    </div>
+                    <div *ngIf="phoneNumber && phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)"
+                        class="text-danger">
+                        <p *ngIf="phoneNumber.errors?.['required']">To pole nie może być puste</p>
+                        <p *ngIf="phoneNumber.errors?.['pattern']">Podaj poprawny numer telefonu</p>
+                    </div>
+                    <div class="col-12 py-3">
+                        <p-dropdown [options]="genders" formControlName="gender" placeholder="Wybierz płeć"
+                            optionLabel="name" optionValue="number" [showClear]="true"></p-dropdown>
+                    </div>
+                    <div *ngIf="gender && gender.invalid && (gender.dirty || gender.touched)" class="text-danger">
+                        <p *ngIf="gender.errors?.['required']">Proszę wybrać płeć</p>
+                    </div>
+                    <div *ngIf="existEmail" class="pb-3 text-danger">
+                        Podany email został już wykorzystany
+                    </div>
+                    <p-button class="w-full pt-3" [disabled]="updateForm.invalid" type="submit"
+                        label="Zaktualizuj dane"></p-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</p-card>
+<p-card class="p-2">
+    <div class="container py-3 ">
+        <div class="row">
+            <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
+                <div class="p-fluid">
+                    <div class="col-12 py-3">
+                        <span class="p-float-label">
+                            <input id="float-input-oldPassword" type="password" pInputText formControlName="oldPassword">
+                            <label for="float-input-oldPassword">Stare hasło</label>
+                        </span>
+                    </div>
+                    <div *ngIf="oldPassword && oldPassword.invalid && (oldPassword.dirty || oldPassword.touched)"
+                        class="text-danger">
+                        <p *ngIf="oldPassword.errors?.['required']">To pole nie może być puste</p>
+                    </div>
+                    <div class="col-12 py-3">
+                        <span class="p-float-label">
+                            <input id="float-input-newPassword" type="password" pInputText formControlName="newPassword">
+                            <label for="float-input-newPassword">Nowe hasło</label>
+                        </span>
+                    </div>
+                    <div *ngIf="newPassword && newPassword.invalid && (newPassword.dirty || newPassword.touched)"
+                        class="text-danger">
+                        <p *ngIf="newPassword.errors?.['required']">To pole nie może być puste</p>
+                        <p *ngIf="newPassword.errors?.['pattern']">Hasło musi zwierać jedną małą, dużą literę, znak
+                            specialny oraz mieć długość 8-50</p>
+                    </div>
+                    <div class="col-12 py-3">
+                        <span class="p-float-label">
+                            <input id="float-input-confirmNewPassword" type="password" pInputText formControlName="confirmNewPassword">
+                            <label for="float-input-confirmNewPassword">Powtórz nowe hasło</label>
+                        </span>
+                    </div>
+                    <div *ngIf="confirmNewPassword && confirmNewPassword.invalid && (confirmNewPassword.dirty || confirmNewPassword.touched)"
+                        class="text-danger">
+                        <p *ngIf="confirmNewPassword.errors?.['required']">To pole nie może być puste</p>
+                        <p *ngIf="confirmNewPassword.errors?.['mustMatch']">Hasła się nie zgadzają</p>
+                    </div>
+                    <div *ngIf="wrongOldPassword" class="pb-3 text-danger">
+                        Podane stare hasło jest niepoprawne
+                    </div>
+                    <p-button class="w-full pt-3" [disabled]="passwordForm.invalid" type="submit"
+                    label="Zaktualizuj Hasło"></p-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</p-card>

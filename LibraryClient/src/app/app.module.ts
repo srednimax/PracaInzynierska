@@ -17,6 +17,9 @@ import {PaginatorModule} from 'primeng/paginator';
 import {ToastModule} from 'primeng/toast';
 import {CheckboxModule} from 'primeng/checkbox';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {RatingModule} from 'primeng/rating';
+import {DialogModule} from 'primeng/dialog';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 //pagination
 import {NgxPaginationModule} from 'ngx-pagination'; 
@@ -36,6 +39,10 @@ import { BookService } from 'src/services/bookService';
 import { BorrowingBookService } from 'src/services/borrowingBookServices';
 import { MessageService } from 'primeng/api';
 import { ManualFilterPipe } from 'src/services/filterPipe';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { BookRatingServices } from 'src/services/bookRatingServices';
+import { UserProfileUpdateComponent } from './user-profile-update/user-profile-update.component';
+import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books/user-profile-borrowed-books.component';
 
 
 @NgModule({
@@ -48,7 +55,10 @@ import { ManualFilterPipe } from 'src/services/filterPipe';
     SignInUpComponent,
     HomeComponent,
     BooksComponent,
-    ManualFilterPipe
+    ManualFilterPipe,
+    UserProfileComponent,
+    UserProfileUpdateComponent,
+    UserProfileBorrowedBooksComponent
   ],
   imports: [
     BrowserModule,
@@ -69,12 +79,16 @@ import { ManualFilterPipe } from 'src/services/filterPipe';
     NgxPaginationModule,
     ToastModule,
     CheckboxModule,
-    MultiSelectModule
+    MultiSelectModule,
+    RatingModule,
+    DialogModule,
+    InputTextareaModule
   ],
   providers: [
     UserService,
     BookService,
     BorrowingBookService,
+    BookRatingServices,
     MessageService, 
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],

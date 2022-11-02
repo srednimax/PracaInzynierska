@@ -76,7 +76,7 @@ namespace LibraryBackend.Controllers
             };
         }
 
-        [HttpPut("Renew")]
+        [HttpPut("Renew/{borrowedBookId}")]
         [Authorize(Roles = "User")]
         public async Task<ActionResult<BorrowedBookDto>> RenewBook(int borrowedBookId)
         {
@@ -94,6 +94,21 @@ namespace LibraryBackend.Controllers
         public async Task<ActionResult<BorrowedBookDto>> ChangeStatus(BorrowedBookChangeStatusDto bookChangeStatusDto)
         {
             var result = await _borrowingBookService.ChangeStatus(bookChangeStatusDto);
+
+            return result.Status switch
+            {
+                200 => result.Body,
+                404 => NotFound(),
+                500 => Problem(result.Message)
+            };
+        }
+
+        [Authorize(Roles="User")]
+        [HttpPut("Cancel/{borrowedBookId}")]
+        public async Task<ActionResult<BorrowedBookDto>> Cancel(int borrowedBookId)
+        {
+
+            var result = await _borrowingBookService.Cancel(borrowedBookId);
 
             return result.Status switch
             {

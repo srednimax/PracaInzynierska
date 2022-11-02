@@ -6,9 +6,10 @@ export interface IBorrowedBookDto {
     book: IBookDto | null;
     employee: IUserDto | null;
     reader: IUserDto | null;
-    status: string;
+    status: number;
     borrowDate: string | null;
     returnDate: string | null;
     isRenew: boolean;
     isReturned: boolean;
+    isRated: boolean;
 }

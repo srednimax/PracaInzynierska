@@ -50,6 +50,12 @@ namespace LibraryDatabase.Migrations
                         .HasColumnType("int")
                         .HasColumnName("publish_year");
 
+                    b.Property<double>("Rating")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValue(0.0)
+                        .HasColumnName("rating");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(MAX)")
@@ -80,9 +86,14 @@ namespace LibraryDatabase.Migrations
                     b.Property<int?>("book_id")
                         .HasColumnType("int");
 
+                    b.Property<int?>("user_id")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("book_id");
+
+                    b.HasIndex("user_id");
 
                     b.ToTable("book_ratings", (string)null);
                 });
@@ -101,6 +112,12 @@ namespace LibraryDatabase.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("borrowed_date")
                         .HasDefaultValueSql("CAST( GETDATE() AS DateTime )");
+
+                    b.Property<bool>("IsRated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_rated");
 
                     b.Property<bool>("IsRenew")
                         .ValueGeneratedOnAdd()
@@ -214,7 +231,13 @@ namespace LibraryDatabase.Migrations
                         .WithMany()
                         .HasForeignKey("book_id");
 
+                    b.HasOne("LibraryDatabase.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("user_id");
+
                     b.Navigation("Book");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LibraryDatabase.Models.BorrowedBook", b =>

@@ -11,5 +11,6 @@ namespace LibraryBackend.Services.Interfaces
         public Task<ServiceResult<BorrowedBookDto>> ReturnBook(BorrowedBookReturnDto borrowedBookReturnDto);
         public Task<ServiceResult<BorrowedBookDto>> RenewBook(int borrowedBookId);
         public Task<ServiceResult<BorrowedBookDto>> ChangeStatus(BorrowedBookChangeStatusDto bookChangeStatusDto);
+        public Task<ServiceResult<BorrowedBookDto>> Cancel(int borrowedBookId);
     }
 }

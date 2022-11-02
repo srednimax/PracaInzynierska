@@ -10,4 +10,5 @@ public class BookDto
     public Genre Genre { get; set; }
     public int PublishYear { get; set; }
     public bool IsBorrowed { get; set; }
+    public float Rating { get; set; }
 }

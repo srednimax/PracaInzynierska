@@ -31,6 +31,9 @@
                     <div class="col-4">
                         <p>Rok wydania: {{book.publishYear}}</p>
                     </div>
+                    <div class="col-4">
+                        <p-rating [ngModel]="book.rating" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
+                    </div>
                 </div>
             </div>
             <div class="col-4">
