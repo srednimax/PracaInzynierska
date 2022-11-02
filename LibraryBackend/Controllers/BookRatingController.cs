@@ -19,6 +19,35 @@ namespace LibraryBackend.Controllers
         }
 
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BookRatingDto>> GetBookRatingById(int id )
+        {
+
+            var result = await _bookRatingService.GetBookRatingById(id);
+
+            return result.Status switch
+            {
+                200 => result.Body,
+                404 => NotFound(),
+                500 => Problem(result.Message)
+            };
+        }
+
+        [HttpGet("Users's")]
+        public async Task<ActionResult<BookRatingDto>> GetBookRatingByUser()
+        {
+            var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+
+            var result = await _bookRatingService.GetBookRatingById(userId);
+
+            return result.Status switch
+            {
+                200 => result.Body,
+                404 => NotFound(),
+                500 => Problem(result.Message)
+            };
+        }
+
         [HttpPost]
         public async Task<ActionResult<BookRatingDto>> AddBookRating(BookRatingAddDto bookRatingAddDto)
         {

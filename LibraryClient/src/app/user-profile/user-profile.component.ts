@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { IBookRatingDto } from "src/Dtos/BookRating/IBookRatingDto";
 import { IBorrowedBookDto } from "src/Dtos/BorrowedBook/IBorrowedBookDto";
 import { BorrowingBookService } from "src/services/borrowingBookServices";
 
@@ -11,6 +12,11 @@ export class UserProfileComponent implements OnInit {
   constructor(private borrowingBookService: BorrowingBookService) {}
 
   borrowedBooks: IBorrowedBookDto[];
+  bookRating:IBookRatingDto;
+
+  //p-dialog
+  bookRatingDialog: boolean;
+  submitted:boolean;
 
   ngOnInit(): void {
     this.borrowingBookService.getBorrowedBooks().subscribe((resp) => {
@@ -91,5 +97,22 @@ export class UserProfileComponent implements OnInit {
       default:
         return "";
     }
+  }
+
+  //p-dialog
+  editRating(bookRating: IBookRatingDto) {
+    this.bookRating = {...bookRating};
+    this.bookRatingDialog = true;
+  }
+  hideDialog():void{
+    this.bookRatingDialog = false;
+    this.submitted = false;
+  }
+  saveRating(): void
+  {
+
+  }
+  deleteRating(): void{
+
   }
 }

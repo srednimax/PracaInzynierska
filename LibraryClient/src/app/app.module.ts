@@ -18,6 +18,7 @@ import {ToastModule} from 'primeng/toast';
 import {CheckboxModule} from 'primeng/checkbox';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {RatingModule} from 'primeng/rating';
+import {DialogModule} from 'primeng/dialog';
 
 //pagination
 import {NgxPaginationModule} from 'ngx-pagination'; 
@@ -73,7 +74,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ToastModule,
     CheckboxModule,
     MultiSelectModule,
-    RatingModule
+    RatingModule,
+    DialogModule
   ],
   providers: [
     UserService,

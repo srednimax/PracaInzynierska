@@ -33,6 +33,28 @@ public class BookRatingService : IBookRatingService
         };
     }
 
+    public async Task<ServiceResult<List<BookRatingDto>>> GetAllBooksRatingByUser(int userId)
+    {
+        var user = _userRepository.GetUserById(userId);
+
+        if (user is null)
+            return new ServiceResult<List<BookRatingDto>>() { Status = 404 };
+
+        var bookRatings = _bookRatingRepository.GetAllBookRatingsByUser(user.Id);
+
+        return new ServiceResult<List<BookRatingDto>>() { Status = 200,Body = _mapper.Map<List<BookRatingDto>>(bookRatings)};
+    }
+
+    public async Task<ServiceResult<BookRatingDto>> GetBookRatingById(int id)
+    {
+        var bookRating = await _bookRatingRepository.GetBookRatingById(id);
+
+        if (bookRating is null)
+            return new ServiceResult<BookRatingDto>() { Status = 404 };
+
+        return new ServiceResult<BookRatingDto>() { Body =_mapper.Map<BookRatingDto>(bookRating) ,Status = 200 };
+    }
+
     public async Task<ServiceResult<BookRatingDto>> AddBookRating(BookRatingAddDto bookRatingAddDto)
     {
         var user = await _userRepository.GetUserById(bookRatingAddDto.UserId);

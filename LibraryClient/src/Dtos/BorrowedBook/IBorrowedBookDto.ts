@@ -11,4 +11,5 @@ export interface IBorrowedBookDto {
     returnDate: string | null;
     isRenew: boolean;
     isReturned: boolean;
+    isRated: boolean;
 }
