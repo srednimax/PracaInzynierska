@@ -103,7 +103,7 @@ namespace LibraryBackend.Services
 
         public async Task<ServiceResult<BorrowedBookDto>> ReturnBook(BorrowedBookReturnDto borrowedBookReturnDto)
         {
-            var user = await _userRepository.GetUserById(borrowedBookReturnDto.UserId);
+            var user = await _userRepository.GetUserById(borrowedBookReturnDto.EmployeeId);
 
             if (user is null)
                 return new ServiceResult<BorrowedBookDto>() { Status = 404 };
@@ -121,7 +121,14 @@ namespace LibraryBackend.Services
                     { Status = 500, Message = "This book was already returned" };
             }
 
-            if (borrowedBook.ReturnDate < DateTime.Now)
+            if (borrowedBook.Status != Status.Received)
+                return new ServiceResult<BorrowedBookDto>()
+                {
+                    Status = 500,
+                    Message = "This book has not been received yet"
+                };
+
+                if (borrowedBook.ReturnDate < DateTime.Now)
             {
                 user.Penalty += 10;
                 await _userRepository.UpdateUser(user);

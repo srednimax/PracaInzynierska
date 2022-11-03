@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { IBorrowedBookChangeStatusDto } from "src/Dtos/BorrowedBook/IBorrowedBookChangeStatus";
 import { IBorrowedBookDto } from "src/Dtos/BorrowedBook/IBorrowedBookDto";
+import { IBorrowedBookReturnDto } from "src/Dtos/BorrowedBook/IBorrowedBookReturnDto";
 
 @Injectable()
 export class BorrowingBookService {
@@ -30,7 +31,11 @@ export class BorrowingBookService {
   }
 
   changeStatus(data:IBorrowedBookChangeStatusDto){
-    return this.http.put<IBorrowedBookDto>(`${this.url}/ChangeStatus`,data)
+    return this.http.put<IBorrowedBookDto>(`${this.url}/ChangeStatus`,data);
+  }
+  
+  returnBook(data:IBorrowedBookReturnDto){
+    return this.http.put<IBorrowedBookDto>(`${this.url}/Return`,data);
   }
  
 }

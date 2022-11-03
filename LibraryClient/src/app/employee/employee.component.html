@@ -45,7 +45,7 @@
     <ng-template pTemplate="content">
         <div class="field">
             <label for="comment">Status</label>
-            <p-dropdown appendTo="body" dataKey="borrowedBook.status" [(ngModel)]="selectedStatus" [options]="status" placeholder="Wybierz status"
+            <p-dropdown appendTo="body" [(ngModel)]="selectedStatus" [options]="status" placeholder="Wybierz status"
             optionLabel="name" optionValue="number" [showClear]="true"></p-dropdown>
         </div>
     </ng-template>
