@@ -6,6 +6,6 @@ export interface IUserDto {
     phoneNumber: string | null;
     birth: string | null;
     gender: string;
-    role: string;
+    role: number;
     penalty: number;
 }

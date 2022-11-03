@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IUserDto } from 'src/Dtos/User/IUserDto';
 import { IUserSignInDto } from 'src/Dtos/User/IUserSignInDto';
 import { UserService } from 'src/services/userService';
 
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
     this.userService.signInUser(userSignIn).subscribe(
       {next: (resp) =>{
         localStorage.setItem("token", resp.headers.get("jwt")!);
+        localStorage.setItem("user",JSON.stringify(resp.body))
         this.router.navigate(["/"]).then(()=>{
           window.location.reload();
         });

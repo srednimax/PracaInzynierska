@@ -43,6 +43,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BookRatingServices } from 'src/services/bookRatingServices';
 import { UserProfileUpdateComponent } from './user-profile-update/user-profile-update.component';
 import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books/user-profile-borrowed-books.component';
+import { EmployeeComponent } from './employee/employee.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books
     ManualFilterPipe,
     UserProfileComponent,
     UserProfileUpdateComponent,
-    UserProfileBorrowedBooksComponent
+    UserProfileBorrowedBooksComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,
