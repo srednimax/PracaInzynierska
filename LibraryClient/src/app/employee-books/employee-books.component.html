@@ -1,1 +1,79 @@
-<p>employee-books works!</p>
+<p-toast></p-toast>
+
+<div class="card">
+
+    <p-table #dt [value]="books" [rows]="10" [paginator]="true" [globalFilterFields]="['title','author']" responsiveLayout="scroll"
+         [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Zarządzanie książkami</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Filter" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="title">Tytuł <p-sortIcon field="title"></p-sortIcon></th>
+                <th pSortableColumn="author">Autor <p-sortIcon field="author"></p-sortIcon></th>
+                <th pSortableColumn="genre">Gatunek <p-sortIcon field="genre"></p-sortIcon></th>
+                <th pSortableColumn="rating">Ocena <p-sortIcon field="rating"></p-sortIcon></th>
+                <th pSortableColumn="publishYear">Rok publikacji <p-sortIcon field="publishYear"></p-sortIcon></th>
+                <th pSortableColumn="isBorrowed">Pożyczona <p-sortIcon field="isBorrowed"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-book>
+            <tr>
+                <td>{{book.title}}</td>
+                <td>{{book.author}}</td>
+                <td>{{extraFunctions.genre(book.genre)}}</td>
+                <td><p-rating [ngModel]="book.rating" [readonly]="true" [cancel]="false"></p-rating></td>
+                <td>{{book.publishYear}}</td>
+                <td>{{book.isBorrowed}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editBook(book)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteBook(book)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                W sumie {{books ? books.length : 0 }} książek.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [(visible)]="bookDialog" [style]="{width: '450px'}" header="Książka" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="title">Tytuł</label>
+            <input type="text" pInputText id="title" [(ngModel)]="book.title" required autofocus />
+            <small class="p-error" *ngIf="submitted && !book.title">Tytuł jest wymagany.</small>
+        </div>
+        <div class="field">
+            <label for="author">Tytuł</label>
+            <input type="text" pInputText id="author" [(ngModel)]="book.author" required autofocus />
+            <small class="p-error" *ngIf="submitted && !book.author">Autor jest wymagany.</small>
+        </div>
+        <div class="field">
+            <label for="genre">Gatunek</label>
+            <p-dropdown appendTo="body" [(ngModel)]="book.genre" inputId="genre" [options]="genres" optionLabel="name" optionValue="number" placeholder="Wybierz gatunek">
+            </p-dropdown>
+        </div>
+        <div class="field">
+            <label for="publishYear">Rok</label>
+            <p-inputNumber id="publishYear" [(ngModel)]="book.publishYear"></p-inputNumber>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveBook()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

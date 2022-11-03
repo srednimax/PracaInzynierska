@@ -20,6 +20,9 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import {RatingModule} from 'primeng/rating';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {ConfirmDialog, ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 
 //pagination
 import {NgxPaginationModule} from 'ngx-pagination'; 
@@ -89,7 +92,10 @@ import { EmployeeBorrowedBooksComponent } from './employee-borrowed-books/employ
     MultiSelectModule,
     RatingModule,
     DialogModule,
-    InputTextareaModule
+    InputTextareaModule,
+    InputNumberModule, 
+    ConfirmDialogModule,
+    
   ],
   providers: [
     UserService,
@@ -97,6 +103,7 @@ import { EmployeeBorrowedBooksComponent } from './employee-borrowed-books/employ
     BorrowingBookService,
     BookRatingServices,
     MessageService,
+    ConfirmationService,
     ExtraFunctions, 
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],

@@ -7,3 +7,8 @@ export interface IBookDto {
     isBorrowed: boolean;
     rating:number;
 }
+
+export interface IGenre{
+    number:number;
+    name:string;
+}
