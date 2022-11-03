@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { IBorrowedBookChangeStatusDto } from "src/Dtos/BorrowedBook/IBorrowedBookChangeStatus";
 import { IBorrowedBookDto } from "src/Dtos/BorrowedBook/IBorrowedBookDto";
 
 @Injectable()
@@ -26,6 +27,10 @@ export class BorrowingBookService {
 
   getBorrowedBooks(){
     return this.http.get<IBorrowedBookDto[]>(this.url);
+  }
+
+  changeStatus(data:IBorrowedBookChangeStatusDto){
+    return this.http.put<IBorrowedBookDto>(`${this.url}/ChangeStatus`,data)
   }
  
 }

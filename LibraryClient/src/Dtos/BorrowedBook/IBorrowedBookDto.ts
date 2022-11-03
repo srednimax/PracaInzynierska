@@ -13,3 +13,8 @@ export interface IBorrowedBookDto {
     isReturned: boolean;
     isRated: boolean;
 }
+
+export interface IStatus{
+    number:number;
+    name:string;
+}

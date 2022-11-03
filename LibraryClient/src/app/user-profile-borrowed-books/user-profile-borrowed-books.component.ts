@@ -23,7 +23,6 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
 
     borrowedBooks: IBorrowedBookDto[];
     bookRatings: IBookRatingDto[];
-    bookRating: IBookRatingDto;
     page: number = 1;
   
     //p-dialog
@@ -32,6 +31,7 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
     isNotExist: boolean;
     bookId: number;
     borrowedBookId: number;
+    bookRating: IBookRatingDto;
 
   ngOnInit(): void {
     this.borrowingBookService.getBorrowedBooksByUser().subscribe((resp) => {

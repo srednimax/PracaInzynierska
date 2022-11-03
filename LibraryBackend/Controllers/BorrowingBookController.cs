@@ -93,6 +93,8 @@ namespace LibraryBackend.Controllers
         [Authorize(Roles = "Employee")]
         public async Task<ActionResult<BorrowedBookDto>> ChangeStatus(BorrowedBookChangeStatusDto bookChangeStatusDto)
         {
+            bookChangeStatusDto.EmployeeId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+
             var result = await _borrowingBookService.ChangeStatus(bookChangeStatusDto);
 
             return result.Status switch
