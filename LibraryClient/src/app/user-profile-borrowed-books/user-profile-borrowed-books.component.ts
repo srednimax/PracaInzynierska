@@ -7,6 +7,7 @@ import { IBookRatingUpdateDto } from 'src/Dtos/BookRating/IBookRatingUpdateDto';
 import { IBorrowedBookDto } from 'src/Dtos/BorrowedBook/IBorrowedBookDto';
 import { BookRatingServices } from 'src/services/bookRatingServices';
 import { BorrowingBookService } from 'src/services/borrowingBookServices';
+import { ExtraFunctions } from 'src/services/ExtraFunctions';
 
 @Component({
   selector: 'app-user-profile-borrowed-books',
@@ -17,7 +18,7 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
 
   constructor(    private borrowingBookService: BorrowingBookService,
     private bookRatingService: BookRatingServices,
-    private messageService: MessageService) { }
+    private extraFunctions: ExtraFunctions) { }
 
 
     borrowedBooks: IBorrowedBookDto[];
@@ -33,7 +34,7 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
     borrowedBookId: number;
 
   ngOnInit(): void {
-    this.borrowingBookService.getBorrowedBooks().subscribe((resp) => {
+    this.borrowingBookService.getBorrowedBooksByUser().subscribe((resp) => {
       this.borrowedBooks = resp;
     });
     this.bookRatingService.getBookRatingsByUser().subscribe((resp) => {
@@ -51,58 +52,18 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
       },
       error: (error) => {
         if (error === "This was already renewed") {
-          this.showToast("error", "Błąd", "Ta książka była już przedłużana");
+          this.extraFunctions.showToast("error", "Błąd", "Ta książka była już przedłużana");
         }
         if (error === "This book is not ready yet") {
-          this.showToast("warn", "Info", "Książka nie jest jeszcze gotowa");
+          this.extraFunctions.showToast("warn", "Info", "Książka nie jest jeszcze gotowa");
         }
       },
     });
   }
-  genre(gen: number): string {
-    switch (gen) {
-      case 0:
-        return "Fikcja literacka";
-      case 1:
-        return "Kryminał";
-      case 2:
-        return "Horror";
-      case 3:
-        return "Historyczna";
-      case 4:
-        return "Romans";
-      case 5:
-        return "Western";
-      case 6:
-        return "Science fiction";
-      case 7:
-        return "Fantasy";
-      default:
-        return "";
-    }
-  }
+
   getDate(date: string): string {
     return date.slice(0, 9);
   }
-  status(stat: number): string {
-    switch (stat) {
-      case 0:
-        return "Zamówiona";
-      case 1:
-        return "Zarezerwowane";
-      case 2:
-        return "W trakcie realizacji";
-      case 3:
-        return "Gotowe do obioru";
-      case 4:
-        return "Odebrana";
-      case 5:
-        return "Oddana";
-      default:
-        return "";
-    }
-  }
-
   //p-dialog
   editRating(bookId: number, borrowedBookId: number) {
     this.submitted = false;
@@ -143,10 +104,10 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
         },
         error: (error) => {
           if (error === "You must read it first.") {
-            this.showToast("error", "Błąd", "Najpierw musisz oddać książke.");
+            this.extraFunctions.showToast("error", "Błąd", "Najpierw musisz oddać książke.");
           }
           if (error === "You rated it before.") {
-            this.showToast("warn", "Info", "Oceniłeś już tą książke");
+            this.extraFunctions.showToast("warn", "Info", "Oceniłeś już tą książke");
           }
         },
       });
@@ -167,7 +128,7 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
         },
         error: (error) => {
           if (error === "This rating do not belong to you.") {
-            this.showToast("error", "Błąd", "To nie twoja ocena.");
+            this.extraFunctions.showToast("error", "Błąd", "To nie twoja ocena.");
           }
         },
       });
@@ -175,7 +136,7 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
   }
   deleteRating(): void {
     if (this.isNotExist) {
-      this.showToast("error", "Błąd", "Musisz najpierw dodać ocene.");
+      this.extraFunctions.showToast("error", "Błąd", "Musisz najpierw dodać ocene.");
     } else {
       let ratingToDelete: IBookRatingRemoveDto = {
         id: this.bookRating.id,
@@ -191,7 +152,7 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
         },
         error: (error) => {
           if (error === "This rating do not belong to you.") {
-            this.showToast("error", "Błąd", "To nie twoja ocena.");
+            this.extraFunctions.showToast("error", "Błąd", "To nie twoja ocena.");
           }
         },
       });
@@ -202,18 +163,9 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
       this.borrowedBooks = this.borrowedBooks.filter(x=>x.id !=resp.id);
     },error:(error)=>{
       if (error === "You can't cancel") {
-        this.showToast("error", "Błąd", "Nie można już anulować wypożyczenia książki");
+        this.extraFunctions.showToast("error", "Błąd", "Nie można już anulować wypożyczenia książki");
       }
     }})
-  }
-
-  showToast(severity: string, summary: string, message: string): void {
-    this.messageService.add({
-      severity: severity,
-      summary: summary,
-      detail: message,
-      life: 5000,
-    });
   }
 
 }

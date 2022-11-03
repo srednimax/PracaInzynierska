@@ -44,6 +44,7 @@ import { BookRatingServices } from 'src/services/bookRatingServices';
 import { UserProfileUpdateComponent } from './user-profile-update/user-profile-update.component';
 import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books/user-profile-borrowed-books.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { ExtraFunctions } from 'src/services/ExtraFunctions';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import { EmployeeComponent } from './employee/employee.component';
     BookService,
     BorrowingBookService,
     BookRatingServices,
-    MessageService, 
+    MessageService,
+    ExtraFunctions, 
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

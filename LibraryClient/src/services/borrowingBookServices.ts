@@ -11,14 +11,21 @@ export class BorrowingBookService {
   borrowBooks(bookId:number) {
     return this.http.post(`${this.url}/${bookId}`,null);
   }
-  getBorrowedBooks() {
+
+  getBorrowedBooksByUser() {
     return this.http.get<IBorrowedBookDto[]>(`${this.url}/UserBook's`);
   }
+
   renewBook(borrowedBookId:number){
     return this.http.put(`${this.url}/Renew/${borrowedBookId}`,null);
   }
+
   cancelBook(borrowedBookId:number){
     return this.http.put<IBorrowedBookDto>(`${this.url}/Cancel/${borrowedBookId}`,null);
+  }
+
+  getBorrowedBooks(){
+    return this.http.get<IBorrowedBookDto[]>(this.url);
   }
  
 }

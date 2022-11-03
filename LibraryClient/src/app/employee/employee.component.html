@@ -1,1 +1,36 @@
-<p>employee works!</p>
+<p-toast></p-toast>
+
+<div *ngFor="let borrowedBook of borrowedBooks | paginate: {itemsPerPage: 10,currentPage: page }">
+    <p-card class="p-2">
+        <div class="row d-flex align-items-center">
+            <div class="col-4">
+                <img src="assets/images/bookCoverPlaceholder.png">
+            </div>
+            <div class="col-4">
+                <div clas="row d-flex ">
+                    <div class="col-12 title">
+                        <p>{{borrowedBook.book?.title}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>{{borrowedBook.book?.author}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Gatunek: {{extraFunctions.genre(borrowedBook.book?.genre!)}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Rok wydania: {{borrowedBook.book?.publishYear}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Status: {{extraFunctions.status(borrowedBook.status)}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <p-button type="button" label="button"></p-button>
+            </div>
+
+        </div>
+    </p-card>
+
+</div>
+<pagination-controls (pageChange)="page =$event" [responsive]="true"></pagination-controls>

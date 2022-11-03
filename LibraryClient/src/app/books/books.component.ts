@@ -3,6 +3,7 @@ import { MessageService } from "primeng/api";
 import { IBookDto } from "src/Dtos/Book/IBookDto";
 import { BookService } from "src/services/bookService";
 import { BorrowingBookService } from "src/services/borrowingBookServices";
+import { ExtraFunctions } from "src/services/ExtraFunctions";
 
 @Component({
   selector: "app-books",
@@ -13,7 +14,7 @@ export class BooksComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private borrowingBookService: BorrowingBookService,
-    private messageService: MessageService
+    public extraFunctions:ExtraFunctions
   ) {}
 
   books: IBookDto[];
@@ -43,28 +44,6 @@ export class BooksComponent implements OnInit {
       this.filterBooks = resp;
     });
   }
-  genre(gen: number): string {
-    switch (gen) {
-      case 0:
-        return "Fikcja literacka";
-      case 1:
-        return "Kryminał";
-      case 2:
-        return "Horror";
-      case 3:
-        return "Historyczna";
-      case 4:
-        return "Romans";
-      case 5:
-        return "Western";
-      case 6:
-        return "Science fiction";
-      case 7:
-        return "Fantasy";
-      default:
-        return "";
-    }
-  }
   borrowBook(id: number) {
     this.borrowingBookService.borrowBooks(id).subscribe({
       next: (resp) => {
@@ -73,17 +52,17 @@ export class BooksComponent implements OnInit {
       },
       error: (error) => {
         if (error === "You must first pay the penalty") {
-          this.showToast("error", "Błąd", "Musisz najpierw zapłacić karę.");
+          this.extraFunctions.showToast("error", "Błąd", "Musisz najpierw zapłacić karę.");
         }
         if (error === "You already booked this book") {
-          this.showToast(
+          this.extraFunctions.showToast(
             "info",
             "Informacja",
             "Książka jest już w trakcie realizacji."
           );
         }
         if (error === "You can't borrowed more than 3 books at the same time") {
-          this.showToast(
+          this.extraFunctions.showToast(
             "error",
             "Błąd",
             "Nie możesz wypożyczyć więcej niż 3 książki naraz."
@@ -92,14 +71,7 @@ export class BooksComponent implements OnInit {
       },
     });
   }
-  showToast(severity: string, summary: string, message: string): void {
-    this.messageService.add({
-      severity: severity,
-      summary: summary,
-      detail: message,
-      life: 5000,
-    });
-  }
+  
   filterText(){
     if(this.search)
     {
@@ -107,9 +79,6 @@ export class BooksComponent implements OnInit {
     }
   }
   
-  con(){
-    console.log(this.selectedGenres)
-  }
 
  
 }
