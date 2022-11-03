@@ -45,6 +45,8 @@ import { UserProfileUpdateComponent } from './user-profile-update/user-profile-u
 import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books/user-profile-borrowed-books.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { ExtraFunctions } from 'src/services/ExtraFunctions';
+import { EmployeeBooksComponent } from './employee-books/employee-books.component';
+import { EmployeeBorrowedBooksComponent } from './employee-borrowed-books/employee-borrowed-books.component';
 
 
 @NgModule({
@@ -61,7 +63,9 @@ import { ExtraFunctions } from 'src/services/ExtraFunctions';
     UserProfileComponent,
     UserProfileUpdateComponent,
     UserProfileBorrowedBooksComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    EmployeeBooksComponent,
+    EmployeeBorrowedBooksComponent
   ],
   imports: [
     BrowserModule,
