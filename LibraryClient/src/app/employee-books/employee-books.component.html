@@ -4,14 +4,14 @@
 
     <p-table #dt [value]="books" [rows]="10" [paginator]="true" [globalFilterFields]="['title','author']" responsiveLayout="scroll"
          [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        currentPageReportTemplate="Wyświetlanie od {first} do {last} wszystkich {totalRecords} książek" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Zarządzanie książkami</h5>
+            <div class="d-flex align-items-center justify-content-between">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Filter" />
                 </span>
+                <button pButton pRipple label="Dodaj" icon="pi pi-plus" class="p-button-success mr-2" (click)="addBook()"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -55,7 +55,7 @@
             <small class="p-error" *ngIf="submitted && !book.title">Tytuł jest wymagany.</small>
         </div>
         <div class="field">
-            <label for="author">Tytuł</label>
+            <label for="author">Autor</label>
             <input type="text" pInputText id="author" [(ngModel)]="book.author" required autofocus />
             <small class="p-error" *ngIf="submitted && !book.author">Autor jest wymagany.</small>
         </div>
@@ -73,6 +73,35 @@
     <ng-template pTemplate="footer">
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
         <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveBook()"></button>
+    </ng-template>
+</p-dialog>
+<!-- add -->
+<p-dialog [(visible)]="bookDialogAdd" [style]="{width: '450px'}" header="Książka" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="titleAdd">Tytuł</label>
+            <input type="text" pInputText id="titleAdd" [(ngModel)]="bookAdd.title" required autofocus />
+            <small class="p-error" *ngIf="submittedAdd && !bookAdd.title">Tytuł jest wymagany.</small>
+        </div>
+        <div class="field">
+            <label for="authorAdd">Autor</label>
+            <input type="text" pInputText id="authorAdd" [(ngModel)]="bookAdd.author" required autofocus />
+            <small class="p-error" *ngIf="submittedAdd && !bookAdd.author">Autor jest wymagany.</small>
+        </div>
+        <div class="field">
+            <label for="genreAdd">Gatunek</label>
+            <p-dropdown appendTo="body" [(ngModel)]="bookAdd.genre" inputId="genreAdd" [options]="genres" optionLabel="name" optionValue="number" placeholder="Wybierz gatunek">
+            </p-dropdown>
+        </div>
+        <div class="field">
+            <label for="publishYearAdd">Rok</label>
+            <p-inputNumber id="publishYearAdd" [(ngModel)]="bookAdd.publishYear"></p-inputNumber>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialogAdd()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveBookAdd()"></button>
     </ng-template>
 </p-dialog>
 
