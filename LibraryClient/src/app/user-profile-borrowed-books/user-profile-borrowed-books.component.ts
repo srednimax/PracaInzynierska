@@ -18,7 +18,7 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
 
   constructor(    private borrowingBookService: BorrowingBookService,
     private bookRatingService: BookRatingServices,
-    private extraFunctions: ExtraFunctions) { }
+    public extraFunctions: ExtraFunctions) { }
 
 
     borrowedBooks: IBorrowedBookDto[];

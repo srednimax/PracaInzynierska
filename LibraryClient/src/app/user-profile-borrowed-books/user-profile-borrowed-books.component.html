@@ -13,13 +13,13 @@
                         <p>{{borrowedBook.book?.author}}</p>
                     </div>
                     <div class="col-4">
-                        <p>Gatunek: {{genre(borrowedBook.book?.genre!)}}</p>
+                        <p>Gatunek: {{extraFunctions.genre(borrowedBook.book?.genre!)}}</p>
                     </div>
                     <div class="col-4">
                         <p>Rok wydania: {{borrowedBook.book?.publishYear}}</p>
                     </div>
                     <div class="col-4">
-                        <p>Status: {{status(borrowedBook.status)}}</p>
+                        <p>Status: {{extraFunctions.status(borrowedBook.status)}}</p>
                     </div>
                 </div>
             </div>
