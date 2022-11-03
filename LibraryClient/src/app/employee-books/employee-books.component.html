@@ -32,7 +32,9 @@
                 <td>{{extraFunctions.genre(book.genre)}}</td>
                 <td><p-rating [ngModel]="book.rating" [readonly]="true" [cancel]="false"></p-rating></td>
                 <td>{{book.publishYear}}</td>
-                <td>{{book.isBorrowed}}</td>
+                <td><i *ngIf="book.isBorrowed" class="pi text-success pi-check"></i>
+                    <i *ngIf="!book.isBorrowed" class="pi text-danger pi-times"></i>
+                </td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editBook(book)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteBook(book)"></button>
