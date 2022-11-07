@@ -48,6 +48,22 @@ namespace LibraryBackend.Controllers
             };
         }
 
+        [AllowAnonymous]
+        [HttpGet("Book/{bookId}")]
+        public async Task<ActionResult<List<BookRatingDto>>> GetBookRatingByBook(int bookId)
+        {
+
+            var result = await _bookRatingService.GetAllBooksRatingByBook(bookId);
+
+            return result.Status switch
+            {
+                200 => result.Body,
+                404 => NotFound(),
+                500 => Problem(result.Message)
+            };
+        }
+
+
         [HttpPost]
         public async Task<ActionResult<BookRatingDto>> AddBookRating(BookRatingAddDto bookRatingAddDto)
         {

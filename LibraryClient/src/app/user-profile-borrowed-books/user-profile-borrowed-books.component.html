@@ -53,7 +53,7 @@
 <p-dialog [(visible)]="bookRatingDialog" [style]="{width: '450px'}" header="Ocena" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="field">
-            <label for="rate">Oena</label>
+            <label for="rate">Ocena</label>
             <p-rating [(ngModel)]="bookRating.rating" [stars]="5" [cancel]="false"></p-rating>
             <small class="p-error" *ngIf="submitted && !bookRating.rating">Ocena jest wymagana.</small>
         </div>

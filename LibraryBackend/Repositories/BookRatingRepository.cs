@@ -32,6 +32,16 @@ public class BookRatingRepository : Repository<BookRating>, IBookRatingRepositor
             .ToListAsync();
     }
 
+    public async Task<List<BookRating>> GetAllBookRatingsByBook(int bookId)
+    {
+        return await GetAll()
+            .Include(x => x.Book)
+            .Include(x => x.User)
+            .Where(x => x.Book.Id == bookId)
+            .ToListAsync();
+
+    }
+
     public async Task<BookRating> AddBookRating(BookRating bookRating)
     {
         return await AddAsync(bookRating);

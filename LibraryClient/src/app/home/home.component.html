@@ -1,2 +1,2 @@
-<app-books *ngIf="user?.role === 0"></app-books>
+<app-books *ngIf="user?.role !== 1"></app-books>
 <app-employee *ngIf="user?.role === 1"></app-employee>

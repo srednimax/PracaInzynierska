@@ -1,0 +1,16 @@
+<div *ngFor="let rating of ratings | paginate: {itemsPerPage: itemsPerPage,currentPage: page }" class="p-3">
+    <p-card>
+        <div class="row">
+            <div class="col-12 reader">
+               <p> {{rating?.user?.firstName}} {{rating?.user?.lastName}}</p>
+            </div>
+            <div class="col-12 py-2">
+                <p-rating [ngModel]="rating?.rating" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
+             </div>
+             <div class="col-12">
+                <p> {{rating?.comment}}</p>
+             </div>
+        </div>
+    </p-card>
+</div>
+<pagination-controls *ngIf="ratings.length > itemsPerPage" (pageChange)="page =$event" [responsive]="true"></pagination-controls>

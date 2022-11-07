@@ -1,6 +1,7 @@
 ﻿using LibraryDatabase.Models;
 
 Console.WriteLine("Hello, World!");
+/*
 var dbContext = new LibraryDatabaseContext();
 
 var books = new List<Book>()
@@ -217,4 +218,4 @@ var books = new List<Book>()
 };
 
 dbContext.AddRange(books);
-dbContext.SaveChanges();
+dbContext.SaveChanges();*/

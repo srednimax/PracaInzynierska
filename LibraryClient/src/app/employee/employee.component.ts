@@ -1,12 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { IBorrowedBookChangeStatusDto } from "src/Dtos/BorrowedBook/IBorrowedBookChangeStatus";
-import {
-  IBorrowedBookDto,
-  IStatus,
-} from "src/Dtos/BorrowedBook/IBorrowedBookDto";
-import { IBorrowedBookReturnDto } from "src/Dtos/BorrowedBook/IBorrowedBookReturnDto";
-import { BorrowingBookService } from "src/services/borrowingBookServices";
-import { ExtraFunctions } from "src/services/ExtraFunctions";
 
 @Component({
   selector: "app-employee",

@@ -47,9 +47,10 @@ import { BookRatingServices } from 'src/services/bookRatingServices';
 import { UserProfileUpdateComponent } from './user-profile-update/user-profile-update.component';
 import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books/user-profile-borrowed-books.component';
 import { EmployeeComponent } from './employee/employee.component';
-import { ExtraFunctions } from 'src/services/ExtraFunctions';
+import { ExtraFunctions } from 'src/services/extraFunctions';
 import { EmployeeBooksComponent } from './employee-books/employee-books.component';
 import { EmployeeBorrowedBooksComponent } from './employee-borrowed-books/employee-borrowed-books.component';
+import { BookReviewComponent } from './book-review/book-review.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { EmployeeBorrowedBooksComponent } from './employee-borrowed-books/employ
     UserProfileBorrowedBooksComponent,
     EmployeeComponent,
     EmployeeBooksComponent,
-    EmployeeBorrowedBooksComponent
+    EmployeeBorrowedBooksComponent,
+    BookReviewComponent
   ],
   imports: [
     BrowserModule,

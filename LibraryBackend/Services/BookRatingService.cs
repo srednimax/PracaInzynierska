@@ -45,6 +45,19 @@ public class BookRatingService : IBookRatingService
         return new ServiceResult<List<BookRatingDto>>() { Status = 200,Body = _mapper.Map<List<BookRatingDto>>(bookRatings)};
     }
 
+    public async Task<ServiceResult<List<BookRatingDto>>> GetAllBooksRatingByBook(int bookId)
+    {
+        var book = await _bookRepository.GetBookById(bookId);
+
+        if (book is null)
+            return new ServiceResult<List<BookRatingDto>>() { Status = 404 };
+
+        var ratings = await _bookRatingRepository.GetAllBookRatingsByBook(bookId);
+
+        return new ServiceResult<List<BookRatingDto>>()
+            { Status = 200, Body = _mapper.Map<List<BookRatingDto>>(ratings) };
+    }
+
     public async Task<ServiceResult<BookRatingDto>> GetBookRatingById(int id)
     {
         var bookRating = await _bookRatingRepository.GetBookRatingById(id);
