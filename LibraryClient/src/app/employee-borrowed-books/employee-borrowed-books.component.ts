@@ -6,7 +6,7 @@ import {
 } from "src/Dtos/BorrowedBook/IBorrowedBookDto";
 import { IBorrowedBookReturnDto } from "src/Dtos/BorrowedBook/IBorrowedBookReturnDto";
 import { BorrowingBookService } from "src/services/borrowingBookServices";
-import { ExtraFunctions } from "src/services/ExtraFunctions";
+import { ExtraFunctions } from "src/services/extraFunctions";
 
 @Component({
   selector: "app-employee-borrowed-books",

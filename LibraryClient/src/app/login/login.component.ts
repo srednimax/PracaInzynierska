@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IUserDto } from 'src/Dtos/User/IUserDto';
 import { IUserSignInDto } from 'src/Dtos/User/IUserSignInDto';
 import { UserService } from 'src/services/userService';
 

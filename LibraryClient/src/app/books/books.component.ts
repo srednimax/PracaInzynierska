@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { MessageService } from "primeng/api";
 import { IBookDto } from "src/Dtos/Book/IBookDto";
 import { BookService } from "src/services/bookService";
 import { BorrowingBookService } from "src/services/borrowingBookServices";
-import { ExtraFunctions } from "src/services/ExtraFunctions";
+import { ExtraFunctions } from "src/services/extraFunctions";
 
 @Component({
   selector: "app-books",

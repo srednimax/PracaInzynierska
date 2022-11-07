@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IGender, IUserSignUpDto } from 'src/Dtos/User/IUserSignUpDto';
 import { UserService } from 'src/services/userService';
 import { CustomValidators } from '../customValidators/customValidators';
