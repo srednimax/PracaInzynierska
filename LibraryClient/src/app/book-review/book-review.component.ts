@@ -14,6 +14,8 @@ export class BookReviewComponent implements OnInit {
 
   ratings:IBookRatingDto[];
   bookId:number;
+  page:number = 1;
+  itemsPerPage:number = 5;
 
 
   ngOnInit(): void {
