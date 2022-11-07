@@ -47,7 +47,7 @@ import { BookRatingServices } from 'src/services/bookRatingServices';
 import { UserProfileUpdateComponent } from './user-profile-update/user-profile-update.component';
 import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books/user-profile-borrowed-books.component';
 import { EmployeeComponent } from './employee/employee.component';
-import { ExtraFunctions } from 'src/services/ExtraFunctions';
+import { ExtraFunctions } from 'src/services/extraFunctions';
 import { EmployeeBooksComponent } from './employee-books/employee-books.component';
 import { EmployeeBorrowedBooksComponent } from './employee-borrowed-books/employee-borrowed-books.component';
 
