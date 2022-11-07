@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { IBookDto } from "src/Dtos/Book/IBookDto";
 import { BookService } from "src/services/bookService";
 import { BorrowingBookService } from "src/services/borrowingBookServices";
@@ -13,7 +14,8 @@ export class BooksComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private borrowingBookService: BorrowingBookService,
-    public extraFunctions:ExtraFunctions
+    public extraFunctions:ExtraFunctions,
+    private _router: Router
   ) {}
 
   books: IBookDto[];
@@ -76,6 +78,10 @@ export class BooksComponent implements OnInit {
     {
       this.filterBooks=this.books.filter(x=>x.title?.includes(this.search));
     }
+  }
+
+  bookReview(bookId:number){
+    this._router.navigate([`/book/${bookId}`]);
   }
   
 

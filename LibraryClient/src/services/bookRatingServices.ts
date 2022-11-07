@@ -26,5 +26,8 @@ export class BookRatingServices {
   deleteBookRating(data :IBookRatingRemoveDto){
     return this.http.delete<IBookRatingDto>(`${this.url}`,{body:data});
   }
+  getBookRatingByBook(bookId:number){
+    return this.http.get<IBookRatingDto[]>(`${this.url}/Book/${bookId}`);
+  }
 
 }
