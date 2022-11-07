@@ -1,9 +1,14 @@
 export interface IBookDto {
     id: number;
-    title: string | null;
-    author: string | null;
+    title: string;
+    author: string;
     genre: number;
     publishYear: number;
     isBorrowed: boolean;
     rating:number;
+}
+
+export interface IGenre{
+    number:number;
+    name:string;
 }

@@ -1,6 +1,6 @@
 export interface IBookAddDto {
-    title: string | null;
-    author: string | null;
-    genre: string;
+    title: string;
+    author: string;
+    genre: number;
     publishYear: number;
 }

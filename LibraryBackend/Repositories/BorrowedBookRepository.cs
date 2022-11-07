@@ -13,6 +13,7 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
             .Include(x => x.Book)
             .Include(x => x.Employee)
             .Include(x => x.Reader)
+            .OrderBy(x=>x.Status)
             .ToListAsync();
     }
 

@@ -20,6 +20,9 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import {RatingModule} from 'primeng/rating';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {ConfirmDialog, ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 
 //pagination
 import {NgxPaginationModule} from 'ngx-pagination'; 
@@ -43,6 +46,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { BookRatingServices } from 'src/services/bookRatingServices';
 import { UserProfileUpdateComponent } from './user-profile-update/user-profile-update.component';
 import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books/user-profile-borrowed-books.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { ExtraFunctions } from 'src/services/ExtraFunctions';
+import { EmployeeBooksComponent } from './employee-books/employee-books.component';
+import { EmployeeBorrowedBooksComponent } from './employee-borrowed-books/employee-borrowed-books.component';
 
 
 @NgModule({
@@ -58,7 +65,10 @@ import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books
     ManualFilterPipe,
     UserProfileComponent,
     UserProfileUpdateComponent,
-    UserProfileBorrowedBooksComponent
+    UserProfileBorrowedBooksComponent,
+    EmployeeComponent,
+    EmployeeBooksComponent,
+    EmployeeBorrowedBooksComponent
   ],
   imports: [
     BrowserModule,
@@ -82,14 +92,19 @@ import { UserProfileBorrowedBooksComponent } from './user-profile-borrowed-books
     MultiSelectModule,
     RatingModule,
     DialogModule,
-    InputTextareaModule
+    InputTextareaModule,
+    InputNumberModule, 
+    ConfirmDialogModule,
+    
   ],
   providers: [
     UserService,
     BookService,
     BorrowingBookService,
     BookRatingServices,
-    MessageService, 
+    MessageService,
+    ConfirmationService,
+    ExtraFunctions, 
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

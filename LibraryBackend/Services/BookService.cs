@@ -47,7 +47,7 @@ public class BookService : IBookService
             return new ServiceResult<BookDto>() { Status = 500, Message = "Can't update borrowed book" };
 
         if (!String.IsNullOrEmpty(bookUpdateDto.Title))
-            bookToUpdate.Author = bookToUpdate.Title;
+            bookToUpdate.Title = bookUpdateDto.Title;
 
         if (!String.IsNullOrEmpty(bookUpdateDto.Author))
             bookToUpdate.Author = bookUpdateDto.Author;

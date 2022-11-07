@@ -66,6 +66,8 @@ namespace LibraryBackend.Controllers
         [HttpPut("Return")]
         public async Task<ActionResult<BorrowedBookDto>> ReturnBook(BorrowedBookReturnDto borrowedBookReturnDto)
         {
+            borrowedBookReturnDto.EmployeeId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+
             var result = await _borrowingBookService.ReturnBook(borrowedBookReturnDto);
 
             return result.Status switch
@@ -93,6 +95,8 @@ namespace LibraryBackend.Controllers
         [Authorize(Roles = "Employee")]
         public async Task<ActionResult<BorrowedBookDto>> ChangeStatus(BorrowedBookChangeStatusDto bookChangeStatusDto)
         {
+            bookChangeStatusDto.EmployeeId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+
             var result = await _borrowingBookService.ChangeStatus(bookChangeStatusDto);
 
             return result.Status switch

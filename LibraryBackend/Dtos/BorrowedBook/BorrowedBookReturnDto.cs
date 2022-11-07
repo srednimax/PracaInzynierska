@@ -6,5 +6,5 @@ public class BorrowedBookReturnDto
 {
     [Required]
     public int BorrowedBookId { get; set; }
-    public int UserId { get; set; }
+    public int EmployeeId { get; set; }
 }
