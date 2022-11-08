@@ -29,14 +29,14 @@
                     <p>Termin oddania: {{getDate(borrowedBook.returnDate!)}}</p>
                 </div>
                 <p-button type="button" (onClick)="borrowBook(borrowedBook.id)"
-                    [disabled]="borrowedBook.isRenew||borrowedBook.returnDate === null"
+                    [disabled]="borrowedBook.isRenew||borrowedBook.returnDate === null ||borrowedBook.isReturned == true"
                     [label]="borrowedBook.isRenew ? 'Przedłużona':'Przedłuż'"></p-button>
                 <div class="col-4 pt-2">
                     <p-button type="button" (onClick)="editRating(borrowedBook.book?.id!,borrowedBook.id)"
                         [disabled]="borrowedBook.status !==5" [label]="borrowedBook.isRated ? 'Zmień':'Oceń'">
                     </p-button>
                 </div>
-                <div *ngIf="borrowedBook.status <= 0"  class="col-4 pt-2">
+                <div *ngIf="borrowedBook.status < 3"  class="col-4 pt-2">
                     <p-button type="button" (onClick)="cancel(borrowedBook.id)" label="Anuluj">
                     </p-button>
                 </div>

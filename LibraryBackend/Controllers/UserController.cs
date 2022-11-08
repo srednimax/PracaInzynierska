@@ -103,4 +103,21 @@ public class UserController : ControllerBase
             500 => Problem(result.Message)
         };
     }
+
+    [Authorize(Roles = "User")]
+    [HttpPut("Penalty")]
+    public async Task<ActionResult<UserDto>> PayPenalty()
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+
+        var result = await _userService.PayPenalty(userId);
+
+        return result.Status switch
+        {
+            200 => result.Body,
+            404 => NotFound(),
+            500 => Problem(result.Message)
+        };
+
+    }
 }

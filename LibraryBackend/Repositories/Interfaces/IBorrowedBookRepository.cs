@@ -12,4 +12,5 @@ public interface IBorrowedBookRepository
     public Task<BorrowedBook> AddBorrowedBook(BorrowedBook borrowedBook);
     public Task<BorrowedBook> UpdateBorrowedBook(BorrowedBook borrowedBook);
     public Task<bool> MoreThanThreeBooks(int userId);
+    public Task<List<BorrowedBook>> GetRatedBorrowedBooksByUser(int userId);
 }

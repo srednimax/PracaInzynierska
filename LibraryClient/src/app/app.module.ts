@@ -51,6 +51,8 @@ import { ExtraFunctions } from 'src/services/extraFunctions';
 import { EmployeeBooksComponent } from './employee-books/employee-books.component';
 import { EmployeeBorrowedBooksComponent } from './employee-borrowed-books/employee-borrowed-books.component';
 import { BookReviewComponent } from './book-review/book-review.component';
+import { UserProfileRecomendationComponent } from './user-profile-recomendation/user-profile-recomendation.component';
+import { UserProfilePenaltyComponent } from './user-profile-penalty/user-profile-penalty.component';
 
 
 @NgModule({
@@ -70,7 +72,9 @@ import { BookReviewComponent } from './book-review/book-review.component';
     EmployeeComponent,
     EmployeeBooksComponent,
     EmployeeBorrowedBooksComponent,
-    BookReviewComponent
+    BookReviewComponent,
+    UserProfileRecomendationComponent,
+    UserProfilePenaltyComponent
   ],
   imports: [
     BrowserModule,

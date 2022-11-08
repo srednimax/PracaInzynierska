@@ -9,22 +9,32 @@ export class UserProfileComponent implements OnInit {
   constructor() {}
 
   tabSettings: boolean;
+  tabBooks: boolean;
+  tabRecommendations: boolean;
+  tabPenalty:boolean;
 
   ngOnInit(): void {
     this.tabSettings = true;
-    
   }
 
   changeTab(tab: string): void {
-    
+    this.tabSettings = false;
+    this.tabBooks = false;
+    this.tabRecommendations = false;
+    this.tabPenalty=false
     switch (tab) {
       case "set":
-        this.tabSettings =true;
+        this.tabSettings = true;
         break;
       case "book":
-        this.tabSettings=false;
+        this.tabBooks = true;
+        break;
+      case "rec":
+        this.tabRecommendations = true;
+        break;
+        case"pen":
+        this.tabPenalty = true;
         break;
     }
   }
-
 }
