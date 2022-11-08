@@ -25,5 +25,8 @@ export class BookService {
   addBook(data:IBookAddDto){
     return this.http.post<IBookDto>(`${this.url}`,data);
   }
+  getRecommendedBooks(){
+    return this.http.get<IBookDto[]>(`${this.url}/Recommended`);
+  }
 
 }

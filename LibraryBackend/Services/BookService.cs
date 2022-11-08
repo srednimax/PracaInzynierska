@@ -112,13 +112,8 @@ public class BookService : IBookService
 
         filtered = filtered.Where(x=> ratings.Any(y=>y.Rating >=3 && (y.Book.Author == x.Author || y.Book.Genre == x.Genre)));
 
-        filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author || y.Book.Genre == x.Genre));
-
+        filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author || y.Book.Genre == x.Genre)).OrderByDescending(x=>x.Rating);
 
         return new ServiceResult<List<BookDto>>() { Status = 200, Body = _mapper.Map<List<BookDto>>(filtered) };
-
-
-
-
     }
 }

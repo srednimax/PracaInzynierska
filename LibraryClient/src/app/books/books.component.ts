@@ -80,9 +80,7 @@ export class BooksComponent implements OnInit {
     }
   }
 
-  bookReview(bookId:number){
-    this._router.navigate([`/book/${bookId}`]);
-  }
+ 
   
 
  
