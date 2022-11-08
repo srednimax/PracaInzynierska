@@ -29,5 +29,8 @@ export class UserService {
   updatePassword(data :IUserUpdatePasswordDto){
     return this.http.put<IUserDto>(`${this.url}/ChangePassword`,data);
   }
+  payPenalty(){
+    return this.http.put<IUserDto>(`${this.url}/Penalty`,null);
+  }
 
 }
