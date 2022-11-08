@@ -11,6 +11,9 @@
                 <a class="list-group-item list-group-item-action d-flex align-items-center" style="padding: 0.8rem 1rem"
                 data-bs-toggle="list" role="tab" id="list-settings-list" aria-controls="list-settings"
                 (click)="changeTab('rec')">Proponowane</a>
+                <a class="list-group-item list-group-item-action d-flex align-items-center" style="padding: 0.8rem 1rem"
+                data-bs-toggle="list" role="tab" id="list-settings-list" aria-controls="list-settings"
+                (click)="changeTab('pen')">Płatności</a>
 
         </div>
     </div>
@@ -29,6 +32,11 @@
         <app-user-profile-recomendation>
                 
         </app-user-profile-recomendation>
+    </div>
+    <div *ngIf="tabPenalty === true" class="col-10">
+        <app-user-profile-penalty>
+                
+        </app-user-profile-penalty>
     </div>
 
 </div>

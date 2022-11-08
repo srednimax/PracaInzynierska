@@ -52,6 +52,7 @@ import { EmployeeBooksComponent } from './employee-books/employee-books.componen
 import { EmployeeBorrowedBooksComponent } from './employee-borrowed-books/employee-borrowed-books.component';
 import { BookReviewComponent } from './book-review/book-review.component';
 import { UserProfileRecomendationComponent } from './user-profile-recomendation/user-profile-recomendation.component';
+import { UserProfilePenaltyComponent } from './user-profile-penalty/user-profile-penalty.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { UserProfileRecomendationComponent } from './user-profile-recomendation/
     EmployeeBooksComponent,
     EmployeeBorrowedBooksComponent,
     BookReviewComponent,
-    UserProfileRecomendationComponent
+    UserProfileRecomendationComponent,
+    UserProfilePenaltyComponent
   ],
   imports: [
     BrowserModule,

@@ -110,5 +110,22 @@ namespace LibraryBackend.Services
 
             return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(user), Status = 200 };
         }
+
+        public async Task<ServiceResult<UserDto>> PayPenalty(int userId)
+        {
+            var user = await _userRepository.GetUserById(userId);
+
+            if (user is null)
+                return new ServiceResult<UserDto>() { Status = 404 };
+
+            if (user.Penalty == 0)
+                return new ServiceResult<UserDto>() { Status = 500, Message = "You do not need to pay" };
+
+            user.Penalty = 0;
+
+            await _userRepository.UpdateUser(user);
+
+            return new ServiceResult<UserDto>() { Status = 200, Body = _mapper.Map<UserDto>(user) };
+        }
     }
 }
