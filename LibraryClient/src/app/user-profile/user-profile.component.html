@@ -8,6 +8,9 @@
             <a class="list-group-item list-group-item-action d-flex align-items-center" style="padding: 0.8rem 1rem"
                 data-bs-toggle="list" role="tab" id="list-settings-list" aria-controls="list-settings"
                 (click)="changeTab('book')">Książki</a>
+                <a class="list-group-item list-group-item-action d-flex align-items-center" style="padding: 0.8rem 1rem"
+                data-bs-toggle="list" role="tab" id="list-settings-list" aria-controls="list-settings"
+                (click)="changeTab('rec')">Proponowane</a>
 
         </div>
     </div>
@@ -17,10 +20,15 @@
         
         </app-user-profile-update>
     </div>
-    <div *ngIf="tabSettings === false" class="col-10">
+    <div *ngIf="tabBooks === true" class="col-10">
         <app-user-profile-borrowed-books>
-
+                
         </app-user-profile-borrowed-books>
+    </div>
+    <div *ngIf="tabRecommendations === true" class="col-10">
+        <app-user-profile-recomendation>
+                
+        </app-user-profile-recomendation>
     </div>
 
 </div>
