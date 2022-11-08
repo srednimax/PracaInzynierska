@@ -71,5 +71,20 @@ namespace LibraryBackend.Controllers
             };
         }
 
+        [Authorize(Roles = "User")]
+        [HttpGet("Recommended")]
+        public async Task<ActionResult<List<BookDto>>> GetRecommendedBooks()
+        {
+            var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+
+            var result = await _bookService.GetRecommendedBooks(userId);
+
+            return result.Status switch
+            {
+                200 => result.Body,
+                404 => NotFound(),
+                500 => Problem(result.Message)
+            };
+        }
     }
 }

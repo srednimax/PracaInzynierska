@@ -138,6 +138,7 @@ namespace LibraryBackend.Services
             await _bookRepository.UpdateBook(book);
 
             borrowedBook.IsReturned = true;
+            borrowedBook.Status = Status.Returned;
             await _borrowedBookRepository.UpdateBorrowedBook(borrowedBook);
 
             return new ServiceResult<BorrowedBookDto>()

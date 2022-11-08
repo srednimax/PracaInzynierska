@@ -73,4 +73,13 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
 
         return userBorrowedBooks >= 3;
     }
+
+    public async Task<List<BorrowedBook>> GetRatedBorrowedBooksByUser(int userId)
+    {
+        return await GetAll()
+            .Include(x => x.Book)
+            .Include(x => x.Reader)
+            .Where(x => x.Reader.Id == userId && x.IsRated == true)
+            .ToListAsync();
+    }
 }

@@ -9,4 +9,5 @@ public interface IBookService
     public Task<ServiceResult<BookDto>> AddBook(BookAddDto bookAddDto);
     public Task<ServiceResult<BookDto>> UpdateBook(BookUpdateDto bookUpdateDto);
     public Task<ServiceResult<BookDto>> RemoveBook( int id);
+    public Task<ServiceResult<List<BookDto>>> GetRecommendedBooks(int userId);
 }

@@ -9,11 +9,17 @@ namespace LibraryBackend.Services;
 public class BookService : IBookService
 {
     private readonly IBookRepository _bookRepository;
+    private readonly IBorrowedBookRepository _borrowedBookRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly IBookRatingRepository _bookRatingRepository;
     private readonly IMapper _mapper;
 
-    public BookService(IBookRepository bookRepository, IMapper mapper)
+    public BookService(IBookRepository bookRepository, IBorrowedBookRepository borrowedBookRepository, IUserRepository userRepository, IBookRatingRepository bookRatingRepository, IMapper mapper)
     {
         _bookRepository = bookRepository;
+        _borrowedBookRepository = borrowedBookRepository;
+        _userRepository = userRepository;
+        _bookRatingRepository = bookRatingRepository;
         _mapper = mapper;
     }
     public async Task<ServiceResult<List<BookDto>>> GetAllBooks()
@@ -84,5 +90,35 @@ public class BookService : IBookService
             Body = _mapper.Map<BookDto>(bookToRemove),
             Status = 200
         };
+    }
+
+    public async Task<ServiceResult<List<BookDto>>> GetRecommendedBooks(int userId)
+    {
+        var user = await _userRepository.GetUserById(userId);
+
+        if (user is null)
+            return new ServiceResult<List<BookDto>>() { Status = 404 };
+
+        var borrowedBooks = await _borrowedBookRepository.GetRatedBorrowedBooksByUser(user.Id);
+
+        if (borrowedBooks.Count == 0)
+            return new ServiceResult<List<BookDto>>() { Status = 200, Body = new List<BookDto>() };
+
+        var ratings = await _bookRatingRepository.GetAllBookRatingsByUser(user.Id);
+
+        var allBooks = await _bookRepository.GetAllBooks();
+
+        var filtered = allBooks.ExceptBy(borrowedBooks.Select(x => x.Book.Id), book => book.Id);
+
+        filtered = filtered.Where(x=> ratings.Any(y=>y.Rating >=3 && (y.Book.Author == x.Author || y.Book.Genre == x.Genre)));
+
+        filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author || y.Book.Genre == x.Genre));
+
+
+        return new ServiceResult<List<BookDto>>() { Status = 200, Body = _mapper.Map<List<BookDto>>(filtered) };
+
+
+
+
     }
 }
