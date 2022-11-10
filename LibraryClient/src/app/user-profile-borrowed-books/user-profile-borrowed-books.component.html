@@ -1,5 +1,5 @@
-<div class="py-3" *ngFor="let borrowedBook of borrowedBooks | paginate: {itemsPerPage: 5,currentPage: page }">
-    <p-card>
+<div *ngFor="let borrowedBook of borrowedBooks | paginate: {itemsPerPage: 5,currentPage: page }">
+    <p-card styleClass="mb-3">
         <div class="row d-flex align-items-center">
             <div class="col-md d-flex justify-content-center">
                 <img class="img-fluid" src="assets/images/bookCoverPlaceholder.png">

@@ -1,37 +1,38 @@
 <p-toast></p-toast>
-
 <div *ngFor="let borrowedBook of borrowedBooks | paginate: {itemsPerPage: 10,currentPage: page }">
-    <p-card class="p-2">
+    <p-card styleClass="mb-3">
         <div class="row d-flex align-items-center">
-            <div class="col-3">
-                <img src="assets/images/bookCoverPlaceholder.png">
+            <div class="col-md d-flex justify-content-center">
+                <img class="img-fluid" src="assets/images/bookCoverPlaceholder.png">
             </div>
-            <div class="col-4">
-                <div clas="row d-flex ">
-                    <div class="col-12 title">
+            <div class="col-md mt-3 mt-md-0 d-flex justify-content-center">
+                <div clas="row">
+                    <div class="col-md title">
                         <p>{{borrowedBook.book?.title}}</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md">
                         <p>{{borrowedBook.book?.author}}</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md">
                         <p>Gatunek: {{extraFunctions.genre(borrowedBook.book?.genre!)}}</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md">
                         <p>Rok wydania: {{borrowedBook.book?.publishYear}}</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md">
                         <p>Status: {{extraFunctions.status(borrowedBook.status)}}</p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-5">
-                <div class="row d-flex">
-                    <div *ngIf="borrowedBook.employee !== null">
+            <div class="col-md mt-3 mt-md-0">
+                <div class="row gy-2 p-fluid">
+                    <div class="col-12 d-flex justify-content-center" *ngIf="borrowedBook.employee !== null">
                         <p>Modyfikacja: {{borrowedBook.employee.firstName +" " + borrowedBook.employee.lastName}}</p>
                     </div>
-                    <p-button type="button" (onClick)="editStatus(borrowedBook.id)" label="Modyfikuj"></p-button>
+                    <div class="col-12 d-flex justify-content-center">
+                        <p-button class="w-half" type="button" (onClick)="editStatus(borrowedBook.id)" label="Modyfikuj"></p-button>
+                    </div>
                 </div>
             </div>
 
