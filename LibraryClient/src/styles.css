@@ -2,6 +2,9 @@
 .w-full{
     width: 100% !important;
 }
+.w-half{
+    width: 50% !important;
+}
 html {
     position: relative;
     min-height: 100%;
