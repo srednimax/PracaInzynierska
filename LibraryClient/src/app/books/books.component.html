@@ -2,10 +2,10 @@
 <div class="container py-4">
     <p-card>
         <div class="row g-2">
-            <div class="col-md py-2 p-fluid">
+            <div class="col-lg py-2 p-fluid">
                 <input type="text" [(ngModel)]="search" pInputText placeholder="Search" />
             </div>
-            <div class="col-md py-2">
+            <div class="col-lg py-2">
                 <div class="row g-2">
                     <div class="col">
                         <input type="text" style="width:100%;" [(ngModel)]="from" pInputText placeholder="Od roku" />
@@ -15,11 +15,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md py-2 d-flex align-items-center justify-content-center ">
+            <div class="col-lg py-2 d-flex align-items-center justify-content-center ">
                 <p-checkbox [(ngModel)]="isAvalible" [binary]="true" inputId="binary"></p-checkbox>
                 <label class="px-2" for="binary">Wybierz tylko dostępne</label>
             </div>
-            <div class="col-md py-2 d-flex justify-content-center ">
+            <div class="col-lg py-2 d-flex justify-content-center ">
                 <p-multiSelect [maxSelectedLabels]="3" defaultLabel="Wybierz kategorie" [options]="genres"
                     [(ngModel)]="selectedGenres" optionLabel="genre" selectedItemsLabel="{0} gatunków wybranych">
                 </p-multiSelect>
