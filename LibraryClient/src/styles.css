@@ -2,6 +2,9 @@
 .w-full{
     width: 100% !important;
 }
+.w-half{
+    width: 50% !important;
+}
 html {
     position: relative;
     min-height: 100%;
@@ -19,4 +22,8 @@ body {
     width: 100%;
     padding-top: 20px;
     padding-bottom: 10px;
+}
+.title{
+    font-size:x-large;
+    font-weight:600;
 }

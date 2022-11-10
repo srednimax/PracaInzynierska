@@ -1,16 +1,17 @@
 <p-toast></p-toast>
 
-<div class="card">
+<p-card>
 
     <p-table #dt [value]="books" [rows]="10" [paginator]="true" [globalFilterFields]="['title','author']" responsiveLayout="scroll"
          [rowHover]="true" dataKey="id"
         currentPageReportTemplate="Wyświetlanie od {first} do {last} wszystkich {totalRecords} książek" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
-            <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex p-fluid align-items-center justify-content-between">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Filter" />
+                    <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Szukaj" />
                 </span>
+                <div class="px-2"></div>
                 <button pButton pRipple label="Dodaj" icon="pi pi-plus" class="p-button-success mr-2" (click)="addBook()"></button>
             </div>
         </ng-template>
@@ -47,7 +48,7 @@
             </div>
         </ng-template>
     </p-table>
-</div>
+</p-card>
 
 <p-dialog [(visible)]="bookDialog" [style]="{width: '450px'}" header="Książka" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">

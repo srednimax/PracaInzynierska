@@ -1,43 +1,61 @@
 <p-toast></p-toast>
-<div >
-    
-    <input type="text" [(ngModel)]="search" pInputText placeholder="Search" />
-    <input type="text" [(ngModel)]="from" pInputText placeholder="Od" />
-    <input type="text" [(ngModel)]="to" pInputText placeholder="Do" />
-    <p-checkbox [(ngModel)]="isAvalible" [binary]="true" inputId="binary"></p-checkbox>
-    <label for="binary">Wybierz tylko dostępne</label>
-
-    <p-multiSelect defaultLabel="Wybierz kategorie" [options]="genres" [(ngModel)]="selectedGenres" optionLabel="genre"></p-multiSelect>
-    
-</div>
-
-<div *ngFor="let book of books | filter: search: from: to: isAvalible: selectedGenres | paginate: {itemsPerPage: 10,currentPage: page }">
-    <p-card class="p-2">
-        <div class="row d-flex align-items-center">
-            <div class="col-4">
-                <img src="assets/images/bookCoverPlaceholder.png">
+<div class="container py-3">
+    <p-card>
+        <div class="row g-2">
+            <div class="col-lg py-2 p-fluid">
+                <input type="text" [(ngModel)]="search" pInputText placeholder="Search" />
             </div>
-            <div class="col-4">
-                <div clas="row d-flex ">
-                    <div class="col-12 title">
-                        <p>{{book.title}}</p>
+            <div class="col-lg py-2">
+                <div class="row g-2">
+                    <div class="col">
+                        <input type="text" style="width:100%;" [(ngModel)]="from" pInputText placeholder="Od roku" />
                     </div>
-                    <div class="col-4">
-                        <p>{{book.author}}</p>
-                    </div>
-                    <div class="col-4">
-                        <p>Gatunek: {{extraFunctions.genre(book.genre)}}</p>
-                    </div>
-                    <div class="col-4">
-                        <p>Rok wydania: {{book.publishYear}}</p>
-                    </div>
-                    <div class="col-4">
-                        <p-rating [ngModel]="book.rating" (click)="extraFunctions.status(book.id)" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
+                    <div class="col">
+                        <input type="text" style="width:100%;" [(ngModel)]="to" pInputText placeholder="Do roku" />
                     </div>
                 </div>
             </div>
-            <div class="col-4">
-                <p-button type="button" (onClick)="borrowBook(book.id)"
+            <div class="col-lg py-2 d-flex align-items-center justify-content-center ">
+                <p-checkbox [(ngModel)]="isAvalible" [binary]="true" inputId="binary"></p-checkbox>
+                <label class="px-2" for="binary">Wybierz tylko dostępne</label>
+            </div>
+            <div class="col-lg py-2 d-flex justify-content-center ">
+                <p-multiSelect [maxSelectedLabels]="3" defaultLabel="Wybierz kategorie" [options]="genres"
+                    [(ngModel)]="selectedGenres" optionLabel="genre" selectedItemsLabel="{0} gatunków wybranych">
+                </p-multiSelect>
+            </div>
+        </div>
+    </p-card>
+</div>
+<div class="container py-3"
+    *ngFor="let book of books | filter: search: from: to: isAvalible: selectedGenres | paginate: {itemsPerPage: 10,currentPage: page }">
+    <p-card>
+        <div class="row d-flex align-items-center">
+            <div class="col-md d-flex justify-content-center">
+                <img class="img-fluid" src="assets/images/bookCoverPlaceholder.png">
+            </div>
+            <div class="col-md mt-3 mt-md-0 d-flex justify-content-center">
+                <div clas="row ">
+                    <div class="col-md title">
+                        <p>{{book.title}}</p>
+                    </div>
+                    <div class="col-md">
+                        <p>{{book.author}}</p>
+                    </div>
+                    <div class="col-md">
+                        <p>Gatunek: {{extraFunctions.genre(book.genre)}}</p>
+                    </div>
+                    <div class="col-md">
+                        <p>Rok wydania: {{book.publishYear}}</p>
+                    </div>
+                    <div class="col-md">
+                        <p-rating [ngModel]="book.rating" (click)="extraFunctions.status(book.id)" [readonly]="true"
+                            [stars]="5" [cancel]="false"></p-rating>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md mt-3 mt-md-0 d-flex justify-content-center p-fluid">
+                <p-button class="w-half" type="button" (onClick)="borrowBook(book.id)"
                     [label]="book.isBorrowed ? 'Zarezerwuj':'Wypożycz'"></p-button>
             </div>
 

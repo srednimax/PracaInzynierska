@@ -1,46 +1,51 @@
 <div *ngFor="let borrowedBook of borrowedBooks | paginate: {itemsPerPage: 5,currentPage: page }">
-    <p-card class="p-2">
+    <p-card styleClass="mb-3">
         <div class="row d-flex align-items-center">
-            <div class="col-4">
-                <img src="assets/images/bookCoverPlaceholder.png">
+            <div class="col-md d-flex justify-content-center">
+                <img class="img-fluid" src="assets/images/bookCoverPlaceholder.png">
             </div>
-            <div class="col-4">
-                <div clas="row d-flex ">
-                    <div class="col-12 title">
+            <div class="col-md mt-3 mt-md-0 d-flex justify-content-center">
+                <div clas="row">
+                    <div class="col-md title">
                         <p>{{borrowedBook.book?.title}}</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md">
                         <p>{{borrowedBook.book?.author}}</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md">
                         <p>Gatunek: {{extraFunctions.genre(borrowedBook.book?.genre!)}}</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md">
                         <p>Rok wydania: {{borrowedBook.book?.publishYear}}</p>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md">
                         <p>Status: {{extraFunctions.status(borrowedBook.status)}}</p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-4">
-                <div *ngIf="borrowedBook.returnDate !== null">
-                    <p>Termin oddania: {{getDate(borrowedBook.returnDate!)}}</p>
-                </div>
-                <p-button type="button" (onClick)="borrowBook(borrowedBook.id)"
-                    [disabled]="borrowedBook.isRenew||borrowedBook.returnDate === null ||borrowedBook.isReturned == true"
-                    [label]="borrowedBook.isRenew ? 'Przedłużona':'Przedłuż'"></p-button>
-                <div class="col-4 pt-2">
-                    <p-button type="button" (onClick)="editRating(borrowedBook.book?.id!,borrowedBook.id)"
-                        [disabled]="borrowedBook.status !==5" [label]="borrowedBook.isRated ? 'Zmień':'Oceń'">
-                    </p-button>
-                </div>
-                <div *ngIf="borrowedBook.status < 3"  class="col-4 pt-2">
-                    <p-button type="button" (onClick)="cancel(borrowedBook.id)" label="Anuluj">
-                    </p-button>
-                </div>
+            <div class="col-md mt-3 mt-md-0">
+                <div class="row gy-2 p-fluid">
 
+                    <div class="col-12 d-flex justify-content-center" *ngIf="borrowedBook.returnDate !== null">
+                        <p>Termin oddania: {{getDate(borrowedBook.returnDate!)}}</p>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center">
+                        <p-button class="w-half" type="button" (onClick)="borrowBook(borrowedBook.id)"
+                            [disabled]="borrowedBook.isRenew||borrowedBook.returnDate === null ||borrowedBook.isReturned == true"
+                            [label]="borrowedBook.isRenew ? 'Przedłużona':'Przedłuż'"></p-button>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center">
+                        <p-button class="w-half" type="button"
+                            (onClick)="editRating(borrowedBook.book?.id!,borrowedBook.id)"
+                            [disabled]="borrowedBook.status !==5" [label]="borrowedBook.isRated ? 'Zmień':'Oceń'">
+                        </p-button>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center" *ngIf="borrowedBook.status < 3">
+                        <p-button class="w-half" type="button" (onClick)="cancel(borrowedBook.id)" label="Anuluj">
+                        </p-button>
+                    </div>
+                </div>
             </div>
 
         </div>

@@ -1,37 +1,38 @@
 <p-toast></p-toast>
 
-<div *ngFor="let book of books | paginate: {itemsPerPage: 10,currentPage: page }">
-    <p-card class="p-2">
-        <div class="row d-flex align-items-center">
-            <div class="col-3">
-                <img src="assets/images/bookCoverPlaceholder.png">
-            </div>
-            <div class="col-5">
-                <div clas="row d-flex ">
-                    <div class="col-12 title">
-                        <p>{{book.title}}</p>
-                    </div>
-                    <div class="col-4">
-                        <p>{{book.author}}</p>
-                    </div>
-                    <div class="col-4">
-                        <p>Gatunek: {{extraFunctions.genre(book.genre)}}</p>
-                    </div>
-                    <div class="col-4">
-                        <p>Rok wydania: {{book.publishYear}}</p>
-                    </div>
-                    <div class="col-4">
-                        <p-rating [ngModel]="book.rating" (click)="extraFunctions.bookReview(book.id)" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
+    <div *ngFor="let book of books | paginate: {itemsPerPage: 10,currentPage: page }">
+        <p-card styleClass="mb-3">
+            <div class="row d-flex align-items-center">
+                <div class="col-md d-flex justify-content-center">
+                    <img class="img-fluid" src="assets/images/bookCoverPlaceholder.png">
+                </div>
+                <div class="col-md mt-3 mt-md-0 d-flex justify-content-center">
+                    <div clas="row">
+                        <div class="col-md title">
+                            <p>{{book.title}}</p>
+                        </div>
+                        <div class="col-md">
+                            <p>{{book.author}}</p>
+                        </div>
+                        <div class="col-md">
+                            <p>Gatunek: {{extraFunctions.genre(book.genre)}}</p>
+                        </div>
+                        <div class="col-md">
+                            <p>Rok wydania: {{book.publishYear}}</p>
+                        </div>
+                        <div class="col-md">
+                            <p-rating [ngModel]="book.rating" (click)="extraFunctions.bookReview(book.id)"
+                                [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-4">
-                <p-button type="button" (onClick)="borrowBook(book.id)"
-                    [label]="book.isBorrowed ? 'Zarezerwuj':'Wypożycz'"></p-button>
-            </div>
+                <div class="col-md mt-3 mt-md-0 d-flex justify-content-center p-fluid">
+                    <p-button class="w-half" type="button" (onClick)="borrowBook(book.id)"
+                        [label]="book.isBorrowed ? 'Zarezerwuj':'Wypożycz'"></p-button>
+                </div>
 
-        </div>
-    </p-card>
+            </div>
+        </p-card>
 
-</div>
-<pagination-controls (pageChange)="page =$event" [responsive]="true"></pagination-controls>
+    </div>
+    <pagination-controls (pageChange)="page =$event" [responsive]="true"></pagination-controls>

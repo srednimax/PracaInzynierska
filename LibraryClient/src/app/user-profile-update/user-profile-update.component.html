@@ -1,5 +1,6 @@
-<p-card>
-    <div class="container py-3 ">
+
+    <p-card styleClass="mb-3">
+
         <div class="row">
             <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
                 <div class="p-fluid">
@@ -63,16 +64,16 @@
                 </div>
             </form>
         </div>
-    </div>
-</p-card>
-<p-card class="p-2">
-    <div class="container py-3 ">
+    </p-card>
+
+    <p-card>
         <div class="row">
             <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
                 <div class="p-fluid">
                     <div class="col-12 py-3">
                         <span class="p-float-label">
-                            <input id="float-input-oldPassword" type="password" pInputText formControlName="oldPassword">
+                            <input id="float-input-oldPassword" type="password" pInputText
+                                formControlName="oldPassword">
                             <label for="float-input-oldPassword">Stare hasło</label>
                         </span>
                     </div>
@@ -82,7 +83,8 @@
                     </div>
                     <div class="col-12 py-3">
                         <span class="p-float-label">
-                            <input id="float-input-newPassword" type="password" pInputText formControlName="newPassword">
+                            <input id="float-input-newPassword" type="password" pInputText
+                                formControlName="newPassword">
                             <label for="float-input-newPassword">Nowe hasło</label>
                         </span>
                     </div>
@@ -94,7 +96,8 @@
                     </div>
                     <div class="col-12 py-3">
                         <span class="p-float-label">
-                            <input id="float-input-confirmNewPassword" type="password" pInputText formControlName="confirmNewPassword">
+                            <input id="float-input-confirmNewPassword" type="password" pInputText
+                                formControlName="confirmNewPassword">
                             <label for="float-input-confirmNewPassword">Powtórz nowe hasło</label>
                         </span>
                     </div>
@@ -107,9 +110,8 @@
                         Podane stare hasło jest niepoprawne
                     </div>
                     <p-button class="w-full pt-3" [disabled]="passwordForm.invalid" type="submit"
-                    label="Zaktualizuj Hasło"></p-button>
+                        label="Zaktualizuj Hasło"></p-button>
                 </div>
             </form>
         </div>
-    </div>
-</p-card>
+    </p-card>
