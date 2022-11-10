@@ -1,4 +1,4 @@
-    <p-toast></p-toast>
+<p-toast></p-toast>
 <div class="container py-4">
     <p-card>
         <div class="row g-2">
@@ -6,54 +6,61 @@
                 <input type="text" [(ngModel)]="search" pInputText placeholder="Search" />
             </div>
             <div class="col-md py-2">
-                <input  type="text" style="width:50%" [(ngModel)]="from" pInputText placeholder="Od roku" />
-                <input type="text" style="width:50%" [(ngModel)]="to" pInputText placeholder="Do roku" />
+                <div class="row g-2">
+                    <div class="col">
+                        <input type="text" style="width:100%;" [(ngModel)]="from" pInputText placeholder="Od roku" />
+                    </div>
+                    <div class="col">
+                        <input type="text" style="width:100%;" [(ngModel)]="to" pInputText placeholder="Do roku" />
+                    </div>
+                </div>
             </div>
             <div class="col-md py-2 d-flex align-items-center justify-content-center ">
                 <p-checkbox [(ngModel)]="isAvalible" [binary]="true" inputId="binary"></p-checkbox>
                 <label class="px-2" for="binary">Wybierz tylko dostępne</label>
             </div>
             <div class="col-md py-2 d-flex justify-content-center ">
-                <p-multiSelect [maxSelectedLabels]="3" defaultLabel="Wybierz kategorie" [options]="genres" [(ngModel)]="selectedGenres"
-                    optionLabel="genre" selectedItemsLabel="{0} gatunków wybranych"></p-multiSelect>
+                <p-multiSelect [maxSelectedLabels]="3" defaultLabel="Wybierz kategorie" [options]="genres"
+                    [(ngModel)]="selectedGenres" optionLabel="genre" selectedItemsLabel="{0} gatunków wybranych">
+                </p-multiSelect>
             </div>
         </div>
     </p-card>
 </div>
-    <div class="container py-3"
-        *ngFor="let book of books | filter: search: from: to: isAvalible: selectedGenres | paginate: {itemsPerPage: 10,currentPage: page }">
-        <p-card>
-            <div class="row d-flex align-items-center">
-                <div class="col-3">
-                    <img src="assets/images/bookCoverPlaceholder.png">
-                </div>
-                <div class="col-4">
-                    <div clas="row d-flex ">
-                        <div class="col-12 title">
-                            <p>{{book.title}}</p>
-                        </div>
-                        <div class="col-4">
-                            <p>{{book.author}}</p>
-                        </div>
-                        <div class="col-4">
-                            <p>Gatunek: {{extraFunctions.genre(book.genre)}}</p>
-                        </div>
-                        <div class="col-4">
-                            <p>Rok wydania: {{book.publishYear}}</p>
-                        </div>
-                        <div class="col-4">
-                            <p-rating [ngModel]="book.rating" (click)="extraFunctions.status(book.id)" [readonly]="true"
-                                [stars]="5" [cancel]="false"></p-rating>
-                        </div>
+<div class="container py-3"
+    *ngFor="let book of books | filter: search: from: to: isAvalible: selectedGenres | paginate: {itemsPerPage: 10,currentPage: page }">
+    <p-card>
+        <div class="row d-flex align-items-center">
+            <div class="col-3">
+                <img src="assets/images/bookCoverPlaceholder.png">
+            </div>
+            <div class="col-4">
+                <div clas="row d-flex ">
+                    <div class="col-12 title">
+                        <p>{{book.title}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>{{book.author}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Gatunek: {{extraFunctions.genre(book.genre)}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p>Rok wydania: {{book.publishYear}}</p>
+                    </div>
+                    <div class="col-4">
+                        <p-rating [ngModel]="book.rating" (click)="extraFunctions.status(book.id)" [readonly]="true"
+                            [stars]="5" [cancel]="false"></p-rating>
                     </div>
                 </div>
-                <div class="col-4">
-                    <p-button type="button" (onClick)="borrowBook(book.id)"
-                        [label]="book.isBorrowed ? 'Zarezerwuj':'Wypożycz'"></p-button>
-                </div>
-
             </div>
-        </p-card>
+            <div class="col-4">
+                <p-button type="button" (onClick)="borrowBook(book.id)"
+                    [label]="book.isBorrowed ? 'Zarezerwuj':'Wypożycz'"></p-button>
+            </div>
 
-    </div>
-    <pagination-controls (pageChange)="page =$event" [responsive]="true"></pagination-controls>
+        </div>
+    </p-card>
+
+</div>
+<pagination-controls (pageChange)="page =$event" [responsive]="true"></pagination-controls>
