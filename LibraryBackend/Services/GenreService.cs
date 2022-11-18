@@ -29,7 +29,7 @@ public class GenreService : IGenreService
     {
         var checkIfExist = await _genreRepository.GetGenByName(genreAddDto.Name);
 
-        if (checkIfExist is null)
+        if (checkIfExist is not null)
             return new ServiceResult<GenreDto>() { Status = 500, Message = "The genre already exist" };
 
         var genre = _mapper.Map<Genre>(genreAddDto);
@@ -47,7 +47,7 @@ public class GenreService : IGenreService
 
         var checkIfExist = await _genreRepository.GetGenByName(genreUpdateDto.Name);
 
-        if (checkIfExist is null)
+        if (checkIfExist is not null)
             return new ServiceResult<GenreDto>() { Status = 500, Message = "The genre already exist" };
 
         genre.Name = genreUpdateDto.Name;
