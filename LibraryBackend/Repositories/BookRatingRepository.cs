@@ -11,6 +11,7 @@ public class BookRatingRepository : Repository<BookRating>, IBookRatingRepositor
     {
         return await GetAll()
             .Include(x => x.Book)
+            .ThenInclude(x=>x.Genres)
             .Include(x => x.User)
             .FirstOrDefaultAsync(x => x.Id == id);
     }
@@ -19,6 +20,7 @@ public class BookRatingRepository : Repository<BookRating>, IBookRatingRepositor
     {
         return await GetAll()
             .Include(x => x.Book)
+            .ThenInclude(x => x.Genres)
             .Include(x => x.User)
             .ToListAsync();
     }
@@ -27,6 +29,7 @@ public class BookRatingRepository : Repository<BookRating>, IBookRatingRepositor
     {
         return await GetAll()
             .Include(x => x.Book)
+            .ThenInclude(x => x.Genres)
             .Include(x => x.User)
             .Where(x=>x.User.Id == userId)
             .ToListAsync();
@@ -36,6 +39,7 @@ public class BookRatingRepository : Repository<BookRating>, IBookRatingRepositor
     {
         return await GetAll()
             .Include(x => x.Book)
+            .ThenInclude(x => x.Genres)
             .Include(x => x.User)
             .Where(x => x.Book.Id == bookId)
             .ToListAsync();
