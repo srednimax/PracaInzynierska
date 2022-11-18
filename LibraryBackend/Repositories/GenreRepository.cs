@@ -10,6 +10,11 @@ public class GenreRepository : Repository<Genre>, IGenreRepository
     {
     }
 
+    public async Task<List<Genre>> GetAllGenres()
+    {
+        return await GetAll().ToListAsync();
+    }
+
     public async Task<Genre?> GetGenreById(int id)
     {
         return await GetAll().FirstOrDefaultAsync(x => x.Id == id);

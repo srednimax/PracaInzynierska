@@ -4,6 +4,7 @@ namespace LibraryBackend.Repositories.Interfaces;
 
 public interface IGenreRepository
 {
+    public Task<List<Genre>> GetAllGenres();
     public Task<Genre?> GetGenreById(int id);
     public Task<Genre?> GetGenByName(string name);
     public Task<Genre?> AddGenre(Genre newGenre);
