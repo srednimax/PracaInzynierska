@@ -19,7 +19,8 @@ public class GenreConfigurations : IEntityTypeConfiguration<Genre>
 
         builder.Property(x => x.Name)
             .HasColumnName("name")
-            .HasColumnType("nvarchar(MAX)")
+            .HasMaxLength(150)
             .IsRequired();
+        builder.HasIndex(x => x.Name).IsUnique();
     }
 }
