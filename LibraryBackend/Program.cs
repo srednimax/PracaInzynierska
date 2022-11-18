@@ -33,6 +33,7 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IBookRepository, BookRepository>();
 builder.Services.AddTransient<IBookRatingRepository, BookRatingRepository>();
 builder.Services.AddTransient<IBorrowedBookRepository,BorrowedBookRepository>();
+builder.Services.AddTransient<IGenreRepository,GenreRepository>();
 
 
 
