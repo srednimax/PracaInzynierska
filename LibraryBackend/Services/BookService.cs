@@ -58,8 +58,6 @@ public class BookService : IBookService
         if (!String.IsNullOrEmpty(bookUpdateDto.Author))
             bookToUpdate.Author = bookUpdateDto.Author;
 
-        if (Enum.IsDefined(bookUpdateDto.Genre))
-            bookToUpdate.Genre = bookUpdateDto.Genre;
 
         if(bookUpdateDto.PublishYear > 0)
             bookToUpdate.PublishYear = bookUpdateDto.PublishYear;
@@ -110,9 +108,9 @@ public class BookService : IBookService
 
         var filtered = allBooks.ExceptBy(borrowedBooks.Select(x => x.Book.Id), book => book.Id);
 
-        filtered = filtered.Where(x=> ratings.Any(y=>y.Rating >=3 && (y.Book.Author == x.Author || y.Book.Genre == x.Genre)));
+       // filtered = filtered.Where(x=> ratings.Any(y=>y.Rating >=3 && (y.Book.Author == x.Author || y.Book.Genre == x.Genre)));
 
-        filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author || y.Book.Genre == x.Genre)).OrderByDescending(x=>x.Rating);
+       // filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author || y.Book.Genre == x.Genre)).OrderByDescending(x=>x.Rating);
 
         return new ServiceResult<List<BookDto>>() { Status = 200, Body = _mapper.Map<List<BookDto>>(filtered) };
     }

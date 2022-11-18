@@ -21,11 +21,6 @@ public class BookUpdateDto
     public string? Author { get; set; }
 
     [Required(AllowEmptyStrings = true)]
-    [DefaultValue("")]
-    [EnumDataType(typeof(Genre))]
-    public Genre Genre { get; set; }
-
-    [Required(AllowEmptyStrings = true)]
     
     public int PublishYear { get; set; }
 }
