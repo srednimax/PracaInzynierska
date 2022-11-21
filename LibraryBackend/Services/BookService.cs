@@ -136,13 +136,14 @@ public class BookService : IBookService
 
         var allBooks = await _bookRepository.GetAllBooks();
 
-        var filtered = allBooks.ExceptBy(borrowedBooks.Select(x => x.Book.Id), book => book.Id); 
+        var filtered = allBooks.ExceptBy(borrowedBooks.Select(x => x.Book.Id), book => book.Id);
 
-        filtered = filtered.Where(x=> ratings.Any(y=>y.Rating >=3 && (y.Book.Author == x.Author)));
+        filtered = filtered.Where(x => ratings.Any(y =>
+            y.Rating >= 3 && (y.Book.Author == x.Author || y.Book.Genres.Any(gen => x.Genres.Contains(gen)))));
 
-        filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author)).OrderByDescending(x=>x.Rating);
+        filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author || y.Book.Genres.Any(gen => x.Genres.Contains(gen))))
+            .OrderByDescending(x=>x.Rating);
 
         return new ServiceResult<List<BookDto>>() { Status = 200, Body = _mapper.Map<List<BookDto>>(filtered) };
     }
 }
-//|| !y.Book.Genres.Any(gen =>y.Book.Genres.Contains(gen))
