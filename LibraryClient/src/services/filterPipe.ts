@@ -1,9 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IBookDto } from 'src/Dtos/Book/IBookDto';
+import { IGenreDto } from 'src/Dtos/Genre/IGenreDto';
 
 @Pipe({ name: "filter" })
 export class ManualFilterPipe implements PipeTransform {
-  transform(bookList: IBookDto[], search: string,from:string,to:string,isAvalible:boolean,selectedGenres:any[]) {
+  transform(bookList: IBookDto[], search: string,from:string,to:string,isAvalible:boolean,selectedGenres:IGenreDto[]) {
     if (!bookList)
       return [];
     
@@ -13,8 +14,18 @@ export class ManualFilterPipe implements PipeTransform {
       }
       if(selectedGenres.length> 0)
       {
-        let s = selectedGenres.map(x=>x.id);
-        bookList = bookList.filter(book => s.includes(book.genres));
+        
+       
+        // let s = selectedGenres.map(x=>x.id);
+        bookList = bookList.filter(book =>{
+          const arr1 =selectedGenres.map(x=>x.id);
+          const arr2 = book.genres.map(x=>x.id);
+          const containsAll = arr1.every(element => {
+            return arr2.indexOf(element) !== -1;
+          });
+          return containsAll;
+        } )
+          
       }
     if (!search && !from && !to)
       return bookList;

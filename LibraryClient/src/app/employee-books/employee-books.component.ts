@@ -8,7 +8,7 @@ import { IBookUpdateDto } from "src/Dtos/Book/IBookUpdateDto";
 import { BookService } from "src/services/bookService";
 import { ExtraFunctions } from "src/services/extraFunctions";
 import { GenreService } from "src/services/genreService";
-import { IGenreAddDto } from "src/Dtos/Genre/IBookAddDto";
+import { IGenreAddDto } from "src/Dtos/Genre/IGenreAddDto";
 
 @Component({
   selector: "app-employee-books",

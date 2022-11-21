@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { IGenreAddDto } from "src/Dtos/Genre/IBookAddDto";
-import { IGenreUpdateDto } from "src/Dtos/Genre/IBookUpdateDto";
+import { IGenreAddDto } from "src/Dtos/Genre/IGenreAddDto";
+import { IGenreUpdateDto } from "src/Dtos/Genre/IGenreUpdateDto";
 import { IGenreDto } from "src/Dtos/Genre/IGenreDto";
 
 @Injectable()
