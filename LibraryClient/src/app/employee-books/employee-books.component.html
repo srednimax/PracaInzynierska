@@ -30,7 +30,7 @@
             <tr>
                 <td>{{book.title}}</td>
                 <td>{{book.author}}</td>
-                <td>{{extraFunctions.genre(book.genre)}}</td>
+                <td>t</td>
                 <td><p-rating [ngModel]="book.rating" [readonly]="true" [cancel]="false"></p-rating></td>
                 <td>{{book.publishYear}}</td>
                 <td><i *ngIf="book.isBorrowed" class="pi text-success pi-check"></i>
@@ -64,7 +64,7 @@
         </div>
         <div class="field">
             <label for="genre">Gatunek</label>
-            <p-dropdown appendTo="body" [(ngModel)]="book.genre" inputId="genre" [options]="genres" optionLabel="name" optionValue="number" placeholder="Wybierz gatunek">
+            <p-dropdown appendTo="body" [(ngModel)]="book.genres" inputId="genre" [options]="genres" optionLabel="name" optionValue="number" placeholder="Wybierz gatunek">
             </p-dropdown>
         </div>
         <div class="field">
@@ -93,7 +93,7 @@
         </div>
         <div class="field">
             <label for="genreAdd">Gatunek</label>
-            <p-dropdown appendTo="body" [(ngModel)]="bookAdd.genre" inputId="genreAdd" [options]="genres" optionLabel="name" optionValue="number" placeholder="Wybierz gatunek">
+            <p-dropdown appendTo="body" [(ngModel)]="bookAdd.genres" inputId="genreAdd" [options]="genres" optionLabel="name" optionValue="number" placeholder="Wybierz gatunek">
             </p-dropdown>
         </div>
         <div class="field">

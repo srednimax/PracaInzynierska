@@ -36,29 +36,6 @@ export class ExtraFunctions {
     }
   }
 
-  genre(gen: number): string {
-    switch (gen) {
-      case 0:
-        return "Fikcja literacka";
-      case 1:
-        return "Kryminał";
-      case 2:
-        return "Horror";
-      case 3:
-        return "Historyczna";
-      case 4:
-        return "Romans";
-      case 5:
-        return "Western";
-      case 6:
-        return "Science fiction";
-      case 7:
-        return "Fantasy";
-      default:
-        return "";
-    }
-  }
-
   bookReview(bookId:number){
     this._router.navigate([`/book/${bookId}`]);
   }

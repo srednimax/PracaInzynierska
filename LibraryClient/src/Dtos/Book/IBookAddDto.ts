@@ -1,6 +1,6 @@
 import { IGenreDto } from "../Genre/IGenreDto";
 
-export interface BookAddDto {
+export interface IBookAddDto {
     title: string | null;
     author: string | null;
     publishYear: number;

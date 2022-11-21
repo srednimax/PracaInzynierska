@@ -14,7 +14,7 @@ export class ManualFilterPipe implements PipeTransform {
       if(selectedGenres.length> 0)
       {
         let s = selectedGenres.map(x=>x.id);
-        bookList = bookList.filter(book => s.includes(book.genre));
+        bookList = bookList.filter(book => s.includes(book.genres));
       }
     if (!search && !from && !to)
       return bookList;
