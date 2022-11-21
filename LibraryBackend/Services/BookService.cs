@@ -35,10 +35,21 @@ public class BookService : IBookService
 
     public async Task<ServiceResult<BookDto>> AddBook(BookAddDto bookAddDto)
     {
-        if (await _genreRepository.CheckIfExist(_mapper.Map<List<Genre>>(bookAddDto.Genres)) == false)
+        if (await _genreRepository.CheckIfNotExist(_mapper.Map<List<Genre>>(bookAddDto.Genres)))
             return new ServiceResult<BookDto>() { Status = 500, Message = "Not all genres of books exist" };
 
         var bookToAdd = _mapper.Map<Book>(bookAddDto);
+
+        //do zapytania
+        var t = new List<Genre>();
+        foreach (var genre in bookAddDto.Genres)
+        {
+            var g = await _genreRepository.GetGenByName(genre.Name);
+            t.Add(g);
+        }
+
+        bookToAdd.Genres = t;
+        //koniec do zapytania
 
         return new ServiceResult<BookDto>()
         {
@@ -67,11 +78,20 @@ public class BookService : IBookService
         if(bookUpdateDto.PublishYear > 0)
             bookToUpdate.PublishYear = bookUpdateDto.PublishYear;
 
-        if(await _genreRepository.CheckIfExist(_mapper.Map<List<Genre>>(bookUpdateDto.Genres)) == false)
+        if(await _genreRepository.CheckIfNotExist(_mapper.Map<List<Genre>>(bookUpdateDto.Genres)))
             return new ServiceResult<BookDto>() { Status = 500, Message = "Not all genres of books exist" };
 
-        bookToUpdate.Genres = _mapper.Map<List<Genre>>(bookUpdateDto.Genres);
 
+        //do zapytania
+        var t = new List<Genre>();
+        foreach (var genre in bookUpdateDto.Genres)
+        {
+            var g = await _genreRepository.GetGenByName(genre.Name);
+            t.Add(g);
+        }
+
+        bookToUpdate.Genres = t;
+        //koniec do zapytania
         await _bookRepository.UpdateBook(bookToUpdate);
 
         return new ServiceResult<BookDto>()

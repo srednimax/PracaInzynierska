@@ -74,7 +74,7 @@ namespace LibraryDatabase.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("BookGenre");
+                    b.ToTable("BookGenre", (string)null);
                 });
 
             modelBuilder.Entity("LibraryDatabase.Models.BookRating", b =>

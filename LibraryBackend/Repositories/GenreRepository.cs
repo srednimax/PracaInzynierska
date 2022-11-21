@@ -40,9 +40,10 @@ public class GenreRepository : Repository<Genre>, IGenreRepository
         return await RemoveAsync(genreToRemove);
     }
 
-    public async Task<bool> CheckIfExist(List<Genre> genres)
+    public async Task<bool> CheckIfNotExist(List<Genre> genres)
     {
-        var gen = await GetAll().ToListAsync();
-        return !genres.Except(gen).Any();
+        var gen = await GetAll().AsNoTracking().ToListAsync();
+
+        return genres.ExceptBy(gen.Select(x => x.Id), genre => genre.Id).Any();
     }
 }
