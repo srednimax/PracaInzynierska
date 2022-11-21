@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
+import { IGenreDto } from "src/Dtos/Genre/IGenreDto";
 
 @Injectable()
 export class ExtraFunctions {
@@ -34,6 +35,9 @@ export class ExtraFunctions {
       default:
         return "";
     }
+  }
+  getGenres(genres:IGenreDto[]){
+    return genres.map(x=>x.name);
   }
 
   bookReview(bookId:number){

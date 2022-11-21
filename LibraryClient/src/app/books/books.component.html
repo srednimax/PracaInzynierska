@@ -42,14 +42,14 @@
                     <div class="col-md">
                         <p>{{book.author}}</p>
                     </div>
-                    <div class="col-md">
-                        <p>Gatunek: {{book.genres.join(',')}} </p>
+                    <div *ngFor="let genre of book.genres" class="col-md-2">
+                        <p>{{genre.name}}</p>
                     </div>
                     <div class="col-md">
                         <p>Rok wydania: {{book.publishYear}}</p>
                     </div>
                     <div class="col-md">
-                        <p-rating [ngModel]="book.rating" (click)="extraFunctions.status(book.id)" [readonly]="true"
+                        <p-rating [ngModel]="book.rating" (click)="extraFunctions.bookReview(book.id)" [readonly]="true"
                             [stars]="5" [cancel]="false"></p-rating>
                     </div>
                 </div>

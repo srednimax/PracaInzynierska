@@ -8,6 +8,7 @@ import { IBookUpdateDto } from "src/Dtos/Book/IBookUpdateDto";
 import { BookService } from "src/services/bookService";
 import { ExtraFunctions } from "src/services/extraFunctions";
 import { GenreService } from "src/services/genreService";
+import { IGenreAddDto } from "src/Dtos/Genre/IBookAddDto";
 
 @Component({
   selector: "app-employee-books",
@@ -30,12 +31,17 @@ export class EmployeeBooksComponent implements OnInit {
     genres:[],
     publishYear:2022
   };
+  genreAdd:IGenreAddDto={
+    name:""
+  };
   genres:IGenreDto[];
 
   bookDialog: boolean;
   bookDialogAdd: boolean;
   submitted: boolean;
   submittedAdd: boolean;
+  genreDialogAdd:boolean;
+  submittedGenre:boolean;
 
   @ViewChild("dt") dt: Table | undefined;
 
@@ -128,7 +134,7 @@ export class EmployeeBooksComponent implements OnInit {
   }
   saveBookAdd():void{
     this.submittedAdd=true;
-    this.bookService.addBook(this.bookAdd).subscribe(resp=>{
+    this.bookService.addBook(this.bookAdd).subscribe({next:resp=>{
       this.books.push(resp);
       this.extraFunctions.showToast(
         "success",
@@ -141,10 +147,52 @@ export class EmployeeBooksComponent implements OnInit {
       this.bookAdd.publishYear=2022;
       this.bookDialogAdd=false;
       
-    })
+    },error:error=>{
+      if (error === "Not all genres of books exist") {
+        this.extraFunctions.showToast(
+          "error",
+          "Błąd",
+          "Coś poszło nie tak. Nie wszyzstkie gatunki książek znajdują się w bazie danych."
+        );
+      }
+    }})
   }
 
   applyFilterGlobal($event: any, stringVal: any) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
+  }
+
+
+  addGenre():void{
+    this.genreDialogAdd = true;
+    this.submittedGenre= false;
+  }
+
+  hideDialogGenre(): void {
+    this.genreDialogAdd = false;
+    this.submittedGenre= false;
+  }
+  
+  saveGenre():void {
+    this.submittedGenre=true;
+    this.genreService.addGenre(this.genreAdd).subscribe({next:resp=>{
+      this.genres.push(resp);
+      this.extraFunctions.showToast(
+        "success",
+        "Sukces",
+        "Udało się dodać nowy gatunek książki."
+      );
+      this.genreAdd.name="";
+      this.genreDialogAdd=false;
+      
+    },error:error=>{
+      if (error === "The genre already exist") {
+        this.extraFunctions.showToast(
+          "error",
+          "Błąd",
+          "Taki gatunek książki już istnieje."
+        );
+      }
+    }})
   }
 }

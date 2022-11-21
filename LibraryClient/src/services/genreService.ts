@@ -14,7 +14,7 @@ export class GenreService {
     return this.http.get<IGenreDto[]>(`${this.url}/All`);
   }
 
-  AddGenre( data: IGenreAddDto) {
+  addGenre( data: IGenreAddDto) {
     return this.http.post<IGenreDto>(this.url,data);
   }
 

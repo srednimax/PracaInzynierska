@@ -15,7 +15,6 @@ export class BooksComponent implements OnInit {
     private bookService: BookService,
     private borrowingBookService: BorrowingBookService,
     public extraFunctions:ExtraFunctions,
-    private _router: Router
   ) {}
 
   books: IBookDto[];
