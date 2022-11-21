@@ -12,15 +12,17 @@ public class BookService : IBookService
     private readonly IBorrowedBookRepository _borrowedBookRepository;
     private readonly IUserRepository _userRepository;
     private readonly IBookRatingRepository _bookRatingRepository;
+    private readonly IGenreRepository _genreRepository;
     private readonly IMapper _mapper;
 
-    public BookService(IBookRepository bookRepository, IBorrowedBookRepository borrowedBookRepository, IUserRepository userRepository, IBookRatingRepository bookRatingRepository, IMapper mapper)
+    public BookService(IBookRepository bookRepository, IBorrowedBookRepository borrowedBookRepository, IUserRepository userRepository, IBookRatingRepository bookRatingRepository, IMapper mapper, IGenreRepository genreRepository)
     {
         _bookRepository = bookRepository;
         _borrowedBookRepository = borrowedBookRepository;
         _userRepository = userRepository;
         _bookRatingRepository = bookRatingRepository;
         _mapper = mapper;
+        _genreRepository = genreRepository;
     }
     public async Task<ServiceResult<List<BookDto>>> GetAllBooks()
     {
@@ -33,6 +35,9 @@ public class BookService : IBookService
 
     public async Task<ServiceResult<BookDto>> AddBook(BookAddDto bookAddDto)
     {
+        if (await _genreRepository.CheckIfExist(_mapper.Map<List<Genre>>(bookAddDto.Genres)) == false)
+            return new ServiceResult<BookDto>() { Status = 500, Message = "Not all genres of books exist" };
+
         var bookToAdd = _mapper.Map<Book>(bookAddDto);
 
         return new ServiceResult<BookDto>()
@@ -61,6 +66,11 @@ public class BookService : IBookService
 
         if(bookUpdateDto.PublishYear > 0)
             bookToUpdate.PublishYear = bookUpdateDto.PublishYear;
+
+        if(await _genreRepository.CheckIfExist(_mapper.Map<List<Genre>>(bookUpdateDto.Genres)) == false)
+            return new ServiceResult<BookDto>() { Status = 500, Message = "Not all genres of books exist" };
+
+        bookToUpdate.Genres = _mapper.Map<List<Genre>>(bookUpdateDto.Genres);
 
         await _bookRepository.UpdateBook(bookToUpdate);
 
@@ -106,12 +116,13 @@ public class BookService : IBookService
 
         var allBooks = await _bookRepository.GetAllBooks();
 
-        var filtered = allBooks.ExceptBy(borrowedBooks.Select(x => x.Book.Id), book => book.Id);
+        var filtered = allBooks.ExceptBy(borrowedBooks.Select(x => x.Book.Id), book => book.Id); 
 
-       // filtered = filtered.Where(x=> ratings.Any(y=>y.Rating >=3 && (y.Book.Author == x.Author || y.Book.Genre == x.Genre)));
+        filtered = filtered.Where(x=> ratings.Any(y=>y.Rating >=3 && (y.Book.Author == x.Author)));
 
-       // filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author || y.Book.Genre == x.Genre)).OrderByDescending(x=>x.Rating);
+        filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author)).OrderByDescending(x=>x.Rating);
 
         return new ServiceResult<List<BookDto>>() { Status = 200, Body = _mapper.Map<List<BookDto>>(filtered) };
     }
 }
+//|| !y.Book.Genres.Any(gen =>y.Book.Genres.Contains(gen))

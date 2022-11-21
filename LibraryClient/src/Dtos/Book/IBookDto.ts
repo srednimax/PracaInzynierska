@@ -1,14 +1,11 @@
+import { IGenreDto } from "../Genre/IGenreDto";
+
 export interface IBookDto {
     id: number;
-    title: string;
-    author: string;
-    genre: number;
+    title: string | null;
+    author: string | null;
+    genres: IGenreDto[];
     publishYear: number;
     isBorrowed: boolean;
-    rating:number;
-}
-
-export interface IGenre{
-    number:number;
-    name:string;
+    rating: number;
 }

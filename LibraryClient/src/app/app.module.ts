@@ -53,6 +53,7 @@ import { EmployeeBorrowedBooksComponent } from './employee-borrowed-books/employ
 import { BookReviewComponent } from './book-review/book-review.component';
 import { UserProfileRecomendationComponent } from './user-profile-recomendation/user-profile-recomendation.component';
 import { UserProfilePenaltyComponent } from './user-profile-penalty/user-profile-penalty.component';
+import { GenreService } from 'src/services/genreService';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { UserProfilePenaltyComponent } from './user-profile-penalty/user-profile
     BookRatingServices,
     MessageService,
     ConfirmationService,
-    ExtraFunctions, 
+    ExtraFunctions,
+    GenreService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

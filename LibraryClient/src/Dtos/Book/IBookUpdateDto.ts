@@ -1,7 +1,9 @@
-export interface IBookUpdateDto {
+import { IGenreDto } from "../Genre/IGenreDto";
+
+export interface BookUpdateDto {
     id: number;
     title: string | null;
     author: string | null;
-    genre: number;
     publishYear: number;
+    genres: IGenreDto[];
 }

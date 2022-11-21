@@ -10,4 +10,5 @@ public interface IGenreRepository
     public Task<Genre?> AddGenre(Genre newGenre);
     public Task<Genre?> UpdateGenre(Genre updateGenre);
     public Task<Genre?> RemoveGenre(Genre genreToRemove);
+    public Task<bool> CheckIfExist(List<Genre> genres);
 }
