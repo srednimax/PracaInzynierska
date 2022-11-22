@@ -31,17 +31,14 @@ export class EmployeeBooksComponent implements OnInit {
     genres:[],
     publishYear:2022
   };
-  genreAdd:IGenreAddDto={
-    name:""
-  };
+ 
   genres:IGenreDto[];
 
   bookDialog: boolean;
   bookDialogAdd: boolean;
   submitted: boolean;
   submittedAdd: boolean;
-  genreDialogAdd:boolean;
-  submittedGenre:boolean;
+
 
   @ViewChild("dt") dt: Table | undefined;
 
@@ -163,36 +160,5 @@ export class EmployeeBooksComponent implements OnInit {
   }
 
 
-  addGenre():void{
-    this.genreDialogAdd = true;
-    this.submittedGenre= false;
-  }
-
-  hideDialogGenre(): void {
-    this.genreDialogAdd = false;
-    this.submittedGenre= false;
-  }
   
-  saveGenre():void {
-    this.submittedGenre=true;
-    this.genreService.addGenre(this.genreAdd).subscribe({next:resp=>{
-      this.genres.push(resp);
-      this.extraFunctions.showToast(
-        "success",
-        "Sukces",
-        "Udało się dodać nowy gatunek książki."
-      );
-      this.genreAdd.name="";
-      this.genreDialogAdd=false;
-      
-    },error:error=>{
-      if (error === "The genre already exist") {
-        this.extraFunctions.showToast(
-          "error",
-          "Błąd",
-          "Taki gatunek książki już istnieje."
-        );
-      }
-    }})
-  }
 }

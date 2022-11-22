@@ -6,22 +6,30 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./employee.component.css"],
 })
 export class EmployeeComponent implements OnInit {
-  tabSettings: boolean;
+  tabBooks: boolean;
+  tabBorrowedBooks: boolean;
+  tabGenre: boolean;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.tabSettings = true;
+    this.tabBorrowedBooks = true;
   }
 
   changeTab(tab: string): void {
+   this.tabBooks= false;
+   this.tabBorrowedBooks=false;
+   this.tabGenre=false;
     switch (tab) {
-      case "set":
-        this.tabSettings = true;
+      case "bor":
+        this.tabBorrowedBooks = true;
         break;
       case "book":
-        this.tabSettings = false;
+        this.tabBooks = true;
         break;
+        case "genre":
+          this.tabGenre = true;
+          break;
     }
   }
 }
