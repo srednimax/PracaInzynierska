@@ -49,13 +49,11 @@ public class BookConfigurations:IEntityTypeConfiguration<Book>
                 x =>
                     x.HasOne(y => y.Genre)
                         .WithMany(y => y.BookGenres)
-                        .HasForeignKey(y => y.GenreId)
-                        .OnDelete(DeleteBehavior.NoAction),
+                        .HasForeignKey(y => y.GenreId),
                 x =>
                     x.HasOne(y => y.Book)
                         .WithMany(y => y.BookGenres)
                         .HasForeignKey(y => y.BookId)
-                        .OnDelete(DeleteBehavior.NoAction)
             );
 
     }

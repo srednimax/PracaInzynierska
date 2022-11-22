@@ -54,12 +54,14 @@ public class BorrowedBookConfiguration : IEntityTypeConfiguration<BorrowedBook>
         builder.ToTable("borrowed_books")
             .HasOne(x => x.Book)
             .WithMany()
-            .HasForeignKey("book_id");
+            .HasForeignKey("book_id")
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.ToTable("borrowed_books")
             .HasOne(x => x.Employee)
             .WithMany()
-            .HasForeignKey("employee_id");
+            .HasForeignKey("employee_id")
+            .OnDelete(DeleteBehavior.SetNull);
 
         builder.ToTable("borrowed_books")
             .HasOne(x => x.Reader)

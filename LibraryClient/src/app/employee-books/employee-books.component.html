@@ -14,16 +14,15 @@
                 <div class="px-2"></div>
                 <button pButton pRipple label="Dodaj książke" icon="pi pi-plus" class="p-button-success mr-2" (click)="addBook()"></button>
                 <div class="px-2"></div>
-                <button pButton pRipple label="Dodaj gatunek" icon="pi pi-plus" class="p-button-success mr-2" (click)="addGenre()"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="title">Tytuł <p-sortIcon field="title"></p-sortIcon></th>
                 <th pSortableColumn="author">Autor <p-sortIcon field="author"></p-sortIcon></th>
-                <th pSortableColumn="genre">Gatunek <p-sortIcon field="genre"></p-sortIcon></th>
-                <th pSortableColumn="rating">Ocena <p-sortIcon field="rating"></p-sortIcon></th>
-                <th pSortableColumn="publishYear">Rok publikacji <p-sortIcon field="publishYear"></p-sortIcon></th>
+                <th pSortableColumn="genre">Gatunek </th>
+                <th pSortableColumn="rating">Ocena<p-sortIcon field="rating"></p-sortIcon></th>
+                <th pSortableColumn="publishYear">Rok publikacja <p-sortIcon field="publishYear"></p-sortIcon></th>
                 <th pSortableColumn="isBorrowed">Pożyczona <p-sortIcon field="isBorrowed"></p-sortIcon></th>
                 <th></th>
             </tr>
@@ -110,20 +109,4 @@
         <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveBookAdd()"></button>
     </ng-template>
 </p-dialog>
-<!-- genre add -->
-<p-dialog [(visible)]="genreDialogAdd" [style]="{width: '450px'}" header="Gatunek" [modal]="true" styleClass="p-fluid">
-    <ng-template pTemplate="content">
-        <div class="field">
-            <label for="titleAdd">Nazwa</label>
-            <input type="text" pInputText id="titleAdd" [(ngModel)]="genreAdd.name" required autofocus />
-            <small class="p-error" *ngIf="submittedGenre && !genreAdd.name">Nazwa jest wymagana.</small>
-        </div>
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialogGenre()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveGenre()"></button>
-    </ng-template>
-</p-dialog>
-
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
