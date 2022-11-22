@@ -28,7 +28,8 @@ public class BookRatingConfigurations:IEntityTypeConfiguration<BookRating>
         builder.ToTable("book_ratings")
             .HasOne(x => x.Book)
             .WithMany()
-            .HasForeignKey("book_id");
+            .HasForeignKey("book_id")
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.ToTable("book_ratings")
             .HasOne(x => x.User)
