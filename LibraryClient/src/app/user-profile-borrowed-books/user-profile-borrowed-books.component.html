@@ -12,8 +12,8 @@
                     <div class="col-md">
                         <p>{{borrowedBook.book?.author}}</p>
                     </div>
-                    <div class="col-md">
-                        <p>Gatunek: {{extraFunctions.genre(borrowedBook.book?.genre!)}}</p>
+                    <div *ngFor="let genre of borrowedBook.book?.genres" class="col-md-2">
+                        <p>{{genre.name}}</p>
                     </div>
                     <div class="col-md">
                         <p>Rok wydania: {{borrowedBook.book?.publishYear}}</p>
@@ -26,7 +26,9 @@
 
             <div class="col-md mt-3 mt-md-0">
                 <div class="row gy-2 p-fluid">
-
+                    <div class="col-12 d-flex justify-content-center" *ngIf="borrowedBook.returnedDate !== null">
+                        <p>Oddana: {{getDate(borrowedBook.returnedDate!)}}</p>
+                    </div>
                     <div class="col-12 d-flex justify-content-center" *ngIf="borrowedBook.returnDate !== null">
                         <p>Termin oddania: {{getDate(borrowedBook.returnDate!)}}</p>
                     </div>

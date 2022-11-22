@@ -11,6 +11,7 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
     {
         return await GetAll()
             .Include(x => x.Book)
+            .ThenInclude(x => x.Genres)
             .Include(x => x.Employee)
             .Include(x => x.Reader)
             .OrderBy(x=>x.Status)
@@ -21,6 +22,7 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
     {
         return await GetAll()
             .Include(x => x.Book)
+            .ThenInclude(x => x.Genres)
             .Include(x => x.Employee)
             .Include(x => x.Reader)
             .FirstOrDefaultAsync(x=>x.Id==id);
@@ -30,6 +32,7 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
     {
         var borrowedBook= await GetAll()
             .Include(x => x.Book)
+            .ThenInclude(x => x.Genres)
             .Include(x => x.Employee)
             .Include(x => x.Reader)
             .FirstOrDefaultAsync(x => x.Book.Id == bookId && x.Reader.Id == userId);
@@ -41,6 +44,7 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
     {
         return await GetAll()
             .Include(x => x.Book)
+            .ThenInclude(x => x.Genres)
             .Include(x => x.Employee)
             .Include(x => x.Reader)
             .Where(x=>x.Reader.Id==userId && x.Status != Status.Cancel)
@@ -52,6 +56,7 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
     {
         return await GetAll()
             .Include(x => x.Book)
+            .ThenInclude(x => x.Genres)
             .Include(x => x.Employee)
             .Include(x => x.Reader)
             .FirstOrDefaultAsync(x => x.Book.Id == bookId && x.Reader.Id==userId);
@@ -78,6 +83,7 @@ public class BorrowedBookRepository: Repository<BorrowedBook>, IBorrowedBookRepo
     {
         return await GetAll()
             .Include(x => x.Book)
+            .ThenInclude(x => x.Genres)
             .Include(x => x.Reader)
             .Where(x => x.Reader.Id == userId && x.IsRated == true)
             .ToListAsync();

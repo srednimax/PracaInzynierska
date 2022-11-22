@@ -139,6 +139,7 @@ namespace LibraryBackend.Services
 
             borrowedBook.IsReturned = true;
             borrowedBook.Status = Status.Returned;
+            borrowedBook.ReturnedDate = DateTime.Now;
             await _borrowedBookRepository.UpdateBorrowedBook(borrowedBook);
 
             return new ServiceResult<BorrowedBookDto>()

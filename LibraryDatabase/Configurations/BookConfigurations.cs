@@ -32,11 +32,6 @@ public class BookConfigurations:IEntityTypeConfiguration<Book>
             .HasColumnType("int")
             .IsRequired();
 
-        builder.Property(x => x.Genre)
-            .HasColumnName("genre")
-            .HasColumnType("int")
-            .IsRequired();
-
         builder.Property(x => x.IsBorrowed)
             .HasColumnName("is_borrowed")
             .HasColumnType("bit")
@@ -46,6 +41,22 @@ public class BookConfigurations:IEntityTypeConfiguration<Book>
             .HasColumnName("rating")
             .HasColumnType("float")
             .HasDefaultValue(0);
+
+        builder
+            .HasMany(b => b.Genres)
+            .WithMany(g => g.Books)
+            .UsingEntity<BookGenre>(
+                x =>
+                    x.HasOne(y => y.Genre)
+                        .WithMany(y => y.BookGenres)
+                        .HasForeignKey(y => y.GenreId)
+                        .OnDelete(DeleteBehavior.NoAction),
+                x =>
+                    x.HasOne(y => y.Book)
+                        .WithMany(y => y.BookGenres)
+                        .HasForeignKey(y => y.BookId)
+                        .OnDelete(DeleteBehavior.NoAction)
+            );
 
     }
 }

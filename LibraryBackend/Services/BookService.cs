@@ -12,15 +12,17 @@ public class BookService : IBookService
     private readonly IBorrowedBookRepository _borrowedBookRepository;
     private readonly IUserRepository _userRepository;
     private readonly IBookRatingRepository _bookRatingRepository;
+    private readonly IGenreRepository _genreRepository;
     private readonly IMapper _mapper;
 
-    public BookService(IBookRepository bookRepository, IBorrowedBookRepository borrowedBookRepository, IUserRepository userRepository, IBookRatingRepository bookRatingRepository, IMapper mapper)
+    public BookService(IBookRepository bookRepository, IBorrowedBookRepository borrowedBookRepository, IUserRepository userRepository, IBookRatingRepository bookRatingRepository, IMapper mapper, IGenreRepository genreRepository)
     {
         _bookRepository = bookRepository;
         _borrowedBookRepository = borrowedBookRepository;
         _userRepository = userRepository;
         _bookRatingRepository = bookRatingRepository;
         _mapper = mapper;
+        _genreRepository = genreRepository;
     }
     public async Task<ServiceResult<List<BookDto>>> GetAllBooks()
     {
@@ -33,7 +35,21 @@ public class BookService : IBookService
 
     public async Task<ServiceResult<BookDto>> AddBook(BookAddDto bookAddDto)
     {
+        if (await _genreRepository.CheckIfNotExist(_mapper.Map<List<Genre>>(bookAddDto.Genres)))
+            return new ServiceResult<BookDto>() { Status = 500, Message = "Not all genres of books exist" };
+
         var bookToAdd = _mapper.Map<Book>(bookAddDto);
+
+        //do zapytania
+        var t = new List<Genre>();
+        foreach (var genre in bookAddDto.Genres)
+        {
+            var g = await _genreRepository.GetGenByName(genre.Name);
+            t.Add(g);
+        }
+
+        bookToAdd.Genres = t;
+        //koniec do zapytania
 
         return new ServiceResult<BookDto>()
         {
@@ -58,12 +74,24 @@ public class BookService : IBookService
         if (!String.IsNullOrEmpty(bookUpdateDto.Author))
             bookToUpdate.Author = bookUpdateDto.Author;
 
-        if (Enum.IsDefined(bookUpdateDto.Genre))
-            bookToUpdate.Genre = bookUpdateDto.Genre;
 
         if(bookUpdateDto.PublishYear > 0)
             bookToUpdate.PublishYear = bookUpdateDto.PublishYear;
 
+        if(await _genreRepository.CheckIfNotExist(_mapper.Map<List<Genre>>(bookUpdateDto.Genres)))
+            return new ServiceResult<BookDto>() { Status = 500, Message = "Not all genres of books exist" };
+
+
+        //do zapytania
+        var t = new List<Genre>();
+        foreach (var genre in bookUpdateDto.Genres)
+        {
+            var g = await _genreRepository.GetGenByName(genre.Name);
+            t.Add(g);
+        }
+
+        bookToUpdate.Genres = t;
+        //koniec do zapytania
         await _bookRepository.UpdateBook(bookToUpdate);
 
         return new ServiceResult<BookDto>()
@@ -110,9 +138,11 @@ public class BookService : IBookService
 
         var filtered = allBooks.ExceptBy(borrowedBooks.Select(x => x.Book.Id), book => book.Id);
 
-        filtered = filtered.Where(x=> ratings.Any(y=>y.Rating >=3 && (y.Book.Author == x.Author || y.Book.Genre == x.Genre)));
+        filtered = filtered.Where(x => ratings.Any(y =>
+            y.Rating >= 3 && (y.Book.Author == x.Author || y.Book.Genres.Any(gen => x.Genres.Contains(gen)))));
 
-        filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author || y.Book.Genre == x.Genre)).OrderByDescending(x=>x.Rating);
+        filtered = filtered.Where(x => borrowedBooks.Any(y => y.Book.Author == x.Author || y.Book.Genres.Any(gen => x.Genres.Contains(gen))))
+            .OrderByDescending(x=>x.Rating);
 
         return new ServiceResult<List<BookDto>>() { Status = 200, Body = _mapper.Map<List<BookDto>>(filtered) };
     }

@@ -26,6 +26,11 @@ public class BorrowedBookConfiguration : IEntityTypeConfiguration<BorrowedBook>
             .HasColumnType("datetime")
             .IsRequired(false);
 
+        builder.Property(x => x.ReturnedDate)
+            .HasColumnName("returned_date")
+            .HasColumnType("datetime")
+            .IsRequired(false);
+
         builder.Property(x => x.IsRenew)
             .HasColumnName("is_renew")
             .HasColumnType("bit")

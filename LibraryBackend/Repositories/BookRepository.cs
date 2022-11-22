@@ -9,12 +9,12 @@ public class BookRepository: Repository<Book>,IBookRepository
     public BookRepository(LibraryDatabaseContext context) : base(context) { }
     public async Task<Book?> GetBookById(int id)
     {
-        return await GetAll().FirstOrDefaultAsync(x=>x.Id == id);
+        return await GetAll().Include(x=>x.Genres).FirstOrDefaultAsync(x=>x.Id == id);
     }
 
     public async Task<List<Book>> GetAllBooks()
     {
-        return await GetAll().OrderBy(x=>x.IsBorrowed).ToListAsync();
+        return await GetAll().Include(x => x.Genres).OrderBy(x=>x.IsBorrowed).ToListAsync();
     }
 
     public async Task<Book> AddBook(Book book)

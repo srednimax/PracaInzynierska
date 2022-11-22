@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { IBookDto } from "src/Dtos/Book/IBookDto";
+import { IGenreDto } from "src/Dtos/Genre/IGenreDto";
 import { BookService } from "src/services/bookService";
 import { BorrowingBookService } from "src/services/borrowingBookServices";
 import { ExtraFunctions } from "src/services/extraFunctions";
+import { GenreService } from "src/services/genreService";
 
 @Component({
   selector: "app-books",
@@ -15,7 +17,7 @@ export class BooksComponent implements OnInit {
     private bookService: BookService,
     private borrowingBookService: BorrowingBookService,
     public extraFunctions:ExtraFunctions,
-    private _router: Router
+    private genreService:GenreService
   ) {}
 
   books: IBookDto[];
@@ -26,17 +28,8 @@ export class BooksComponent implements OnInit {
   to:string;
   isAvalible:boolean;
   
-  genres:any[] =[
-    {id:0,genre:"Fikcja literacka"},
-    {id:1,genre:"Kryminał"},
-    {id:2,genre:"Horror"},
-    {id:3,genre:"Historyczna"},
-    {id:4,genre:"Romans"},
-    {id:5,genre:"Western"},
-    {id:6,genre:"Science fiction"},
-    {id:7,genre:"Fantasy"}
-      ];
-  selectedGenres:any[]=[];
+  genres:IGenreDto[];
+  selectedGenres:IGenreDto[]=[];
 
 
   ngOnInit(): void {
@@ -44,6 +37,9 @@ export class BooksComponent implements OnInit {
       this.books = resp;
       this.filterBooks = resp;
     });
+    this.genreService.getAll().subscribe(resp=>{
+      this.genres=resp
+    })
   }
   borrowBook(id: number) {
     this.borrowingBookService.borrowBooks(id).subscribe({

@@ -4,6 +4,7 @@ using LibraryDatabase.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryDatabase.Migrations
 {
     [DbContext(typeof(LibraryDatabaseContext))]
-    partial class LibraryDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20221118132901_uniqGenreName")]
+    partial class uniqGenreName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,10 +147,6 @@ namespace LibraryDatabase.Migrations
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime")
                         .HasColumnName("return_date");
-
-                    b.Property<DateTime?>("ReturnedDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("returned_date");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()

@@ -26,6 +26,7 @@ builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<IBookService, BookService>();
 builder.Services.AddTransient<IBorrowingBookService, BorrowingBookService>();
 builder.Services.AddTransient<IBookRatingService, BookRatingService>();
+builder.Services.AddTransient<IGenreService, GenreService>();
 
 // repositories
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
@@ -33,6 +34,7 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IBookRepository, BookRepository>();
 builder.Services.AddTransient<IBookRatingRepository, BookRatingRepository>();
 builder.Services.AddTransient<IBorrowedBookRepository,BorrowedBookRepository>();
+builder.Services.AddTransient<IGenreRepository,GenreRepository>();
 
 
 

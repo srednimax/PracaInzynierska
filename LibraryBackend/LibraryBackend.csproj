@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Authentication\" />
+    <Folder Include="Dtos\Genre\" />
     <Folder Include="Profiles\" />
   </ItemGroup>
 

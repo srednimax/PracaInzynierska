@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
+import { IGenreDto } from "src/Dtos/Genre/IGenreDto";
 
 @Injectable()
 export class ExtraFunctions {
@@ -35,28 +36,8 @@ export class ExtraFunctions {
         return "";
     }
   }
-
-  genre(gen: number): string {
-    switch (gen) {
-      case 0:
-        return "Fikcja literacka";
-      case 1:
-        return "Kryminał";
-      case 2:
-        return "Horror";
-      case 3:
-        return "Historyczna";
-      case 4:
-        return "Romans";
-      case 5:
-        return "Western";
-      case 6:
-        return "Science fiction";
-      case 7:
-        return "Fantasy";
-      default:
-        return "";
-    }
+  getGenres(genres:IGenreDto[]){
+    return genres.map(x=>x.name);
   }
 
   bookReview(bookId:number){

@@ -13,8 +13,8 @@
                     <div class="col-md">
                         <p>{{borrowedBook.book?.author}}</p>
                     </div>
-                    <div class="col-md">
-                        <p>Gatunek: {{extraFunctions.genre(borrowedBook.book?.genre!)}}</p>
+                    <div *ngFor="let genre of borrowedBook.book?.genres" class="col-md-2">
+                        <p>{{genre.name}}</p>
                     </div>
                     <div class="col-md">
                         <p>Rok wydania: {{borrowedBook.book?.publishYear}}</p>

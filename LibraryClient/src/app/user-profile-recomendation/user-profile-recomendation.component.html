@@ -14,8 +14,8 @@
                         <div class="col-md">
                             <p>{{book.author}}</p>
                         </div>
-                        <div class="col-md">
-                            <p>Gatunek: {{extraFunctions.genre(book.genre)}}</p>
+                        <div *ngFor="let genre of book.genres" class="col-md-2">
+                            <p>{{genre.name}}</p>
                         </div>
                         <div class="col-md">
                             <p>Rok wydania: {{book.publishYear}}</p>

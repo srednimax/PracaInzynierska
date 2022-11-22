@@ -20,6 +20,7 @@ public class BorrowedBook
     public Status Status { get; set; }
     public DateTime? BorrowDate { get; set; }
     public DateTime? ReturnDate { get; set; }
+    public DateTime? ReturnedDate { get; set; }
     public bool IsRenew { get; set; }
     public bool IsReturned { get; set; }
     public bool IsRated { get; set; }

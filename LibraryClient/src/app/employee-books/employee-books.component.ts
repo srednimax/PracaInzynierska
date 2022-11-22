@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ConfirmationService } from "primeng/api";
 import { Table } from "primeng/table";
+import { IGenreDto } from "src/Dtos/Genre/IGenreDto";
 import { IBookAddDto } from "src/Dtos/Book/IBookAddDto";
-import { IBookDto, IGenre } from "src/Dtos/Book/IBookDto";
+import { IBookDto} from "src/Dtos/Book/IBookDto";
 import { IBookUpdateDto } from "src/Dtos/Book/IBookUpdateDto";
 import { BookService } from "src/services/bookService";
 import { ExtraFunctions } from "src/services/extraFunctions";
+import { GenreService } from "src/services/genreService";
+import { IGenreAddDto } from "src/Dtos/Genre/IGenreAddDto";
 
 @Component({
   selector: "app-employee-books",
@@ -16,7 +19,8 @@ export class EmployeeBooksComponent implements OnInit {
   constructor(
     private bookService: BookService,
     public extraFunctions: ExtraFunctions,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private genreService: GenreService
   ) {}
 
   books: IBookDto[];
@@ -24,32 +28,30 @@ export class EmployeeBooksComponent implements OnInit {
   bookAdd:IBookAddDto={
     title:"",
     author:"",
-    genre:0,
+    genres:[],
     publishYear:2022
   };
+  genreAdd:IGenreAddDto={
+    name:""
+  };
+  genres:IGenreDto[];
 
   bookDialog: boolean;
   bookDialogAdd: boolean;
   submitted: boolean;
   submittedAdd: boolean;
+  genreDialogAdd:boolean;
+  submittedGenre:boolean;
 
   @ViewChild("dt") dt: Table | undefined;
-
-  genres: IGenre[] = [
-    { number: 0, name: "Fikcja literacka" },
-    { number: 1, name: "Kryminał" },
-    { number: 2, name: "Horror" },
-    { number: 3, name: "Historyczna" },
-    { number: 4, name: "Romans" },
-    { number: 5, name: "Western" },
-    { number: 6, name: "Science fiction" },
-    { number: 7, name: "Fantasy" },
-  ];
 
   ngOnInit(): void {
     this.bookService.getBooks().subscribe((resp) => {
       this.books = resp;
     });
+    this.genreService.getAll().subscribe(resp=>{
+      this.genres = resp;
+    })
   }
   editBook(book: IBookDto): void {
     this.book = { ...book };
@@ -97,7 +99,7 @@ export class EmployeeBooksComponent implements OnInit {
       id: this.book.id,
       title: this.book.title,
       author: this.book.author,
-      genre: this.book.genre,
+      genres: this.book.genres,
       publishYear: this.book.publishYear
     }
 
@@ -132,7 +134,7 @@ export class EmployeeBooksComponent implements OnInit {
   }
   saveBookAdd():void{
     this.submittedAdd=true;
-    this.bookService.addBook(this.bookAdd).subscribe(resp=>{
+    this.bookService.addBook(this.bookAdd).subscribe({next:resp=>{
       this.books.push(resp);
       this.extraFunctions.showToast(
         "success",
@@ -141,14 +143,56 @@ export class EmployeeBooksComponent implements OnInit {
       );
       this.bookAdd.title="";
       this.bookAdd.author="";
-      this.bookAdd.genre=0;
+      this.bookAdd.genres=[];
       this.bookAdd.publishYear=2022;
       this.bookDialogAdd=false;
       
-    })
+    },error:error=>{
+      if (error === "Not all genres of books exist") {
+        this.extraFunctions.showToast(
+          "error",
+          "Błąd",
+          "Coś poszło nie tak. Nie wszyzstkie gatunki książek znajdują się w bazie danych."
+        );
+      }
+    }})
   }
 
   applyFilterGlobal($event: any, stringVal: any) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
+  }
+
+
+  addGenre():void{
+    this.genreDialogAdd = true;
+    this.submittedGenre= false;
+  }
+
+  hideDialogGenre(): void {
+    this.genreDialogAdd = false;
+    this.submittedGenre= false;
+  }
+  
+  saveGenre():void {
+    this.submittedGenre=true;
+    this.genreService.addGenre(this.genreAdd).subscribe({next:resp=>{
+      this.genres.push(resp);
+      this.extraFunctions.showToast(
+        "success",
+        "Sukces",
+        "Udało się dodać nowy gatunek książki."
+      );
+      this.genreAdd.name="";
+      this.genreDialogAdd=false;
+      
+    },error:error=>{
+      if (error === "The genre already exist") {
+        this.extraFunctions.showToast(
+          "error",
+          "Błąd",
+          "Taki gatunek książki już istnieje."
+        );
+      }
+    }})
   }
 }

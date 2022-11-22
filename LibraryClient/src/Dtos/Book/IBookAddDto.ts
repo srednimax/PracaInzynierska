@@ -1,6 +1,8 @@
+import { IGenreDto } from "../Genre/IGenreDto";
+
 export interface IBookAddDto {
-    title: string;
-    author: string;
-    genre: number;
+    title: string | null;
+    author: string | null;
     publishYear: number;
+    genres: IGenreDto[];
 }
