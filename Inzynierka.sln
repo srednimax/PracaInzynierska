@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryBackend", "LibraryBa
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "LibraryClient", "LibraryClient\LibraryClient.esproj", "{262CB752-5771-435B-8121-9B8274CA51F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryBackend.Test", "LibraryBackend.Test\LibraryBackend.Test.csproj", "{6478D9B4-7958-42D9-BA32-4FAEFB03B316}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{262CB752-5771-435B-8121-9B8274CA51F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{262CB752-5771-435B-8121-9B8274CA51F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{262CB752-5771-435B-8121-9B8274CA51F9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6478D9B4-7958-42D9-BA32-4FAEFB03B316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6478D9B4-7958-42D9-BA32-4FAEFB03B316}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6478D9B4-7958-42D9-BA32-4FAEFB03B316}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6478D9B4-7958-42D9-BA32-4FAEFB03B316}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

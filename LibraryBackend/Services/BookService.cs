@@ -78,19 +78,22 @@ public class BookService : IBookService
         if(bookUpdateDto.PublishYear > 0)
             bookToUpdate.PublishYear = bookUpdateDto.PublishYear;
 
-        if(await _genreRepository.CheckIfNotExist(_mapper.Map<List<Genre>>(bookUpdateDto.Genres)))
-            return new ServiceResult<BookDto>() { Status = 500, Message = "Not all genres of books exist" };
-
-
-        //do zapytania
-        var t = new List<Genre>();
-        foreach (var genre in bookUpdateDto.Genres)
+        if (bookUpdateDto.Genres.Count > 0)
         {
-            var g = await _genreRepository.GetGenByName(genre.Name);
-            t.Add(g);
+            if (await _genreRepository.CheckIfNotExist(_mapper.Map<List<Genre>>(bookUpdateDto.Genres)))
+                return new ServiceResult<BookDto>() { Status = 500, Message = "Not all genres of books exist" };
+
+            //do zapytania
+            var t = new List<Genre>();
+            foreach (var genre in bookUpdateDto.Genres)
+            {
+                var g = await _genreRepository.GetGenByName(genre.Name);
+                t.Add(g);
+            }
+
+            bookToUpdate.Genres = t;
         }
 
-        bookToUpdate.Genres = t;
         //koniec do zapytania
         await _bookRepository.UpdateBook(bookToUpdate);
 
