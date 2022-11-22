@@ -61,7 +61,7 @@ export class UserProfileBorrowedBooksComponent implements OnInit {
   }
 
   getDate(date: string): string {
-    return date.slice(0, 9);
+    return date.slice(0, 10);
   }
   //p-dialog
   editRating(bookId: number, borrowedBookId: number) {

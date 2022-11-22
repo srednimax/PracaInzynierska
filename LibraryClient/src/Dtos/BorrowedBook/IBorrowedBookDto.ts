@@ -9,6 +9,7 @@ export interface IBorrowedBookDto {
     status: number;
     borrowDate: string | null;
     returnDate: string | null;
+    returnedDate: string | null;
     isRenew: boolean;
     isReturned: boolean;
     isRated: boolean;
