@@ -3,12 +3,15 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
+using AutoMapper;
 using LibraryBackend.Dtos.Book;
 using LibraryBackend.Dtos.Genre;
 using LibraryBackend.Dtos.User;
 using LibraryDatabase.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
@@ -19,29 +22,22 @@ namespace LibraryBackend.Test
     public class BookControllerTests
     {
         private readonly HttpClient _httpClient;
+        private readonly CustomWebApplicationFactory<Program> _factory;
+        private readonly LibraryDatabaseContext _db;
+        private readonly IMapper _mapper;
 
         public BookControllerTests()
         {
-            var webAppFactory = new WebApplicationFactory<Program>();
-            /*.WithWebHostBuilder(builder =>
-            {
-                builder.ConfigureServices(services =>
-                {
-                    services.RemoveAll(typeof(LibraryDatabaseContext));
-                    services.AddDbContext<LibraryDatabaseContext>(options =>
-                    {
-                        options.UseInMemoryDatabase("memoryDB");
-                    });
-                });
-            });*/
+            _factory = new CustomWebApplicationFactory<Program>();
 
-            _httpClient = webAppFactory.CreateClient();
-
-
-
+            _httpClient = _factory.CreateClient();
+            var scope = _factory.Services.GetService<IServiceScopeFactory>().CreateScope();
+            _db = scope.ServiceProvider.GetService<LibraryDatabaseContext>();
+            _mapper = scope.ServiceProvider.GetService<IMapper>();
         }
+
         [TestMethod]
-        public async Task GetAllBooks_ShouldReturnOkStatus()
+        public async Task GetAllBooks_Should_ReturnOkStatus()
         {
 
             var response = await _httpClient.GetAsync("api/Book/GetAll");
@@ -51,46 +47,64 @@ namespace LibraryBackend.Test
         }
 
         [TestMethod]
-        public async Task AddingNewBook_ShouldReturnOkStatus()
+        public async Task AddingNewBook()
         {
-            var bookAdd = new BookAddDto()
+            var bookToAdd = new BookAddDto()
             {
-                Author = "test",
-                Genres = new List<GenreDto>() { new GenreDto() { Id = 7, Name = "Fantastyka Naukowa" } },
+                Title = "Nowo dodana",
+                Author = "Autor 15",
+                Genres = new List<GenreDto>() { new GenreDto() { Id = 1, Name = "test" } },
                 PublishYear = 1999,
-                Title = "elo"
-
             };
+            
             await LoginEmp();
+            var response = await _httpClient.PostAsync("api/Book", Utilities.Serialize(bookToAdd));
 
-            var response = await _httpClient.PostAsync("api/Book", Serialize(bookAdd));
+            var addedBook = _db.Books.FirstOrDefault(x => x.Title == bookToAdd.Title);
 
-            Assert.AreEqual(true, response.StatusCode == HttpStatusCode.OK);
+            Assert.AreEqual(bookToAdd.Title, addedBook.Title);
+            Assert.AreEqual(bookToAdd.Author,addedBook.Author);
+
+        }
+        [TestMethod]
+        public async Task AddingNewBook_BadRequest()
+        {
+            var bookToAdd = new BookAddDto()
+            {
+                Title = "Nowo dodana",
+                Author = "",
+                Genres = new List<GenreDto>() { new GenreDto() { Id = 1, Name = "test" } },
+                PublishYear = 1999,
+            };
+
+            await LoginEmp();
+            var response = await _httpClient.PostAsync("api/Book", Utilities.Serialize(bookToAdd));
+
+            Assert.AreEqual(true,response.StatusCode == HttpStatusCode.BadRequest);
+
 
         }
 
         [TestMethod]
-        public async Task UpdatingTheBook_ShouldReturnOkStatus()
+        public async Task UpdatingTheBook()
         {
-            var dto = new BookUpdateDto()
-            {
-                Id = 31,
-                Author = "InnyAutor",
-                Title = "InnyTytul",
-                Genres = new List<GenreDto>(),
-                PublishYear = 2000
-            };
+            var bookToUpdateDto = _mapper.Map<BookUpdateDto>(_db.Books.First());
+            bookToUpdateDto.Title += "Test";
+            bookToUpdateDto.Author += "Test";
             await LoginEmp();
 
-            var response = await _httpClient.PutAsync("api/Book",Serialize(dto));
+            var response = await _httpClient.PutAsync("api/Book", Utilities.Serialize(bookToUpdateDto));
+            var updatedBook = await response.Content.ReadFromJsonAsync<BookDto>();
 
-            Assert.AreEqual(true, response.StatusCode == HttpStatusCode.OK);
+            Assert.AreEqual(bookToUpdateDto.Id, updatedBook.Id);
+            Assert.AreEqual(bookToUpdateDto.Title, updatedBook.Title);
+            Assert.AreEqual(bookToUpdateDto.Author, updatedBook.Author);
 
         }
 
        
         [TestMethod]
-        public async Task DeletingNotExistingBook_ShouldReturnNotFoundStatus()
+        public async Task DeletingNotExistingBook_Should_ReturnNotFoundStatus()
         {
 
             await LoginEmp();
@@ -101,7 +115,7 @@ namespace LibraryBackend.Test
 
         }
         [TestMethod]
-        public async Task GetRecommendedBooks_ShouldReturnOkStatus()
+        public async Task GetRecommendedBooks_Should_ReturnOkStatus()
         {
             await LoginUser();
 
@@ -113,16 +127,13 @@ namespace LibraryBackend.Test
 
         private async Task<string> GetJwtAsync(UserSignInDto userSignInDto)
         {
-            var result = await _httpClient.PostAsync("api/User/SignIn", Serialize(userSignInDto));
+            var result = await _httpClient.PostAsync("api/User/SignIn", Utilities.Serialize(userSignInDto));
 
-
+            var t = result.Headers;
             return result.Headers.GetValues("jwt").FirstOrDefault();
         }
 
-        private StringContent Serialize<T>(T dto)
-        {
-            return new StringContent(JsonConvert.SerializeObject(dto), UnicodeEncoding.UTF8, "application/json");
-        }
+
 
         private async Task LoginEmp()
         {

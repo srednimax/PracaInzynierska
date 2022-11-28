@@ -80,14 +80,15 @@ public class BookService : IBookService
 
         if (bookUpdateDto.Genres.Count > 0)
         {
-            if (await _genreRepository.CheckIfNotExist(_mapper.Map<List<Genre>>(bookUpdateDto.Genres)))
-                return new ServiceResult<BookDto>() { Status = 500, Message = "Not all genres of books exist" };
-
             //do zapytania
             var t = new List<Genre>();
             foreach (var genre in bookUpdateDto.Genres)
             {
                 var g = await _genreRepository.GetGenByName(genre.Name);
+
+                if (g is null)
+                    return new ServiceResult<BookDto>() { Status = 500, Message = "Not all genres of books exist" };
+
                 t.Add(g);
             }
 

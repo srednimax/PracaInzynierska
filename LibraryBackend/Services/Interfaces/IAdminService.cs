@@ -7,4 +7,5 @@ public interface IAdminService
     public Task<ServiceResult<UserDto>> ChangeRoleToEmployee(int id);
     public Task<ServiceResult<UserDto>> ChangeRoleToUser(int id);
     public Task<ServiceResult<UserDto>> Remove(int id);
+    public Task<ServiceResult<List<UserDto>>> GetAllUsers();
 }

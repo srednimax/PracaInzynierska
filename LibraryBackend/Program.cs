@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddDbContext<LibraryDatabaseContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("LibraryDatabase"));
@@ -112,7 +113,10 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<LibraryDatabaseContext>();
-    db.Database.Migrate();
+    if (db.Database.IsRelational())
+    {
+        db.Database.Migrate();
+    }
 }
 
 // Configure the HTTP request pipeline.
