@@ -24,8 +24,6 @@ public class LibraryDatabaseContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-
-
             optionsBuilder
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .UseSqlServer(
