@@ -59,7 +59,6 @@ namespace LibraryBackend.Test
             
             await LoginEmp();
             var response = await _httpClient.PostAsync("api/Book", Utilities.Serialize(bookToAdd));
-
             var addedBook = _db.Books.FirstOrDefault(x => x.Title == bookToAdd.Title);
 
             Assert.AreEqual(bookToAdd.Title, addedBook.Title);
