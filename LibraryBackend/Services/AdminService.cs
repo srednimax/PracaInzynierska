@@ -83,4 +83,9 @@ public class AdminService:IAdminService
         return new ServiceResult<UserDto>() { Body = _mapper.Map<UserDto>(userToRemove), Status = 200 };
 
     }
+
+    public async Task<ServiceResult<List<UserDto>>> GetAllUsers()
+    {
+        return new ServiceResult<List<UserDto>>() { Status = 200, Body = _mapper.Map<List<UserDto>>(await _userRepository.GetAllUsers()) };
+    }
 }

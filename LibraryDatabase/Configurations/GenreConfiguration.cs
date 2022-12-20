@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LibraryDatabase.Configurations;
 
-public class GenreConfigurations : IEntityTypeConfiguration<Genre>
+public class GenreConfiguration : IEntityTypeConfiguration<Genre>
 {
     public void Configure(EntityTypeBuilder<Genre> builder)
     {

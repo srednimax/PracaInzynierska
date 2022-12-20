@@ -7,6 +7,11 @@ namespace LibraryBackend.Repositories;
 public class UserRepository: Repository<User>,IUserRepository
 {
     public UserRepository(LibraryDatabaseContext context) : base(context) { }
+    public async Task<List<User>> GetAllUsers()
+    {
+        return await GetAll().ToListAsync();
+    }
+
     public async Task<User?> GetUserById(int id)
     {
         return await GetAll().FirstOrDefaultAsync(x => x.Id == id);

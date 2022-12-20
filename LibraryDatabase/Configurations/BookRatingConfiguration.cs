@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LibraryDatabase.Configurations;
 
-public class BookRatingConfigurations:IEntityTypeConfiguration<BookRating>
+public class BookRatingConfiguration:IEntityTypeConfiguration<BookRating>
 {
     public void Configure(EntityTypeBuilder<BookRating> builder)
     {

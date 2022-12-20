@@ -53,6 +53,19 @@ namespace LibraryBackend.Controllers
                 500 => Problem(result.Message)
             };
         }
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<ActionResult<List<UserDto>>> GetUsers()
+        {
+            var result = await _adminService.GetAllUsers();
+
+            return result.Status switch
+            {
+                200 => result.Body,
+                404 => NotFound(),
+                500 => Problem(result.Message)
+            };
+        }
 
     }
 }
