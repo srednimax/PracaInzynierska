@@ -1,2 +1,2 @@
 # PracaInzynierska
-C#, ASP.NET, MVC, Entity Framework,databse code first, services pattern, repository pattern
+C#, ASP.NET, MVC, Entity Framework, databse code first, services pattern, repository pattern
