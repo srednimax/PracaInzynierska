@@ -7,7 +7,7 @@ import { IBookUpdateDto } from "src/Dtos/Book/IBookUpdateDto";
 
 @Injectable()
 export class BookService {
-  url: string = "https://localhost:7196/api/Book";
+  url: string = "http://localhost:7196/api/Book";
 
   constructor(private http: HttpClient) { }
   

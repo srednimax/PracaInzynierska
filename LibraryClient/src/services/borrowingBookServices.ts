@@ -6,7 +6,7 @@ import { IBorrowedBookReturnDto } from "src/Dtos/BorrowedBook/IBorrowedBookRetur
 
 @Injectable()
 export class BorrowingBookService {
-  url: string = "https://localhost:7196/api/BorrowingBook";
+  url: string = "http://localhost:7196/api/BorrowingBook";
 
   constructor(private http: HttpClient) { }
   

@@ -9,7 +9,7 @@ import { IUserUpdatePasswordDto } from 'src/Dtos/User/IUserUpdatePasswordDto';
 
 @Injectable()
 export class UserService {
-  url: string = "https://localhost:7196/api/User";
+  url: string = "http://localhost:7196/api/User";
 
   constructor(private http: HttpClient) { }
 

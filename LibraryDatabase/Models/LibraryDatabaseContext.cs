@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace LibraryDatabase.Models;
@@ -27,7 +29,7 @@ public class LibraryDatabaseContext : DbContext
             optionsBuilder
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .UseSqlServer(
-                    "Data Source=DESKTOP-6LKDIAB;Database=Library;Integrated Security=True;TrustServerCertificate=True");
+                    "Data Source=localhost;Database=Library;User Id=SA;Password=yourStrong(!)Password;");
         }
     }
 

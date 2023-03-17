@@ -6,7 +6,7 @@ import { IGenreDto } from "src/Dtos/Genre/IGenreDto";
 
 @Injectable()
 export class GenreService {
-  url: string = "https://localhost:7196/api/Genre";
+  url: string = "http://localhost:7196/api/Genre";
 
   constructor(private http: HttpClient) { }
   
